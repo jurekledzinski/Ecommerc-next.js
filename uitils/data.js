@@ -91,24 +91,131 @@ export const sliderData = [
   },
 ];
 
-export const samsungPhones = [
+export const applePhones = [
   {
-    name: "Samsung",
-    category: "",
-    image: "/images/phone1.jpg",
+    name: "Iphone 8",
+    category: "Phones",
+    images: [
+      { url: "/images/Iphone-8-front-1.png" },
+      { url: "/images/Iphone-8-front-2.png" },
+      { url: "/images/Iphone-8-back.png" },
+      { url: "/images/Iphone-8-aside.png" },
+    ],
+    mainImage: "/images/Iphone-8-front-1.png",
     price: 85,
     rate: 5,
     onStock: 23,
-    description: "",
+    description: "Description iphone 8",
     reviews: [
-      { user: "Joe Doe", avatar: "/images/user1.jpg", review: "", rate: 5 },
+      {
+        user: "Joe Doe",
+        avatar: "/images/user1.jpg",
+        review: "Super phone",
+        rate: 5,
+      },
       {
         user: "Mike Berry",
         avatar: "/images/user2.jpg",
-        review: "",
+        review: "I like it very much",
         rate: 4.5,
       },
-      { user: "Alice Key", avatar: "/images/user2.jpg", review: "", rate: 4 },
+      {
+        user: "Alice Key",
+        avatar: "/images/user2.jpg",
+        review: "Awesome phone",
+        rate: 4,
+      },
     ],
+    url: "/iphone-8",
+  },
+  {
+    name: "Iphone 12",
+    category: "Phones",
+    images: [
+      { url: "/images/Iphone-12-front.png" },
+      { url: "/images/Iphone-12.png" },
+      { url: "/images/Iphone-12-back.png" },
+    ],
+    mainImage: "/images/Iphone-12-front.png",
+    price: 40,
+    rate: 4,
+    onStock: 10,
+    description: "Description iphone 12",
+    reviews: [
+      {
+        user: "Joe Doe",
+        avatar: "/images/user1.jpg",
+        review: "Ok phone",
+        rate: 4,
+      },
+      {
+        user: "Mike Berry",
+        avatar: "/images/user2.jpg",
+        review: "Can be for this price",
+        rate: 3.5,
+      },
+      {
+        user: "Alice Key",
+        avatar: "/images/user2.jpg",
+        review: "I like",
+        rate: 3,
+      },
+    ],
+    url: "/iphone-12",
+  },
+  {
+    name: "Iphone 13",
+    category: "Phones",
+    images: [
+      { url: "/images/Iphone-13-front.png" },
+      { url: "/images/Iphone-13.png" },
+      { url: "/images/Iphone-13-back.png" },
+    ],
+    mainImage: "/images/Iphone-13-front.png",
+    price: 70,
+    rate: 4.5,
+    onStock: 50,
+    description: "Description iphone 13",
+    reviews: [
+      {
+        user: "Joe Doe",
+        avatar: "/images/user1.jpg",
+        review: "I like this phone",
+        rate: 4,
+      },
+      {
+        user: "Mike Berry",
+        avatar: "/images/user2.jpg",
+        review: "Good price",
+        rate: 3.5,
+      },
+    ],
+    url: "/iphone-13",
+  },
+  {
+    name: "Iphone 13 Pro",
+    category: "Phones",
+    images: [
+      { url: "/images/Iphone-13-pro-front.png" },
+      { url: "/images/Iphone-13-pro.png" },
+      { url: "/images/Iphone-13-pro-back.png" },
+      { url: "/images/Iphone-13-pro-aside.png" },
+    ],
+    mainImage: "/images/Iphone-13-front.png",
+    price: 30,
+    rate: 4,
+    onStock: 5,
+    description: "Description iphone 13 Pro",
+    reviews: [
+      {
+        user: "Joe Doe",
+        avatar: "/images/user1.jpg",
+        review: "Ok phone, I will recommended for everyone",
+        rate: 4,
+      },
+    ],
+    url: "/iphone-13-pro",
   },
 ];
+
+export const headersCart = ["Product", "Qty", "Price", "Total"];
