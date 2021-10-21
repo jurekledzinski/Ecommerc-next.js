@@ -18,7 +18,6 @@ export const Image = styled("img")(({ theme }) => ({
 export const WrapperContent = styled("div")(({ theme }) => ({
   width: "100%",
   height: "100%",
-  //   backgroundColor: "red",
   display: "flex",
   justifyContent: "flex-start",
   [theme.breakpoints.up("xs")]: {
@@ -75,7 +74,7 @@ export const optionsSlider = {
     280: {
       fixedHeight: "420px",
     },
-    600: {
+    1600: {
       fixedHeight: "350px",
     },
   },
