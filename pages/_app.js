@@ -8,6 +8,8 @@ import {
 
 import GlobalStyles from "@mui/material/GlobalStyles";
 
+import StoreProvider from "../uitils/store";
+
 const inputGlobalStyles = (
   <GlobalStyles
     styles={{
@@ -17,6 +19,10 @@ const inputGlobalStyles = (
     }}
   />
 );
+
+import NavBar from "../components/NavBar";
+import FooterDown from "../components/FooterDown";
+import AsideDrawer from "../components/AsideDrawer";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -28,7 +34,12 @@ function MyApp({ Component, pageProps }) {
           content="Buy phones, watches, tablets in good and cheap price"
         />
       </Head>
-      <Component {...pageProps} />
+      <StoreProvider>
+        <NavBar />
+        <Component {...pageProps} />
+        <FooterDown />
+        <AsideDrawer />
+      </StoreProvider>
       {inputGlobalStyles}
     </>
   );
