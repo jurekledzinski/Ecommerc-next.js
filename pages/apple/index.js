@@ -1,5 +1,9 @@
+import Products from "../../components/Products";
+
+import { applePhones } from "../../uitils/data";
+
 const ApplePage = () => {
-  return <div>Apple phones</div>;
+  return <Products data={applePhones} />;
 };
 
 export default ApplePage;
