@@ -1,5 +1,8 @@
+import Products from "../../components/Products";
+
 const VivoPage = () => {
-  return <div>Vivo phones</div>;
+  const vivoPhones = [];
+  return <Products data={vivoPhones} />;
 };
 
 export default VivoPage;

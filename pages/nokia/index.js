@@ -1,5 +1,8 @@
+import Products from "../../components/Products";
+
 const NokiaPage = () => {
-  return <div>Nokia phones</div>;
+  const nokiaPhones = [];
+  return <Products data={nokiaPhones} />;
 };
 
 export default NokiaPage;

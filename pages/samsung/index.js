@@ -1,5 +1,8 @@
+import Products from "../../components/Products";
+
 const SamsungPage = () => {
-  return <div>Samsung phones</div>;
+  const samsungPhones = [];
+  return <Products data={samsungPhones} />;
 };
 
 export default SamsungPage;

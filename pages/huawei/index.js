@@ -1,5 +1,8 @@
+import Products from "../../components/Products";
+
 const HuaweiPage = () => {
-  return <div>Huawei phones</div>;
+  const huaweiPhones = [];
+  return <Products data={huaweiPhones} />;
 };
 
 export default HuaweiPage;

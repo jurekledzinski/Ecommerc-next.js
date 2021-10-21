@@ -1,5 +1,8 @@
+import Products from "../../components/Products";
+
 const LenovoPage = () => {
-  return <div>Lenovo phones</div>;
+  const lenovoPhones = [];
+  return <Products data={lenovoPhones} />;
 };
 
 export default LenovoPage;

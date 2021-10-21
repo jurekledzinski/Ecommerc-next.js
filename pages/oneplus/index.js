@@ -1,5 +1,8 @@
+import Products from "../../components/Products";
+
 const OneplusPage = () => {
-  return <div>Oneplus phones</div>;
+  const onePlusPhones = [];
+  return <Products data={onePlusPhones} />;
 };
 
 export default OneplusPage;
