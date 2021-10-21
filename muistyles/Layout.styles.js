@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 
 export const layoutContainerStyles = {
   maxWidth: "1200px",
-  minHeight: { xs: "0vh", sm: "0vh" },
+  minHeight: { xs: "0vh", sm: "calc(100vh - 546px)" },
 };
 
 export const Image = styled("img")(({ theme }) => ({
