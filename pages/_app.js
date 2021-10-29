@@ -1,47 +1,61 @@
-import Head from "next/head";
-import "../styles/globals.css";
+import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
+import '../styles/globals.css';
 import {
+  appWrapperStyles,
   bodyStyles,
   globalStyles,
   htmlStyles,
-} from "../muistyles/Global.styles";
+} from '../muistyles/Global.styles';
+import GlobalStyles from '@mui/material/GlobalStyles';
+import { Box } from '@mui/material';
 
-import GlobalStyles from "@mui/material/GlobalStyles";
-
-import StoreProvider from "../uitils/store";
+import StoreProvider from '../uitils/store';
 
 const inputGlobalStyles = (
   <GlobalStyles
     styles={{
-      "*": globalStyles,
+      '*': globalStyles,
       html: htmlStyles,
       body: bodyStyles,
     }}
   />
 );
 
-import NavBar from "../components/NavBar";
-import FooterDown from "../components/FooterDown";
-import AsideDrawer from "../components/AsideDrawer";
+import NavBar from '../components/NavBar';
+import FooterDown from '../components/FooterDown';
+import AsideDrawer from '../components/AsideDrawer';
+import ThemeMui from '../components/ThemeMui';
 
 function MyApp({ Component, pageProps }) {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
-    <>
-      <Head>
-        <title>Shoppy</title>
-        <meta
-          name="description"
-          content="Buy phones, watches, tablets in good and cheap price"
-        />
-      </Head>
-      <StoreProvider>
-        <NavBar />
-        <Component {...pageProps} />
-        <FooterDown />
-        <AsideDrawer />
-      </StoreProvider>
-      {inputGlobalStyles}
-    </>
+    <StoreProvider>
+      <ThemeMui>
+        {loaded && (
+          <Box sx={appWrapperStyles}>
+            <Head>
+              <title>Shoppy</title>
+              <meta
+                name="description"
+                content="Buy phones, watches, tablets in good and cheap price"
+              />
+            </Head>
+            {loaded && <NavBar />}
+            {loaded && <Component {...pageProps} />}
+            <FooterDown />
+            <AsideDrawer />
+
+            {inputGlobalStyles}
+          </Box>
+        )}
+      </ThemeMui>
+    </StoreProvider>
   );
 }
 
