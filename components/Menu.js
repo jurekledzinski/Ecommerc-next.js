@@ -1,21 +1,20 @@
-import React, { useContext, useRef } from "react";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import React, { useContext, useRef } from 'react';
+import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import {
   listStyles,
   listItemStyles,
   menuTitleStyles,
   Nav,
-} from "../muistyles/Navbar.styles";
+} from '../muistyles/Navbar.styles';
 
-import { StoreContext } from "../uitils/store";
+import { StoreContext } from '../uitils/store';
 
 import {
   CLOSE_DRAWER,
-  SHOW_MENU,
   OPEN_DRAWER,
   SHOW_SIGN_IN,
   SHOW_SIGN_UP,
-} from "../uitils/constants";
+} from '../uitils/constants';
 
 const Menu = () => {
   const { disptachContentDrawer, disptachOpenDrawer } =
@@ -24,10 +23,8 @@ const Menu = () => {
   const idTimeoutSec = useRef(null);
 
   const handleItemMenu = (e) => {
-    console.log(e.target.textContent);
-
     switch (e.target.textContent) {
-      case "Sign In":
+      case 'Sign In':
         disptachOpenDrawer({ type: CLOSE_DRAWER });
 
         idTimeout.current = setTimeout(() => {
@@ -36,7 +33,7 @@ const Menu = () => {
           clearTimeout(idTimeout.current);
         }, 800);
         break;
-      case "Sign Up":
+      case 'Sign Up':
         disptachOpenDrawer({ type: CLOSE_DRAWER });
 
         idTimeout.current = setTimeout(() => {
@@ -56,7 +53,7 @@ const Menu = () => {
         Welcome
       </Typography>
       <List sx={listStyles}>
-        {["Home", "Contact", "Sign In", "Sign Up"].map((item) => (
+        {['Home', 'Contact', 'Sign In', 'Sign Up'].map((item) => (
           <ListItem button key={item} onClick={handleItemMenu}>
             <ListItemText primary={item} sx={listItemStyles} />
           </ListItem>
