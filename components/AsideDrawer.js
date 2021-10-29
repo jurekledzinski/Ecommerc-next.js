@@ -1,19 +1,21 @@
-import React, { useContext } from "react";
-import { Drawer } from "@mui/material";
+import React, { useContext } from 'react';
+import { Drawer } from '@mui/material';
 
-import Cart from "./Cart";
-import Menu from "./Menu";
-import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpForm";
+import Cart from './Cart';
+import ForgetPassword from './ForgetPassword';
+import Menu from './Menu';
+import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
 
-import { StoreContext } from "../uitils/store";
+import { StoreContext } from '../uitils/store';
 import {
   CLOSE_DRAWER,
   SHOW_CART,
   SHOW_MENU,
   SHOW_SIGN_IN,
   SHOW_SIGN_UP,
-} from "../uitils/constants";
+  SHOW_FORGET_PASSWORD,
+} from '../uitils/constants';
 
 const AsideDrawer = () => {
   const { stateOpenDrawer, stateContentDrawer, disptachOpenDrawer } =
@@ -35,13 +37,15 @@ const AsideDrawer = () => {
         return <SignInForm />;
       case SHOW_SIGN_UP:
         return <SignUpForm />;
+      case SHOW_FORGET_PASSWORD:
+        return <ForgetPassword />;
       default:
         return <Menu />;
     }
   };
 
   return (
-    <Drawer anchor={"right"} open={openDrawer} onClose={handleCloseDrawer}>
+    <Drawer anchor={'right'} open={openDrawer} onClose={handleCloseDrawer}>
       {showContent(contentDrawer)}
     </Drawer>
   );
