@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Box, TextField, Typography } from "@mui/material";
+import React, { useContext, useRef, useState } from 'react';
+import { Button, Box, TextField, Typography } from '@mui/material';
 
 import {
   boxFormStyles,
@@ -10,16 +10,33 @@ import {
   inputNameStyles,
   signUpTitleStyles,
   submitButtonStyles,
-} from "../muistyles/SignUpForm.styles";
+} from '../muistyles/SignUpForm.styles';
+
+import { StoreContext } from '../uitils/store';
+
+import { CLOSE_DRAWER, OPEN_DRAWER, SHOW_SIGN_IN } from '../uitils/constants';
 
 const SignUpForm = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [surname, setSurname] = useState("");
+  const { disptachContentDrawer, disptachOpenDrawer } =
+    useContext(StoreContext);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [surname, setSurname] = useState('');
+  const idTimeout = useRef(null);
 
   const handleSubmitForm = (e) => {
+    e.preventDefault();
     console.log(e.target);
+  };
+
+  const handleShowSignInForm = () => {
+    disptachOpenDrawer({ type: CLOSE_DRAWER });
+    idTimeout.current = setTimeout(() => {
+      disptachOpenDrawer({ type: OPEN_DRAWER });
+      disptachContentDrawer({ type: SHOW_SIGN_IN });
+      clearTimeout(idTimeout.current);
+    }, 800);
   };
 
   return (
@@ -87,7 +104,11 @@ const SignUpForm = () => {
       </Box>
       <Typography variant="body1" sx={questionTextStyles}>
         Already registered.
-        <Button variant="text" sx={buttonRedirect}>
+        <Button
+          variant="text"
+          sx={buttonRedirect}
+          onClick={handleShowSignInForm}
+        >
           Sign in here
         </Button>
       </Typography>

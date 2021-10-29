@@ -1,22 +1,55 @@
-import React, { useState } from "react";
-import { Button, Box, TextField, Typography } from "@mui/material";
+import React, { useContext, useRef, useState } from 'react';
+import { Button, Box, TextField, Typography } from '@mui/material';
 
 import {
   buttonRedirect,
   boxFormStyles,
+  forgetPasswordStyles,
   inputEmailStyles,
   inputFormStyles,
   questionTextStyles,
   signInTitleStyles,
   submitButtonStyles,
-} from "../muistyles/SignInForm.styles";
+} from '../muistyles/SignInForm.styles';
+
+import { StoreContext } from '../uitils/store';
+
+import {
+  CLOSE_DRAWER,
+  OPEN_DRAWER,
+  SHOW_FORGET_PASSWORD,
+  SHOW_SIGN_UP,
+} from '../uitils/constants';
 
 const SignInForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { disptachContentDrawer, disptachOpenDrawer } =
+    useContext(StoreContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const idTimeout = useRef(null);
+  const idTimeoutSec = useRef(null);
 
   const handleSubmitForm = (e) => {
     console.log(e.target);
+  };
+
+  const handleShowSignUp = () => {
+    disptachOpenDrawer({ type: CLOSE_DRAWER });
+    idTimeout.current = setTimeout(() => {
+      disptachOpenDrawer({ type: OPEN_DRAWER });
+      disptachContentDrawer({ type: SHOW_SIGN_UP });
+      clearTimeout(idTimeout.current);
+    }, 800);
+  };
+
+  const handleShowForgetPassword = () => {
+    disptachOpenDrawer({ type: CLOSE_DRAWER });
+
+    idTimeoutSec.current = setTimeout(() => {
+      disptachOpenDrawer({ type: OPEN_DRAWER });
+      disptachContentDrawer({ type: SHOW_FORGET_PASSWORD });
+      clearTimeout(idTimeoutSec.current);
+    }, 800);
   };
 
   return (
@@ -57,8 +90,18 @@ const SignInForm = () => {
       </Box>
       <Typography variant="body1" sx={questionTextStyles}>
         Not registered.
-        <Button variant="text" sx={buttonRedirect}>
+        <Button variant="text" sx={buttonRedirect} onClick={handleShowSignUp}>
           Sign up here
+        </Button>
+      </Typography>
+      <Typography variant="body1" sx={forgetPasswordStyles}>
+        Forget password.
+        <Button
+          variant="text"
+          sx={buttonRedirect}
+          onClick={handleShowForgetPassword}
+        >
+          Click here
         </Button>
       </Typography>
     </Box>
