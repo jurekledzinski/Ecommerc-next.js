@@ -1,33 +1,48 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
+import NextLink from 'next/link';
+import Cookies from 'js-cookie';
 import {
   AppBar,
-  Badge,
   Box,
   Button,
   IconButton,
+  Link,
   Toolbar,
   Typography,
-} from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+} from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
   appBarStyles,
   buttonHamburger,
   boxWrapperStyles,
   cartIcon,
+  logoLinkStyles,
   navBarLogostyles,
   StyledBadge,
-} from "../muistyles/Navbar.styles";
-import { toolbarNavStyles } from "../muistyles/ToolbarNavStyles";
+} from '../muistyles/Navbar.styles';
+import { toolbarNavStyles } from '../muistyles/ToolbarNavStyles';
 
-import HamburgerMenu from "./HamburgerMenu";
+import HamburgerMenu from './HamburgerMenu';
 
-import { StoreContext } from "../uitils/store";
+import { StoreContext } from '../uitils/store';
 
-import { SHOW_CART, SHOW_MENU, OPEN_DRAWER } from "../uitils/constants";
+import {
+  SHOW_CART,
+  TOGGLE_DARK_MODE,
+  SHOW_MENU,
+  OPEN_DRAWER,
+} from '../uitils/constants';
 
 const NavBar = () => {
-  const { disptachContentDrawer, disptachOpenDrawer } =
-    useContext(StoreContext);
+  const {
+    dispatchDarkMode,
+    disptachContentDrawer,
+    disptachOpenDrawer,
+    stateDarkMode,
+  } = useContext(StoreContext);
+  const { darkmode } = stateDarkMode;
 
   const handleOpenMenu = () => {
     disptachOpenDrawer({ type: OPEN_DRAWER });
@@ -39,13 +54,25 @@ const NavBar = () => {
     disptachContentDrawer({ type: SHOW_CART });
   };
 
+  const handleToggleDarkMode = () => {
+    dispatchDarkMode({ type: TOGGLE_DARK_MODE });
+    Cookies.set('darkmode', !darkmode ? 'on' : 'off');
+  };
+
   return (
     <AppBar sx={appBarStyles}>
       <Toolbar sx={toolbarNavStyles}>
-        <Typography variant="h4" sx={navBarLogostyles}>
-          Shoppy
-        </Typography>
+        <NextLink href="/" passHref>
+          <Link sx={logoLinkStyles}>
+            <Typography variant="h4" sx={navBarLogostyles}>
+              Shoppy
+            </Typography>
+          </Link>
+        </NextLink>
         <Box sx={boxWrapperStyles}>
+          <IconButton onClick={handleToggleDarkMode}>
+            {darkmode ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
           <IconButton aria-label="cart" onClick={handleOpenCart}>
             <StyledBadge badgeContent={1} max={10}>
               <ShoppingCartIcon sx={cartIcon} />
