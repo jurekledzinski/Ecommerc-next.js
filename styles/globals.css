@@ -46,7 +46,7 @@
 
 .splide__arrow.custom-arrow {
   border-radius: initial;
-  background: #efefef;
+  background: rgba(252, 252, 252, 0.4);
 }
 
 .splide__arrow.custom-arrow > svg {
