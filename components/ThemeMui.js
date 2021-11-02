@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getTheme } from '../muistyles/ThemeMui';
 
-import { StoreContext } from '../uitils/store';
+import { StoreContext } from '../utils/store';
 
 const ThemeMui = ({ children }) => {
   const { stateDarkMode } = useContext(StoreContext);
