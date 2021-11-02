@@ -26,14 +26,14 @@ import { toolbarNavStyles } from '../muistyles/ToolbarNavStyles';
 
 import HamburgerMenu from './HamburgerMenu';
 
-import { StoreContext } from '../uitils/store';
+import { StoreContext } from '../utils/store';
 
 import {
   SHOW_CART,
   TOGGLE_DARK_MODE,
   SHOW_MENU,
   OPEN_DRAWER,
-} from '../uitils/constants';
+} from '../utils/constants';
 
 const NavBar = () => {
   const {
