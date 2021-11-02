@@ -1,38 +1,37 @@
-import Link from "next/link";
-import { Box, Card, CardActionArea, Grid, Typography } from "@mui/material";
-
-import { brandsPhoneData } from "../uitils/data";
+import Link from 'next/link';
+import { Box, Card, CardActionArea, Grid, Typography } from '@mui/material';
 
 import {
-  brandBoxesStyles,
   brandTitleStyles,
+  boxBrandStyles,
   containerBrandsStyles,
-} from "../muistyles/BrandsProducts.styles";
+  imageStyles,
+  linkBrandStyles,
+} from '../muistyles/BrandsProducts.styles';
 
-const BrandsProducts = () => {
+const BrandsProducts = ({ brands }) => {
   return (
     <main>
       <Grid container spacing={2} sx={containerBrandsStyles}>
-        {brandsPhoneData.map((item, index) => (
+        {brands.map((item, index) => (
           <Grid key={index} item xs={12} sm={6} md={3}>
-            <Card sx={{ height: "150px" }}>
-              <Link href={item.url} passHref>
-                <a style={{ textDecoration: "none" }}>
+            <Card sx={{ height: '150px' }}>
+              <Link href={`/${item.category}/${item.brand}`} passHref>
+                <a style={linkBrandStyles}>
                   <CardActionArea>
-                    <Box sx={brandBoxesStyles[index]}>
+                    <Box
+                      sx={{
+                        ...boxBrandStyles,
+                        background: item.background1,
+                        background: item.background2,
+                        background: item.background3,
+                      }}
+                    >
                       {item.icon && (
-                        <img
-                          src={item.icon}
-                          alt="img"
-                          style={{
-                            width: item.name === "Xiaomi" ? "70px" : "40px",
-                            height: item.name === "Xiaomi" ? "70px" : "40px",
-                            marginRight: "5px",
-                          }}
-                        />
+                        <img src={item.icon} alt="img" style={imageStyles} />
                       )}
                       <Typography variant="h3" sx={brandTitleStyles}>
-                        {item.name}
+                        {item.brand}
                       </Typography>
                     </Box>
                   </CardActionArea>
