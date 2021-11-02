@@ -7,7 +7,7 @@ import {
   Divider,
   Grid,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import {
   boxButtonsStyles,
   btnRemoveStyles,
@@ -27,9 +27,9 @@ import {
   itemsTitleStyles,
   Section,
   subtitleStyles,
-} from "../muistyles/Cart.styles";
+} from '../muistyles/Cart.styles';
 
-import { headersCart } from "../uitils/data";
+import { headersCart } from '../utils/data';
 
 const Cart = () => {
   return (
