@@ -13,7 +13,7 @@ export const Section = styled('section')(({ theme }) => ({
 
 export const containerDetailsStyles = {
   width: 'initial',
-  padding: (theme) => theme.spacing(3),
+  padding: { xs: '12px', sm: '24px' },
   marginLeft: 'initial',
 };
 
