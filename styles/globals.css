@@ -64,3 +64,14 @@
   background: #1565c0;
   transform: scale(1.2);
 }
+
+.splide__slide {
+  margin: 3px 0 !important;
+  border: none !important;
+  opacity: 0.3;
+}
+
+.splide__slide.is-active {
+  opacity: 1;
+  border: none !important;
+}
