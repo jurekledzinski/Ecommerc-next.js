@@ -18,6 +18,6 @@ export const BreadLink = styled('a')(({ breadcrampindex, index, theme }) => ({
 }));
 
 export const breadCrampsWrapperStyles = {
-  paddingLeft: (theme) => theme.spacing(3),
+  paddingLeft: { xs: '12px', sm: '24px' },
   marginTop: (theme) => theme.spacing(3),
 };
