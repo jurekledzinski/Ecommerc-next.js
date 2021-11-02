@@ -1,6 +1,5 @@
-import Link from "next/link";
+import Link from 'next/link';
 import {
-  Breadcrumbs,
   Box,
   Button,
   Card,
@@ -9,13 +8,12 @@ import {
   CardMedia,
   Grid,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { Section } from "../muistyles/Products.styles";
+import { Section } from '../muistyles/Products.styles';
 
 import {
   aTagStyles,
-  BreadLink,
   boxWrapper,
   cardContentStyles,
   cardMediaStyles,
@@ -23,40 +21,35 @@ import {
   containerProductsStyles,
   productTitleStyles,
   productBoxesStyles,
-} from "../muistyles/Products.styles";
+} from '../muistyles/Products.styles';
 
-const Products = ({ data }) => {
+import BreadCramps from './BreadCramps';
+
+const Products = ({ data, endpoints }) => {
   return (
     <Section>
-      <Box
-        sx={{
-          paddingLeft: (theme) => theme.spacing(3),
-          marginTop: (theme) => theme.spacing(3),
-        }}
-      >
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link href="/">
-            <BreadLink>Home</BreadLink>
-          </Link>
-          <Link href="/apple">
-            <BreadLink>Apple</BreadLink>
-          </Link>
-        </Breadcrumbs>
-      </Box>
+      <BreadCramps endpoints={endpoints} />
       <Grid container spacing={2} sx={containerProductsStyles}>
         {data.map((item, index) => (
           <Grid key={index} item xs={12} sm={6} md={3}>
             <Card sx={cardStyles}>
-              <Link href={item.url} passHref>
+              <Link
+                href={`/${item.category}/${item.brand}/model/${item?.name
+                  ?.toLowerCase()
+                  ?.replace(/\s/g, '-')}?id=${item._id}`}
+                passHref
+              >
                 <a style={aTagStyles}>
                   <CardActionArea>
                     <Box sx={productBoxesStyles}>
                       <CardMedia
                         component="img"
                         height="250"
-                        image={item.mainImage}
+                        image={item.imageSrc}
                         alt={item.name}
                         sx={cardMediaStyles}
+                        srcSet={item.imagesSrcSet.map((item) => item)}
+                        sizes={item.sizes.map((item) => item)}
                       />
                     </Box>
                   </CardActionArea>
