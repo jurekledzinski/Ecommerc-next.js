@@ -89,7 +89,14 @@ export const InputNumber = styled('input')(({ theme }) => ({
   border: '1px solid #eeeeee',
   outline: 'none',
   textAlign: 'center',
-  textIndent: '12px',
+  '&::-webkit-inner-spin-button': {
+    margin: 0,
+    WebkitAppearance: 'none',
+  },
+  '&::-webkit-outer-spin-button': {
+    margin: 0,
+    WebkitAppearance: 'none',
+  },
 }));
 
 export const boxButtonsStyles = {
