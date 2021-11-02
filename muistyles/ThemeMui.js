@@ -12,6 +12,7 @@ export const getTheme = (mode) => ({
             cardbottom: '#ffffff',
             cardtop: '#ffffff',
             default: '#eeeeee',
+            tablerow: '#f2f2f2',
           },
         }
       : {
@@ -23,6 +24,7 @@ export const getTheme = (mode) => ({
             paper: '#333333',
             cardbottom: '#555555',
             cardtop: '#7a7a7a',
+            tablerow: '#555555',
           },
           text: {
             primary: '#ffffff',
