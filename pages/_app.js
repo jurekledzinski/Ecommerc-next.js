@@ -10,7 +10,7 @@ import {
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { Box } from '@mui/material';
 
-import StoreProvider from '../uitils/store';
+import StoreProvider from '../utils/store';
 
 const inputGlobalStyles = (
   <GlobalStyles
