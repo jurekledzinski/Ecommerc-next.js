@@ -11,20 +11,6 @@ export const Section = styled('section')(({ theme }) => ({
   },
 }));
 
-export const BreadLink = styled('a')(({ theme }) => ({
-  color: theme.palette.text.primary,
-  textDecoration: 'none',
-  cursor: 'pointer',
-  [theme.breakpoints.up('xs')]: {
-    fontSize: '1.4rem',
-  },
-  [theme.breakpoints.up('sm')]: {
-    fontSize: '1.6rem',
-  },
-  transition: '0.2s ease',
-  ':hover': { color: '#1976d2' },
-}));
-
 export const containerProductsStyles = {
   padding: (theme) => theme.spacing(3),
 };
@@ -72,3 +58,4 @@ export const boxWrapper = {
   alignItems: 'flex-end',
   marginTop: '20px',
 };
+
