@@ -7,7 +7,7 @@ import Menu from './Menu';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 
-import { StoreContext } from '../uitils/store';
+import { StoreContext } from '../utils/store';
 import {
   CLOSE_DRAWER,
   SHOW_CART,
@@ -15,7 +15,7 @@ import {
   SHOW_SIGN_IN,
   SHOW_SIGN_UP,
   SHOW_FORGET_PASSWORD,
-} from '../uitils/constants';
+} from '../utils/constants';
 
 const AsideDrawer = () => {
   const { stateOpenDrawer, stateContentDrawer, disptachOpenDrawer } =
