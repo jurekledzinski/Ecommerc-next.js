@@ -12,14 +12,14 @@ import {
   submitButtonStyles,
 } from '../muistyles/SignInForm.styles';
 
-import { StoreContext } from '../uitils/store';
+import { StoreContext } from '../utils/store';
 
 import {
   CLOSE_DRAWER,
   OPEN_DRAWER,
   SHOW_FORGET_PASSWORD,
   SHOW_SIGN_UP,
-} from '../uitils/constants';
+} from '../utils/constants';
 
 const SignInForm = () => {
   const { disptachContentDrawer, disptachOpenDrawer } =

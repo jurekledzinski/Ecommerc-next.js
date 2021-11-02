@@ -12,9 +12,9 @@ import {
   submitButtonStyles,
 } from '../muistyles/SignUpForm.styles';
 
-import { StoreContext } from '../uitils/store';
+import { StoreContext } from '../utils/store';
 
-import { CLOSE_DRAWER, OPEN_DRAWER, SHOW_SIGN_IN } from '../uitils/constants';
+import { CLOSE_DRAWER, OPEN_DRAWER, SHOW_SIGN_IN } from '../utils/constants';
 
 const SignUpForm = () => {
   const { disptachContentDrawer, disptachOpenDrawer } =
