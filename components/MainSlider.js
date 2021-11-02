@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { useRouter } from "next//router";
+import { useRouter } from 'next//router';
 
-import { Button, Typography } from "@mui/material";
+import { Button, Typography } from '@mui/material';
 
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/splide/dist/css/splide.min.css";
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/splide/dist/css/splide.min.css';
 
 import {
   buttonSlideStyles,
@@ -18,9 +18,9 @@ import {
   subtitleSlideStyles,
   WrapperContent,
   WrapperSlider,
-} from "../muistyles/MainSlider.styles";
+} from '../muistyles/MainSlider.styles';
 
-import { sliderData } from "../uitils/data";
+import { sliderData } from '../utils/data';
 
 const MainSlider = () => {
   const router = useRouter();
@@ -42,7 +42,7 @@ const MainSlider = () => {
             <WrapperContent>
               <LeftBoxSlide>
                 <ContentLeftBox
-                  className={indexSlide === index ? "show-text" : "hidden-text"}
+                  className={indexSlide === index ? 'show-text' : 'hidden-text'}
                 >
                   <Typography variant="h3" sx={titleSlideStyles}>
                     {item.title}
@@ -61,7 +61,7 @@ const MainSlider = () => {
               </LeftBoxSlide>
               <RightBoxSlide>
                 <Image
-                  className={indexSlide === index ? "active" : "hidden-image"}
+                  className={indexSlide === index ? 'active' : 'hidden-image'}
                   src={item.image}
                   alt={item.alt}
                 ></Image>
