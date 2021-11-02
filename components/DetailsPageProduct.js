@@ -12,6 +12,7 @@ import { useRoutesHook } from '../customHooks/useRoutesHook';
 import BreadCramps from './BreadCramps';
 import SliderThumbnails from './SliderThumbnails';
 import DescriptionProduct from './DescriptionProduct';
+import DetailsAndReviews from './DetailsAndReviews';
 
 import {
   containerDetailsStyles,
@@ -35,6 +36,7 @@ const DetailsPageProduct = () => {
           <DescriptionProduct />
         </Grid>
       </Grid>
+      <DetailsAndReviews />
     </Section>
   );
 };
