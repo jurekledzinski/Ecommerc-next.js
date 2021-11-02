@@ -6,6 +6,7 @@ export const appBarStyles = {
   backgroundColor: (theme) => theme.palette.background.paper,
   //   boxShadow: (theme) => `0 0 0px 2px ${theme.palette.background.default}`,
   borderBottom: (theme) => `1px solid ${theme.palette.background.default}`,
+  boxShadow: 'initial',
 };
 
 export const logoLinkStyles = {
