@@ -66,12 +66,27 @@
 }
 
 .splide__slide {
-  margin: 3px 0 !important;
+  /* margin: 3px 3px !important; */
   border: none !important;
-  opacity: 0.3;
+  /* opacity: 0.3; */
 }
 
 .splide__slide.is-active {
   opacity: 1;
   border: none !important;
+}
+
+.splide__pagination__page.splide__other-rated-btn {
+  width: 12px;
+  height: 2px;
+  border-radius: initial;
+  background: #555555;
+}
+
+.splide__pagination__page.splide__other-rated-btn.is-active {
+  width: 15px;
+  height: 3px;
+  border-radius: initial;
+  transform: scale(1.2);
+  background: #4f4f4f;
 }
