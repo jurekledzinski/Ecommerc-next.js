@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
 
 import { tabelWrapperStyles } from '../muistyles/DetailsAndReviews.styles';
 
@@ -59,7 +62,26 @@ const MoreDetailsProduct = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <TableDetailsProduct />
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  textTransform: 'uppercase',
+                  fontFamily: 'Oswald,sans-serif',
+                }}
+              >
+                Specification
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <TableDetailsProduct />
+            </AccordionDetails>
+          </Accordion>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <ReviewsProduct />
