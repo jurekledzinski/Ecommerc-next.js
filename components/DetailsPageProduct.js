@@ -13,6 +13,7 @@ import BreadCramps from './BreadCramps';
 import SliderThumbnails from './SliderThumbnails';
 import DescriptionProduct from './DescriptionProduct';
 import DetailsAndReviews from './DetailsAndReviews';
+import SliderOtherProducts from './SliderOtherProducts';
 
 import {
   containerDetailsStyles,
@@ -37,6 +38,7 @@ const DetailsPageProduct = () => {
         </Grid>
       </Grid>
       <DetailsAndReviews />
+      <SliderOtherProducts />
     </Section>
   );
 };
