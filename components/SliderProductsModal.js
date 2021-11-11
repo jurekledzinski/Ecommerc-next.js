@@ -1,5 +1,8 @@
+import React, { useContext } from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
+
+import { StoreContext } from '../utils/store';
 
 import {
   ImageElement,
@@ -7,20 +10,23 @@ import {
 } from '../muistyles/SliderProductModal.styles';
 
 const SliderProductsModal = ({ indexSlide }) => {
+  const { stateDetailsProduct } = useContext(StoreContext);
+  const { imagesSlider, name } = stateDetailsProduct;
+
   return (
     <Splide options={{ ...optionsSliderModal, start: indexSlide }}>
-      <SplideSlide>
-        <ImageElement
-          src="https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png"
-          alt="Image 1"
-        />
-      </SplideSlide>
-      <SplideSlide>
-        <ImageElement
-          src="https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-12-front_OD7tDwAb_zA.png"
-          alt="Image 2"
-        />
-      </SplideSlide>
+      {imagesSlider
+        ? imagesSlider.map((item, index) => (
+            <SplideSlide key={index}>
+              <ImageElement
+                src={item}
+                srcSet={`${item}?tr=w-350 350w`}
+                sizes="350px"
+                alt={name}
+              />
+            </SplideSlide>
+          ))
+        : null}
     </Splide>
   );
 };
