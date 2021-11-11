@@ -24,7 +24,6 @@ import {
 
 const DetailsPageProduct = () => {
   const { endpoints } = useRoutesHook();
-  console.log(endpoints, ' details product page breadcramps');
 
   return (
     <Section>
