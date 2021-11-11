@@ -16,7 +16,7 @@ export const boxTitleStyles = {
 
 export const cartTitleStyles = {
   width: '95%',
-  margin: '18px auto 0 15px',
+  margin: { xs: '22px auto 0 15px', sm: '18px auto 0 15px' },
   textTransform: 'uppercase',
   color: (theme) => theme.palette.text.primary,
   fontSize: { xs: '1.6rem', sm: '2rem' },
@@ -122,4 +122,37 @@ export const btnRemoveStyles = {
 
 export const gridContainerTwoStyles = {
   padding: '16px',
+};
+
+export const itemsCartWrapperStyles = {
+  maxHeight: '476px',
+  overflowY: 'auto',
+  scrollbarWidth: 'thin',
+  scrollbarColor: 'rgb(240, 239, 239)',
+  '&::-webkit-scrollbar': {
+    width: '3px',
+    height: '3px',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: 'rgb(240, 239, 239)',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: '#bdb6b6',
+    borderRadius: '3px',
+  },
+};
+
+export const titleCartSummaryStyles = {
+  width: 'calc(100% - 32px)',
+  margin: '30px auto',
+  textTransform: 'Uppercase',
+  letterSpacing: '1px',
+  fontFamily: 'Oswald, sans-serif',
+};
+
+export const buttonCheckoutCartStyles = {
+  display: 'block',
+  width: 'calc(100% - 32px)',
+  padding: '12px 16px',
+  margin: '30px auto 30px auto',
 };
