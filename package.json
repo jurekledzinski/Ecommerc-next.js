@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
+    "@mui/system": "^5.0.6",
     "@splidejs/react-splide": "^0.5.1",
     "js-cookie": "^3.0.1",
     "mongoose": "^6.0.12",
