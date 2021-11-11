@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
@@ -22,69 +24,46 @@ import {
   wrapperSliderOtherProductsStyles,
 } from '../muistyles/SliderOtherProducts.styles';
 
-const data = [
-  {
-    imageSrc:
-      'https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png',
-    imagesSrcSet: [
-      'https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png?tr=w-100 100w',
-    ],
-    sizes: ['100px'],
-    price: 100,
-    rates: 4.5,
-  },
-  {
-    imageSrc:
-      'https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png',
-    imagesSrcSet: [
-      'https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png?tr=w-100 100w',
-    ],
-    sizes: ['100px'],
-    price: 100,
-    rates: 4.5,
-  },
-  {
-    imageSrc:
-      'https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png',
-    imagesSrcSet: [
-      'https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png?tr=w-100 100w',
-    ],
-    sizes: ['100px'],
-    price: 100,
-    rates: 4.5,
-  },
-  {
-    imageSrc:
-      'https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png',
-    imagesSrcSet: [
-      'https://ik.imagekit.io/mdklwracd5rti/Shoppy/Iphone-8-front-1_QPZblGWggD.png?tr=w-100 100w',
-    ],
-    sizes: ['100px'],
-    price: 100,
-    rates: 4.5,
-  },
-];
-
 const SliderOtherProducts = () => {
+  const [dataProducts, setDataProducts] = useState([]);
+  const router = useRouter();
+  const index = router.asPath.slice(1).indexOf('/');
+  const category = router.asPath.slice(1).slice(0, index);
+
+  useEffect(() => {
+    const fetchExtraProducts = async () => {
+      const response = await fetch(`http://localhost:3000/api/v1/${category}`);
+      const data = await response.json();
+      setDataProducts(data);
+    };
+    fetchExtraProducts();
+  }, []);
+
   return (
     <Box style={wrapperSliderOtherProductsStyles}>
       <Typography variant="h5" sx={titlrTopRateStyles}>
         Top rated phones
       </Typography>
       <Splide options={optionsSliderOtherProducts}>
-        {data.map((item, index) => (
+        {dataProducts.map((item, index) => (
           <SplideSlide key={index}>
             <Card sx={{ height: '320px' }}>
-              <Link href="#">
+              <Link
+                href={`http://localhost:3000/${item.category}/${
+                  item.brand
+                }/model/${item?.name?.toLowerCase()?.replace(/\s/g, '-')}?id=${
+                  item._id
+                }`}
+              >
                 <a>
                   <CardActionArea sx={cardActionTopRatedStyles}>
                     <CardMedia
                       component="img"
                       height="150"
                       alt=""
-                      src={item.imageSrc}
-                      srcSet={item.imagesSrcSet.map((item) => item)}
-                      sizes={item.sizes.map((item) => item)}
+                      src={item.imagesSlider[0]}
+                      srcSet={`${item.imagesSlider[0]}?tr=w-100,h-100,cm-pad_resize,bg-transparent`}
+                      sizes="100px"
                       sx={cardMediaTopRateStyles}
                     ></CardMedia>
                   </CardActionArea>
@@ -92,17 +71,17 @@ const SliderOtherProducts = () => {
               </Link>
               <CardContent>
                 <Typography variant="h6" sx={titleContentTopRatesOneStyles}>
-                  Iphone 1
+                  {item.name}
                 </Typography>
                 <Rating
                   name="half-rating-read"
-                  defaultValue={2.5}
+                  value={parseInt(item?.rate)}
                   precision={0.5}
                   readOnly
                   sx={ratingTopRateSliderStyles}
                 />
                 <Typography variant="h6" sx={titleContentTopRatesTwoStyles}>
-                  Price: 80.00€
+                  Price: {item.price}€
                 </Typography>
                 <Button variant="contained">Add to cart</Button>
               </CardContent>
