@@ -40,6 +40,7 @@ const NavBar = () => {
     dispatchDarkMode,
     disptachContentDrawer,
     disptachOpenDrawer,
+    stateCart,
     stateDarkMode,
   } = useContext(StoreContext);
   const { darkmode } = stateDarkMode;
@@ -74,7 +75,7 @@ const NavBar = () => {
             {darkmode ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
           <IconButton aria-label="cart" onClick={handleOpenCart}>
-            <StyledBadge badgeContent={1} max={10}>
+            <StyledBadge badgeContent={stateCart.totalCartAmount} max={99}>
               <ShoppingCartIcon sx={cartIcon} />
             </StyledBadge>
           </IconButton>
