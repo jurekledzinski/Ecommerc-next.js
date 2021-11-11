@@ -1,11 +1,51 @@
+import React, { useContext, useEffect } from 'react';
+
 import Products from '../../../components/Products';
 
 import { useRoutesHook } from '../../../customHooks/useRoutesHook';
+import {
+  FETCH_DATA_BRAND_PRODUCTS,
+  UPDATE_PRODUCTS_BRAND_ON_STOCK,
+} from '../../../utils/constants';
+import { StoreContext } from '../../../utils/store';
 
 const ProductsListPage = ({ products }) => {
+  const { disptachProductsBrand, stateCart, stateProductsBrand } =
+    useContext(StoreContext);
   const { endpoints } = useRoutesHook();
-  console.log(endpoints);
-  return <Products data={products} endpoints={endpoints} />;
+
+  const createCopyProducts = (data) => {
+    let copyProductsArray = data.map((item) => {
+      return {
+        ...item,
+        details: item.details.map((item1) => ({ ...item1 })),
+        imagesSlider: item.imagesSlider.map((item2) => item2),
+      };
+    });
+
+    return copyProductsArray;
+  };
+
+  useEffect(() => {
+    if (products.length > 0) {
+      disptachProductsBrand({
+        type: FETCH_DATA_BRAND_PRODUCTS,
+        data: createCopyProducts(products),
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    stateCart.products.forEach((item) => {
+      disptachProductsBrand({
+        type: UPDATE_PRODUCTS_BRAND_ON_STOCK,
+        productId: item._id,
+        amountOnStock: item.onStock,
+      });
+    });
+  }, [stateProductsBrand.length]);
+
+  return <Products endpoints={endpoints} />;
 };
 
 export default ProductsListPage;
