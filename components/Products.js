@@ -1,4 +1,6 @@
+import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+
 import {
   Box,
   Button,
@@ -23,14 +25,46 @@ import {
   productBoxesStyles,
 } from '../muistyles/Products.styles';
 
+import { UPDATE_PRODUCTS_BRAND_ON_STOCK } from '../utils/constants';
+
+import { StoreContext } from '../utils/store';
+import { controlCart } from '../helpers/carthelpers';
+
 import BreadCramps from './BreadCramps';
 
-const Products = ({ data, endpoints }) => {
+const Products = ({ endpoints }) => {
+  const { dispatchCart, disptachProductsBrand, stateCart, stateProductsBrand } =
+    useContext(StoreContext);
+
+  const handleAddToCart = (idProduct) => {
+    const singleProductAdded = stateProductsBrand.find(
+      (item) => item._id === idProduct
+    );
+
+    let copyProduct = {
+      ...singleProductAdded,
+      amount: singleProductAdded.onStock,
+    };
+
+    controlCart(copyProduct, idProduct, stateCart, dispatchCart);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(stateCart));
+    stateCart.products.forEach((item) => {
+      disptachProductsBrand({
+        type: UPDATE_PRODUCTS_BRAND_ON_STOCK,
+        productId: item._id,
+        amountOnStock: item.onStock,
+      });
+    });
+  }, [stateCart.products]);
+
   return (
     <Section>
       <BreadCramps endpoints={endpoints} />
       <Grid container spacing={2} sx={containerProductsStyles}>
-        {data.map((item, index) => (
+        {stateProductsBrand.map((item, index) => (
           <Grid key={index} item xs={12} sm={6} md={3}>
             <Card sx={cardStyles}>
               <Link
@@ -45,11 +79,11 @@ const Products = ({ data, endpoints }) => {
                       <CardMedia
                         component="img"
                         height="250"
-                        image={item.imageSrc}
+                        image={item.imagesSlider[0]}
                         alt={item.name}
                         sx={cardMediaStyles}
-                        srcSet={item.imagesSrcSet.map((item) => item)}
-                        sizes={item.sizes.map((item) => item)}
+                        srcSet={`${item.imagesSlider[0]}?tr=w-250,h-250,cm-pad_resize,bg-transparent`}
+                        sizes="250px"
                       />
                     </Box>
                   </CardActionArea>
@@ -63,7 +97,13 @@ const Products = ({ data, endpoints }) => {
                   Price: {item.price}€
                 </Typography>
                 <Box sx={boxWrapper}>
-                  <Button variant="contained">Add to cart</Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => handleAddToCart(item._id)}
+                    disabled={item.onStock === 0 ? true : false}
+                  >
+                    {item.onStock === 0 ? 'Out of stock' : 'Add to cart'}
+                  </Button>
                   <Typography variant="body1" sx={productTitleStyles}>
                     On stock: {item.onStock}
                   </Typography>
