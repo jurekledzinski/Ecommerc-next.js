@@ -7,12 +7,7 @@ export const BreadLink = styled('a')(({ breadcrampindex, index, theme }) => ({
       : theme.palette.text.primary,
   textDecoration: 'none',
   cursor: 'pointer',
-  [theme.breakpoints.up('xs')]: {
-    fontSize: '1.4rem',
-  },
-  [theme.breakpoints.up('sm')]: {
-    fontSize: '1.6rem',
-  },
+  fontSize: '1.4rem',
   transition: '0.2s ease',
   ':hover': { color: '#e5e5e5' },
 }));
