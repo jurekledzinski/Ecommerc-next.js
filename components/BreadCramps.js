@@ -15,7 +15,7 @@ const BreadCramps = ({ endpoints }) => {
 
   return (
     <Box sx={breadCrampsWrapperStyles}>
-      <Breadcrumbs aria-label="breadcrumb">
+      <Breadcrumbs aria-label="breadcrumb" separator="›">
         {endpoints.map((item, index) => (
           <Link href={item.url} key={index}>
             <BreadLink
