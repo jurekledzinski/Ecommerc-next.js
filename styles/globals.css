@@ -66,9 +66,7 @@
 }
 
 .splide__slide {
-  /* margin: 3px 3px !important; */
   border: none !important;
-  /* opacity: 0.3; */
 }
 
 .splide__slide.is-active {
