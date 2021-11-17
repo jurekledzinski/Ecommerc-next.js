@@ -1,3 +1,4 @@
+import { Fragment, useRouter } from 'next/router';
 import React, { useContext, useRef } from 'react';
 import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import {
@@ -12,18 +13,43 @@ import { StoreContext } from '../utils/store';
 import {
   CLOSE_DRAWER,
   OPEN_DRAWER,
+  SHOW_CONTACT,
   SHOW_SIGN_IN,
   SHOW_SIGN_UP,
 } from '../utils/constants';
 
 const Menu = () => {
-  const { disptachContentDrawer, disptachOpenDrawer } =
+  const router = useRouter();
+  const { disptachContentDrawer, disptachOpenDrawer, stateLoginUser } =
     useContext(StoreContext);
   const idTimeout = useRef(null);
   const idTimeoutSec = useRef(null);
+  const idTimeoutThird = useRef(null);
+
+  //   TODO: Fake id
+  const userId = '123';
+
+  console.log(stateLoginUser);
 
   const handleItemMenu = (e) => {
     switch (e.target.textContent) {
+      case 'Contact':
+        disptachOpenDrawer({ type: CLOSE_DRAWER });
+
+        idTimeoutThird.current = setTimeout(() => {
+          disptachOpenDrawer({ type: OPEN_DRAWER });
+          disptachContentDrawer({ type: SHOW_CONTACT });
+          clearTimeout(idTimeoutThird.current);
+        }, 800);
+        break;
+      case 'Orders':
+        router.push(`/orders/user?id=${userId}`);
+        disptachOpenDrawer({ type: CLOSE_DRAWER });
+        break;
+      case 'Profile':
+        router.push(`/profile/user?id=${userId}`);
+        disptachOpenDrawer({ type: CLOSE_DRAWER });
+        break;
       case 'Sign In':
         disptachOpenDrawer({ type: CLOSE_DRAWER });
 
@@ -53,7 +79,15 @@ const Menu = () => {
         Welcome
       </Typography>
       <List sx={listStyles}>
-        {['Home', 'Contact', 'Sign In', 'Sign Up'].map((item) => (
+        {[
+          'Home',
+          'Contact',
+          'Orders',
+          'Profile',
+          'Sign In',
+          'Sign Up',
+          'Log out',
+        ].map((item) => (
           <ListItem button key={item} onClick={handleItemMenu}>
             <ListItemText primary={item} sx={listItemStyles} />
           </ListItem>
