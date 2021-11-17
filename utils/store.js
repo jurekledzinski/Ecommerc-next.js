@@ -11,6 +11,7 @@ import {
   darkModeReducer,
   dataProductsByBrandReducer,
   detailsProductReducer,
+  userReducer,
 } from './reducers';
 
 const stateMode = Cookies.get('darkmode') === 'on' ? true : false;
@@ -30,6 +31,7 @@ if (typeof window !== 'undefined') {
     totalCartPrice: 0,
   };
 }
+const initialStateLoginUser = {};
 
 const StoreProvider = ({ children }) => {
   const [stateOpenDrawer, disptachOpenDrawer] = useReducer(
@@ -59,6 +61,11 @@ const StoreProvider = ({ children }) => {
 
   const [stateCart, dispatchCart] = useReducer(cartReducer, initialStateCart);
 
+  const [stateLoginUser, dispatchLoginUser] = useReducer(
+    userReducer,
+    initialStateLoginUser
+  );
+
   return (
     <StoreContext.Provider
       value={{
@@ -70,6 +77,8 @@ const StoreProvider = ({ children }) => {
         dispatchDarkMode,
         stateDetailsProduct,
         dispatchDetailsProduct,
+        stateLoginUser,
+        dispatchLoginUser,
         stateOpenDrawer,
         disptachOpenDrawer,
         stateProductsBrand,

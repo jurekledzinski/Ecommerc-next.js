@@ -1,16 +1,18 @@
 import {
   ADD_TO_CART,
-  REMOVE_FROM_CART,
   CLOSE_DRAWER,
   FETCH_DATA_BRAND_PRODUCTS,
+  FETCH_DETAILS_PRODUCT,
   OPEN_DRAWER,
+  REMOVE_FROM_CART,
   SHOW_CART,
+  SHOW_CONTACT,
   SHOW_MENU,
   SHOW_SIGN_IN,
   SHOW_SIGN_UP,
   SHOW_FORGET_PASSWORD,
   TOGGLE_DARK_MODE,
-  FETCH_DETAILS_PRODUCT,
+  USER_LOGIN_DATA,
   UPDATE_RATE_PRODUCT_DETAILS,
   UPDATE_ON_STOCK_PRODUCT_DETAILS,
   UPDATE_ON_STOCK_CART_PRODUCT,
@@ -35,6 +37,8 @@ export const contentDrawerReducer = (state, action) => {
   switch (action.type) {
     case SHOW_CART:
       return { ...state, contentDrawer: SHOW_CART };
+    case SHOW_CONTACT:
+      return { ...state, contentDrawer: SHOW_CONTACT };
     case SHOW_MENU:
       return { ...state, contentDrawer: SHOW_MENU };
     case SHOW_SIGN_IN:
@@ -158,6 +162,15 @@ export const cartReducer = (state, action) => {
           : state.totalCartPrice -
             action.product.price * action.addedAmountToCart,
       };
+    default:
+      return state;
+  }
+};
+
+export const userReducer = (state, action) => {
+  switch (action.type) {
+    case USER_LOGIN_DATA:
+      return action.data;
     default:
       return state;
   }
