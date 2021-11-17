@@ -6,11 +6,13 @@ import ForgetPassword from './ForgetPassword';
 import Menu from './Menu';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
+import ContactForm from './ContactForm';
 
 import { StoreContext } from '../utils/store';
 import {
   CLOSE_DRAWER,
   SHOW_CART,
+  SHOW_CONTACT,
   SHOW_MENU,
   SHOW_SIGN_IN,
   SHOW_SIGN_UP,
@@ -31,6 +33,8 @@ const AsideDrawer = () => {
     switch (type) {
       case SHOW_CART:
         return <Cart />;
+      case SHOW_CONTACT:
+        return <ContactForm />;
       case SHOW_MENU:
         return <Menu />;
       case SHOW_SIGN_IN:
