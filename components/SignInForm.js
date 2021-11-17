@@ -1,9 +1,16 @@
-import React, { useContext, useRef, useState } from 'react';
-import { Button, Box, TextField, Typography } from '@mui/material';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+
+import SnackBarMessage from './SnackBarMessage';
 
 import {
   buttonRedirect,
   boxFormStyles,
+  FormMsgSignIn,
   forgetPasswordStyles,
   inputEmailStyles,
   inputFormStyles,
@@ -19,19 +26,33 @@ import {
   OPEN_DRAWER,
   SHOW_FORGET_PASSWORD,
   SHOW_SIGN_UP,
+  USER_LOGIN_DATA,
 } from '../utils/constants';
 
 const SignInForm = () => {
-  const { disptachContentDrawer, disptachOpenDrawer } =
-    useContext(StoreContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    disptachContentDrawer,
+    dispatchLoginUser,
+    disptachOpenDrawer,
+    stateLoginUser,
+  } = useContext(StoreContext);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const idTimeout = useRef(null);
   const idTimeoutSec = useRef(null);
+  const idTimeoutThird = useRef(null);
 
-  const handleSubmitForm = (e) => {
-    console.log(e.target);
-  };
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
   const handleShowSignUp = () => {
     disptachOpenDrawer({ type: CLOSE_DRAWER });
@@ -52,6 +73,57 @@ const SignInForm = () => {
     }, 800);
   };
 
+  const handleCloseSignIn = () => {
+    idTimeoutThird.current = setTimeout(() => {
+      disptachOpenDrawer({ type: CLOSE_DRAWER });
+    }, 3000);
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/v1/login', {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSuccessMsg(result.msgSuccess);
+        dispatchLoginUser({ type: USER_LOGIN_DATA, data: result });
+        handleCloseSignIn();
+      } else {
+        setErrorMsg(result.msgError);
+      }
+    } catch (error) {
+      setErrorMsg('Something went wrong! Please try later');
+    }
+  };
+
+  const errorMessage = (errorMsg) => {
+    return <FormMsgSignIn>{errorMsg}</FormMsgSignIn>;
+  };
+
+  useEffect(() => {
+    if (stateLoginUser.tokenAccess) {
+      const defaultValues = {
+        email: '',
+        password: '',
+      };
+      reset(defaultValues);
+    }
+  }, [reset, stateLoginUser]);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(idTimeoutThird.current);
+    };
+  }, []);
+
   return (
     <Box>
       <Typography
@@ -64,27 +136,66 @@ const SignInForm = () => {
       <Box
         component="form"
         sx={boxFormStyles}
-        onSubmit={(e) => handleSubmitForm(e)}
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField
-          id="outlined-basic"
-          label="Email"
-          variant="outlined"
-          size="small"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          sx={inputEmailStyles}
+        <SnackBarMessage
+          errorMsg={errorMsg}
+          successMsg={successMsg}
+          setErrorMsg={setErrorMsg}
+          setSuccessMsg={setSuccessMsg}
         />
-        <TextField
-          id="outlined-basic"
-          label="Password"
-          variant="outlined"
-          size="small"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          sx={inputFormStyles}
+        {errors.email && errorMessage(errors.email.message)}
+        <Controller
+          name="email"
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: 'Email is required',
+            },
+            pattern: {
+              value: /^\S+@\S+\.\S+$/,
+              message: "Email isn't valid",
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              id="outlined-basic"
+              label="Email"
+              variant="outlined"
+              size="small"
+              sx={inputEmailStyles}
+            />
+          )}
         />
-        <Button variant="contained" size="large" sx={submitButtonStyles}>
+        {errors.password && errorMessage(errors.password.message)}
+        <Controller
+          name="password"
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: 'Password is required',
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              size="small"
+              sx={inputFormStyles}
+            />
+          )}
+        />
+        <Button
+          variant="contained"
+          size="large"
+          sx={submitButtonStyles}
+          type="submit"
+        >
           Sign In
         </Button>
       </Box>

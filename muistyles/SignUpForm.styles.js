@@ -1,6 +1,8 @@
+import { styled } from '@mui/material/styles';
+
 export const signUpTitleStyles = {
   width: '95%',
-  margin: '18px auto 0 auto',
+  margin: '18px auto 17px auto',
   textTransform: 'uppercase',
   color: (theme) => theme.palette.text.primary,
   fontSize: { xs: '1.6rem', sm: '2rem' },
@@ -17,17 +19,17 @@ export const boxFormStyles = {
 
 export const inputNameStyles = {
   width: '95%',
-  marginTop: '20px',
+  margin: '6px 0',
 };
 
 export const inputFormStyles = {
   width: '95%',
-  marginTop: '10px',
+  margin: '6px 0',
 };
 
 export const inputConfirmPasswordStyles = {
   width: '95%',
-  margin: '10px 0 20px 0',
+  margin: '6px 0 20px 0',
 };
 
 export const submitButtonStyles = {
@@ -42,4 +44,15 @@ export const buttonRedirect = {
 export const questionTextStyles = {
   width: '94%',
   margin: '10px auto 0 auto',
+};
+
+export const FormMsgSignUp = styled('p')(({}) => ({
+  width: '95%',
+  fontSize: '1rem',
+  color: 'red',
+}));
+
+export const alertSnackSignUpStyles = {
+  width: '100%',
+  fontSize: '1.4rem',
 };
