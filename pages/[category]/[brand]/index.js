@@ -1,18 +1,26 @@
+import cookie from 'cookie';
 import React, { useContext, useEffect } from 'react';
-
 import Products from '../../../components/Products';
 
 import { useRoutesHook } from '../../../customHooks/useRoutesHook';
 import {
   FETCH_DATA_BRAND_PRODUCTS,
+  USER_LOGIN_DATA,
   UPDATE_PRODUCTS_BRAND_ON_STOCK,
 } from '../../../utils/constants';
 import { StoreContext } from '../../../utils/store';
 
-const ProductsListPage = ({ products }) => {
-  const { disptachProductsBrand, stateCart, stateProductsBrand } =
-    useContext(StoreContext);
+const ProductsListPage = ({ products, user }) => {
+  const {
+    dispatchLoginUser,
+    disptachProductsBrand,
+    stateCart,
+    stateLoginUser,
+    stateProductsBrand,
+  } = useContext(StoreContext);
   const { endpoints } = useRoutesHook();
+
+  console.log(stateLoginUser, 'stateLoginUser products');
 
   const createCopyProducts = (data) => {
     let copyProductsArray = data.map((item) => {
@@ -25,6 +33,12 @@ const ProductsListPage = ({ products }) => {
 
     return copyProductsArray;
   };
+
+  useEffect(() => {
+    if (Object.keys(user).length > 0) {
+      dispatchLoginUser({ type: USER_LOGIN_DATA, data: user });
+    }
+  }, [dispatchLoginUser, user]);
 
   useEffect(() => {
     if (products.length > 0) {
@@ -53,14 +67,63 @@ export default ProductsListPage;
 export async function getServerSideProps(context) {
   const { params } = context;
   const { category, brand } = params;
-  const response = await fetch(
+
+  const response1 = await fetch(
     `http://localhost:3000/api/v1/${category}/${brand}`
   );
-  const data = await response.json();
 
-  return {
-    props: {
-      products: data,
-    },
-  };
+  const response2 = await fetch(
+    'http://localhost:3000/api/v1/refresher-access',
+    {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'applications/json',
+        credentials: 'include',
+        cookie: JSON.stringify(context.req.cookies),
+      },
+    }
+  );
+
+  if (response1.ok || response2.ok) {
+    const dataProducts = await response1.json();
+    const data = await response2.json();
+    const { tokenAccess, user } = data;
+
+    if (data.user) {
+      context.res.setHeader(
+        'Set-Cookie',
+        cookie.serialize('refreshToken', user.tokenRefresh, {
+          httpOnly: true,
+          path: '/',
+        })
+      );
+    }
+
+    let dataChange;
+    if (data.tokenAccess) {
+      dataChange = {
+        tokenAccess: tokenAccess,
+        user: { _id: user._id, name: user.name },
+      };
+    }
+
+    return {
+      props: {
+        products: dataProducts,
+        user: dataChange || {},
+      },
+    };
+  } else {
+    return {
+      props: {
+        products: [],
+        user: {},
+        error: {
+          message: `Oops! ${response2.statusText}`,
+          statusCode: response2.status,
+        },
+      },
+    };
+  }
 }
