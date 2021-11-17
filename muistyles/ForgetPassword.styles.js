@@ -1,3 +1,5 @@
+import { styled } from '@mui/material/styles';
+
 export const boxStyles = {
   width: { xs: 'calc(100vw - 20vw)', sm: '300px' },
 };
@@ -33,3 +35,9 @@ export const submitButtonStyles = {
   width: '95%',
   marginTop: '10px',
 };
+
+export const FormForgetMsgStyles = styled('p')(({}) => ({
+  width: '95%',
+  fontSize: '1rem',
+  color: 'red',
+}));
