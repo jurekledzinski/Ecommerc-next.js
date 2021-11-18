@@ -43,7 +43,7 @@ const ContactForm = () => {
   const handleCloseContact = () => {
     idTimeout.current = setTimeout(() => {
       disptachOpenDrawer({ type: CLOSE_DRAWER });
-    }, 3000);
+    }, 2000);
   };
 
   const onSubmit = async (data) => {

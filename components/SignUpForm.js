@@ -59,7 +59,7 @@ const SignUpForm = () => {
   const handleCloseSignUp = () => {
     idTimeoutSec.current = setTimeout(() => {
       disptachOpenDrawer({ type: CLOSE_DRAWER });
-    }, 3000);
+    }, 2000);
   };
 
   const onSubmit = async (data) => {
