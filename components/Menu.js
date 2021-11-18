@@ -26,10 +26,7 @@ const Menu = () => {
   const idTimeoutSec = useRef(null);
   const idTimeoutThird = useRef(null);
 
-  //   TODO: Fake id
-  const userId = '123';
-
-  console.log(stateLoginUser);
+  const userId = stateLoginUser?.user?._id;
 
   const handleItemMenu = (e) => {
     switch (e.target.textContent) {
@@ -43,11 +40,13 @@ const Menu = () => {
         }, 800);
         break;
       case 'Orders':
-        router.push(`/orders/user?id=${userId}`);
+        router.push(`/orders/user?id=${userId ? userId : 'not-found'}`);
         disptachOpenDrawer({ type: CLOSE_DRAWER });
         break;
       case 'Profile':
-        router.push(`/profile/user?id=${userId}`);
+        router.push(
+          `/profile/user-profile?id=${userId ? userId : 'not-found'}`
+        );
         disptachOpenDrawer({ type: CLOSE_DRAWER });
         break;
       case 'Sign In':
