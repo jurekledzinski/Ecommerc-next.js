@@ -11,6 +11,7 @@ import {
   darkModeReducer,
   dataProductsByBrandReducer,
   detailsProductReducer,
+  userProfileReducer,
   userReducer,
 } from './reducers';
 
@@ -32,6 +33,7 @@ if (typeof window !== 'undefined') {
   };
 }
 const initialStateLoginUser = {};
+const initialStateProfileUser = {};
 
 const StoreProvider = ({ children }) => {
   const [stateOpenDrawer, disptachOpenDrawer] = useReducer(
@@ -66,6 +68,11 @@ const StoreProvider = ({ children }) => {
     initialStateLoginUser
   );
 
+  const [stateUserProfile, dispatchUserProfile] = useReducer(
+    userProfileReducer,
+    initialStateProfileUser
+  );
+
   return (
     <StoreContext.Provider
       value={{
@@ -83,6 +90,8 @@ const StoreProvider = ({ children }) => {
         disptachOpenDrawer,
         stateProductsBrand,
         disptachProductsBrand,
+        stateUserProfile,
+        dispatchUserProfile,
       }}
     >
       {children}

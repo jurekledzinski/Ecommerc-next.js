@@ -12,6 +12,7 @@ import {
   SHOW_SIGN_UP,
   SHOW_FORGET_PASSWORD,
   TOGGLE_DARK_MODE,
+  USER_DATA_PROFILE,
   USER_LOGIN_DATA,
   UPDATE_RATE_PRODUCT_DETAILS,
   UPDATE_ON_STOCK_PRODUCT_DETAILS,
@@ -170,6 +171,15 @@ export const cartReducer = (state, action) => {
 export const userReducer = (state, action) => {
   switch (action.type) {
     case USER_LOGIN_DATA:
+      return action.data;
+    default:
+      return state;
+  }
+};
+
+export const userProfileReducer = (state, action) => {
+  switch (action.type) {
+    case USER_DATA_PROFILE:
       return action.data;
     default:
       return state;
