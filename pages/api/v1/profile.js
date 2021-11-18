@@ -1,13 +1,21 @@
+import bcrypt from 'bcryptjs';
 import { connectDb } from '../../../utils/db';
 import User from '../../../models/user';
 import errorHandler from '../../../helpers/api/error-handler';
 import { isAuth } from '../../../helpers/api/auth-helper';
 
+const updatePassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  const updatedPassword = await bcrypt.hash(password, salt);
+  return updatedPassword;
+};
+
 const handler = connectDb(async (req, res) => {
+  const { id } = req.query;
+
   try {
     if (req.method === 'GET') {
       const idUser = isAuth(req);
-      console.log(idUser, 'id user');
       const userData = await User.findOne({ _id: idUser }).select([
         '_id',
         'city',
@@ -23,6 +31,25 @@ const handler = connectDb(async (req, res) => {
         return res.status(200).json({ userData });
       }
     } else if (req.method === 'PATCH') {
+      const updateData = {
+        city: req.body.city,
+        country: req.body.country,
+        email: req.body.email,
+        name: req.body.name,
+        password:
+          req.body.password && (await updatePassword(req.body.password)),
+        street: req.body.street,
+        surname: req.body.surname,
+        zipCode: req.body.zipCode,
+      };
+
+      const userData = await User.findByIdAndUpdate({ _id: id }, updateData, {
+        new: true,
+      });
+
+      return res
+        .status(200)
+        .json({ data: userData, msgSuccess: 'Update was successful' });
     }
   } catch (error) {
     errorHandler(error, res);
