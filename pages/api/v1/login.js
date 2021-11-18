@@ -35,7 +35,10 @@ const handler = connectDb(async (req, res) => {
         throw 'User not found';
       }
 
-      if (req.cookies.refreshToken === user.tokenRefresh) {
+      const check =
+        Boolean(req.cookies.refreshToken) && Boolean(user.tokenRefresh);
+
+      if (check && req.cookies.refreshToken === user.tokenRefresh) {
         throw 'You are already logged in';
       }
 
