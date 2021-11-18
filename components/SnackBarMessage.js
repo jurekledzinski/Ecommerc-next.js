@@ -20,7 +20,7 @@ const SnackBarMessage = ({
       {successMsg && (
         <Snackbar
           open={Boolean(successMsg)}
-          autoHideDuration={3000}
+          autoHideDuration={2000}
           onClose={handleClose}
         >
           <Alert
@@ -36,7 +36,7 @@ const SnackBarMessage = ({
       {errorMsg && (
         <Snackbar
           open={Boolean(errorMsg)}
-          autoHideDuration={3000}
+          autoHideDuration={2000}
           onClose={handleClose}
         >
           <Alert
