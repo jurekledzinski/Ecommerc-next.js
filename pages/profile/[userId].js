@@ -1,12 +1,16 @@
 import cookie from 'cookie';
 import React, { useContext, useEffect } from 'react';
-import { USER_LOGIN_DATA } from '../../utils/constants';
+import { USER_DATA_PROFILE, USER_LOGIN_DATA } from '../../utils/constants';
 
 import { StoreContext } from '../../utils/store';
 
+import UserProfile from '../../components/ProfileUser';
+import { useRoutesHook } from '../../customHooks/useRoutesHook';
+
 const ProfileUser = ({ user }) => {
-  const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
-  console.log(stateLoginUser, 'profile stateLoginUser');
+  const { stateLoginUser, dispatchLoginUser, dispatchUserProfile } =
+    useContext(StoreContext);
+  const { endpoints } = useRoutesHook();
 
   useEffect(() => {
     if (stateLoginUser.tokenAccess) {
@@ -19,7 +23,8 @@ const ProfileUser = ({ user }) => {
           },
         });
         const result = await response.json();
-        console.log(result);
+        const { userData } = result;
+        dispatchUserProfile({ type: USER_DATA_PROFILE, data: userData });
       };
       fetchData();
     }
@@ -31,7 +36,7 @@ const ProfileUser = ({ user }) => {
     }
   }, [dispatchLoginUser, user]);
 
-  return <div>Profile user</div>;
+  return <UserProfile endpoints={endpoints} />;
 };
 
 export default ProfileUser;
