@@ -3,7 +3,6 @@ import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 
 import SnackBarMessage from './SnackBarMessage';
 
@@ -35,7 +34,6 @@ const FormAddShippingAddress = () => {
     formState: { errors },
     handleSubmit,
     reset,
-    setError,
   } = useForm({
     defaultValues: {
       street: '',
@@ -78,7 +76,6 @@ const FormAddShippingAddress = () => {
 
   useEffect(() => {
     if (Object.keys(stateUserProfile).length > 0) {
-      console.log('Effect add shipping address');
       const defaultValues = {
         street: stateUserProfile.street,
         zipCode: stateUserProfile.zipCode,
