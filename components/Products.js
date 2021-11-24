@@ -33,8 +33,13 @@ import { controlCart } from '../helpers/carthelpers';
 import BreadCramps from './BreadCramps';
 
 const Products = ({ endpoints }) => {
-  const { dispatchCart, disptachProductsBrand, stateCart, stateProductsBrand } =
-    useContext(StoreContext);
+  const {
+    dispatchCart,
+    disptachProductsBrand,
+    stateCart,
+    stateLoginUser,
+    stateProductsBrand,
+  } = useContext(StoreContext);
 
   const handleAddToCart = (idProduct) => {
     const singleProductAdded = stateProductsBrand.find(
@@ -49,8 +54,12 @@ const Products = ({ endpoints }) => {
     controlCart(copyProduct, idProduct, stateCart, dispatchCart);
   };
 
+  //   TODO: Zmiana
+
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(stateCart));
+    if (!Boolean(stateLoginUser.tokenAccess)) {
+      localStorage.setItem('cart', JSON.stringify(stateCart));
+    }
     stateCart.products.forEach((item) => {
       disptachProductsBrand({
         type: UPDATE_PRODUCTS_BRAND_ON_STOCK,
@@ -58,7 +67,7 @@ const Products = ({ endpoints }) => {
         amountOnStock: item.onStock,
       });
     });
-  }, [stateCart.products]);
+  }, [stateCart]);
 
   return (
     <Section>
