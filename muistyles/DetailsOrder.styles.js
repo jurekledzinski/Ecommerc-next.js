@@ -27,7 +27,7 @@ export const detailsOrderBoxRight = {
 };
 
 export const titleDetailsOrderStyles = {
-  marginBottom: '15px',
+  marginBottom: '10px',
   color: (theme) => theme.palette.text.primary,
   textTransform: 'uppercase',
   fontSize: { xs: '1.6rem', sm: '2.1rem' },
@@ -72,6 +72,7 @@ export const detailsCardMediaStyles = {
   maxWidth: { xs: '100%', sxm: '50px' },
   minHeight: { xs: '200px', sxm: '50px' },
   paddingLeft: { xs: 'initial', sxm: '3px' },
+  objectFit: 'contain',
 };
 
 export const detailsCardContentStyles = {
@@ -98,3 +99,24 @@ export const detailsSummaryBtnStyles = {
   marginTop: '20px',
   borderRadius: 'initial',
 };
+
+export const shippingAddressTextDetails = {
+  fontSize: { xs: '1.3rem', sm: '1.4rem' },
+};
+
+export const titleDetailsOrderShipStyles = {
+  margin: '10px 0',
+  color: (theme) => theme.palette.text.primary,
+  textTransform: 'uppercase',
+  fontSize: { xs: '1.6rem', sm: '2.1rem' },
+  fontWeight: 500,
+  fontFamily: 'Oswald, sans-serif',
+  letterSpacing: 1,
+};
+
+export const FormMsgErrorConfrim = styled('p')(({}) => ({
+  width: '100%',
+  marginTop: '12px',
+  fontSize: '1rem',
+  color: 'red',
+}));
