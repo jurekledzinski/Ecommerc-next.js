@@ -16,5 +16,8 @@ export const useRoutesHook = () => {
       url: index === 0 ? condition : router.asPath,
     };
   });
+  arrQueries = arrQueries.filter(
+    (item) => item.name !== '1' && item.name !== '/shipping'
+  );
   return { endpoints: baseurl.concat(arrQueries) };
 };
