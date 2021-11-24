@@ -3,7 +3,6 @@ import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 
 import SnackBarMessage from './SnackBarMessage';
 
@@ -15,12 +14,14 @@ import {
   updateShipBtnStyles,
 } from '../muistyles/UpdateFormProfile.styles';
 
+import { addUpdateProfile } from '../helpers/client/apiHelpers';
+
 import { StoreContext } from '../utils/store';
 
 const UpdateFormProfile = () => {
   const { dispatchLoginUser, stateLoginUser, stateUserProfile } =
     useContext(StoreContext);
-  const { user } = stateLoginUser;
+  const { tokenAccess } = stateLoginUser;
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
@@ -48,28 +49,15 @@ const UpdateFormProfile = () => {
       });
     }
 
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/profile?id=${user._id}`,
-        {
-          method: 'PATCH',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
+    const result = await addUpdateProfile(
+      'http://localhost:3000/api/v1/profile',
+      data,
+      tokenAccess,
+      setErrorMsg
+    );
 
-      const result = await response.json();
-
-      if (response.ok) {
-        setSuccessMsg(result.msgSuccess);
-      } else {
-        setErrorMsg(result.msgError);
-      }
-    } catch (error) {
-      setErrorMsg('Something went wrong! Please try later');
+    if (Boolean(result?.data)) {
+      setSuccessMsg(result.msgSuccess);
     }
   };
 
@@ -79,7 +67,6 @@ const UpdateFormProfile = () => {
 
   useEffect(() => {
     if (Object.keys(stateUserProfile).length > 0) {
-      console.log('Effect update profile');
       const defaultValues = {
         name: stateUserProfile.name,
         surname: stateUserProfile.surname,
