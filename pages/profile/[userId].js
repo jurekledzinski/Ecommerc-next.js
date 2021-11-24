@@ -1,30 +1,32 @@
 import cookie from 'cookie';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { USER_DATA_PROFILE, USER_LOGIN_DATA } from '../../utils/constants';
 
 import { StoreContext } from '../../utils/store';
 
 import UserProfile from '../../components/ProfileUser';
 import { useRoutesHook } from '../../customHooks/useRoutesHook';
+import { getProfile } from '../../helpers/client/apiHelpers';
 
 const ProfileUser = ({ user }) => {
   const { stateLoginUser, dispatchLoginUser, dispatchUserProfile } =
     useContext(StoreContext);
   const { endpoints } = useRoutesHook();
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    if (stateLoginUser.tokenAccess) {
+    if (stateLoginUser?.tokenAccess) {
       const fetchData = async () => {
-        const response = await fetch('http://localhost:3000/api/v1/profile', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${stateLoginUser?.tokenAccess}`,
-          },
-        });
-        const result = await response.json();
-        const { userData } = result;
-        dispatchUserProfile({ type: USER_DATA_PROFILE, data: userData });
+        const result = await getProfile(
+          'http://localhost:3000/api/v1/profile',
+          stateLoginUser.tokenAccess,
+          setErrorMsg
+        );
+
+        if (result?.userData) {
+          const { userData } = result;
+          dispatchUserProfile({ type: USER_DATA_PROFILE, data: userData });
+        }
       };
       fetchData();
     }
