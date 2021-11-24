@@ -11,11 +11,10 @@ const updatePassword = async (password) => {
 };
 
 const handler = connectDb(async (req, res) => {
-  const { id } = req.query;
+  const idUser = isAuth(req);
 
   try {
     if (req.method === 'GET') {
-      const idUser = isAuth(req);
       const userData = await User.findOne({ _id: idUser }).select([
         '_id',
         'city',
@@ -43,9 +42,13 @@ const handler = connectDb(async (req, res) => {
         zipCode: req.body.zipCode,
       };
 
-      const userData = await User.findByIdAndUpdate({ _id: id }, updateData, {
-        new: true,
-      });
+      const userData = await User.findByIdAndUpdate(
+        { _id: idUser },
+        updateData,
+        {
+          new: true,
+        }
+      );
 
       return res
         .status(200)
