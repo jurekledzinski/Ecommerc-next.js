@@ -18,14 +18,6 @@ const productSchema = new Schema({
     type: Array,
     required: [true, 'Images slider are required'],
   },
-  imageSrc: {
-    type: String,
-    required: [true, 'Image main src product is required'],
-  },
-  imagesSrcSet: {
-    type: Array,
-    required: [true, 'Image srcset product is required'],
-  },
   name: {
     type: String,
     required: [true, 'Name product is required'],
@@ -38,9 +30,13 @@ const productSchema = new Schema({
     type: Number,
     required: [true, 'Price product is required'],
   },
-  sizes: {
+  rate: {
+    type: String,
+    required: [true, 'Rate is required'],
+  },
+  details: {
     type: Array,
-    required: [true, 'Sizes of image are required'],
+    required: [true, 'Details are required'],
   },
 });
 
