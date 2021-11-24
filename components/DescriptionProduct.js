@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Rating from '@mui/material/Rating';
@@ -25,6 +31,7 @@ import { controlCart } from '../helpers/carthelpers';
 const DescriptionProduct = () => {
   const {
     stateCart,
+    stateLoginUser,
     dispatchCart,
     dispatchDetailsProduct,
     stateDetailsProduct,
@@ -51,7 +58,10 @@ const DescriptionProduct = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(stateCart));
+    if (!Boolean(stateLoginUser.tokenAccess)) {
+      localStorage.setItem('cart', JSON.stringify(stateCart));
+    }
+
     stateCart.products.forEach((item) => {
       dispatchDetailsProduct({
         type: UPDATE_ON_STOCK_PRODUCT_DETAILS,
