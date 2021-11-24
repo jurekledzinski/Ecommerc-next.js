@@ -17,8 +17,6 @@ const DetailsProduct = ({ detailsProduct, user }) => {
     stateLoginUser,
   } = useContext(StoreContext);
 
-  console.log(stateLoginUser, ' details product stateLoginUser');
-
   useEffect(() => {
     if (detailsProduct.name) {
       dispatchDetailsProduct({
@@ -54,7 +52,7 @@ const DetailsProduct = ({ detailsProduct, user }) => {
 export default DetailsProduct;
 
 export async function getServerSideProps(context) {
-  console.log(context.req.cookies, 'products details getserver');
+//   console.log(context.req.cookies, 'products details getserver');
   const { category, brand, id } = context.query;
 
   const response1 = await fetch(
