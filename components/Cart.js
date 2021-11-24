@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Divider,
-  Grid,
-  Typography,
-} from '@mui/material';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import React, { useContext, useRef, useState } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+import { CLOSE_DRAWER, OPEN_DRAWER, SHOW_SIGN_IN } from '../utils/constants';
+
 import {
   boxButtonsStyles,
   btnRemoveStyles,
@@ -35,16 +38,26 @@ import {
 
 import { headersCart } from '../utils/data';
 import { StoreContext } from '../utils/store';
-import { controlCart } from '../helpers/carthelpers';
+import { controlCart, copyCart } from '../helpers/carthelpers';
+import SnackBarMessage from './SnackBarMessage';
+
+import { addCart } from '../helpers/client/apiHelpers';
 
 const Cart = () => {
+  const router = useRouter();
   const {
     dispatchCart,
+    disptachContentDrawer,
     disptachProductsBrand,
     dispatchDetailsProduct,
+    disptachOpenDrawer,
     stateCart,
+    stateLoginUser,
   } = useContext(StoreContext);
-
+  const { tokenAccess } = stateLoginUser;
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const idTimeout = useRef(null);
   let flagOperation = false;
   const addedAmountToCart = 1;
   const removeProductFlag = true;
@@ -94,8 +107,44 @@ const Cart = () => {
     );
   };
 
+  const handleProccedToCheckout = async (e) => {
+    e.preventDefault();
+
+    if (!tokenAccess) {
+      Cookies.set('check', '1');
+      disptachOpenDrawer({ type: CLOSE_DRAWER });
+
+      idTimeout.current = setTimeout(() => {
+        disptachOpenDrawer({ type: OPEN_DRAWER });
+        disptachContentDrawer({ type: SHOW_SIGN_IN });
+        clearTimeout(idTimeout.current);
+      }, 800);
+    } else {
+      const cartAndId = copyCart(stateCart, stateLoginUser);
+      const result = await addCart(
+        `http://localhost:3000/api/v1/cart`,
+        cartAndId,
+        tokenAccess,
+        setErrorMsg
+      );
+
+      disptachOpenDrawer({ type: CLOSE_DRAWER });
+      router.push('/shipping');
+
+      if (!result) {
+        setErrorMsg('Something went wrong. Please try later');
+      }
+    }
+  };
+
   return (
     <Section>
+      <SnackBarMessage
+        errorMsg={errorMsg}
+        successMsg={successMsg}
+        setErrorMsg={setErrorMsg}
+        setSuccessMsg={setSuccessMsg}
+      />
       <Box sx={boxTitleStyles}>
         <Typography variant="h6" sx={cartTitleStyles}>
           Shopping Cart
@@ -204,13 +253,16 @@ const Cart = () => {
       <Typography variant="h5" sx={titleCartSummaryStyles}>
         Subtotal: {stateCart.totalCartPrice}€
       </Typography>
-      <Button
-        variant="contained"
-        sx={buttonCheckoutCartStyles}
-        disabled={!Boolean(stateCart.totalCartAmount)}
-      >
-        Procced to checkout
-      </Button>
+      <form onSubmit={handleProccedToCheckout}>
+        <Button
+          variant="contained"
+          sx={buttonCheckoutCartStyles}
+          disabled={!Boolean(stateCart.totalCartAmount)}
+          type="submit"
+        >
+          Procced to checkout
+        </Button>
+      </form>
     </Section>
   );
 };
