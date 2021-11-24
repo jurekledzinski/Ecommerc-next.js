@@ -14,6 +14,8 @@ import {
   addShipBtnStyles,
 } from '../muistyles/FormAddShippingAddress.styles';
 
+import { addUpdateProfile } from '../helpers/client/apiHelpers';
+
 import { USER_DATA_PROFILE } from '../utils/constants';
 
 import { StoreContext } from '../utils/store';
@@ -25,7 +27,7 @@ const FormAddShippingAddress = () => {
     stateLoginUser,
     stateUserProfile,
   } = useContext(StoreContext);
-  const { user } = stateLoginUser;
+  const { tokenAccess } = stateLoginUser;
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
@@ -44,29 +46,16 @@ const FormAddShippingAddress = () => {
   });
 
   const onSubmit = async (data) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/profile?id=${user._id}`,
-        {
-          method: 'PATCH',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
+    const result = await addUpdateProfile(
+      'http://localhost:3000/api/v1/profile',
+      data,
+      tokenAccess,
+      setErrorMsg
+    );
 
-      const result = await response.json();
-
-      if (response.ok) {
-        dispatchUserProfile({ type: USER_DATA_PROFILE, data: result.data });
-        setSuccessMsg(result.msgSuccess);
-      } else {
-        setErrorMsg(result.msgError);
-      }
-    } catch (error) {
-      setErrorMsg('Something went wrong! Please try later');
+    if (Boolean(result?.data)) {
+      dispatchUserProfile({ type: USER_DATA_PROFILE, data: result.data });
+      setSuccessMsg(result.msgSuccess);
     }
   };
 
