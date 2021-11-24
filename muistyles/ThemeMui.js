@@ -34,6 +34,7 @@ export const getTheme = (mode) => ({
   breakpoints: {
     values: {
       xs: 0,
+      sxm: 500,
       sm: 600,
       md: 900,
       lg: 1200,
