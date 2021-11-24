@@ -20,8 +20,6 @@ const ProductsListPage = ({ products, user }) => {
   } = useContext(StoreContext);
   const { endpoints } = useRoutesHook();
 
-  console.log(stateLoginUser, 'stateLoginUser products');
-
   const createCopyProducts = (data) => {
     let copyProductsArray = data.map((item) => {
       return {
