@@ -1,21 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import cookie from 'cookie';
 import Layout from '../components/Layout';
 import BrandsProducts from '../components/BrandsProducts';
 
-import { USER_LOGIN_DATA } from '../utils/constants';
+import { USER_LOGIN_DATA, USER_DATA_CLEAR_PROFILE } from '../utils/constants';
 
 import { StoreContext } from '../utils/store';
 
 const Home = ({ brands, user }) => {
-  const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
-  Object.keys(stateLoginUser).length > 0 && console.log(stateLoginUser);
-
-  console.log(user);
+  const { dispatchLoginUser, dispatchUserProfile, stateUserProfile } =
+    useContext(StoreContext);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {
       dispatchLoginUser({ type: USER_LOGIN_DATA, data: user });
+      dispatchUserProfile({ type: USER_DATA_CLEAR_PROFILE, data: {} });
     }
   }, [dispatchLoginUser, user]);
 
