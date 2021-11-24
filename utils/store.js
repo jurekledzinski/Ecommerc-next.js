@@ -1,9 +1,11 @@
-import { createContext, useReducer } from 'react';
 import Cookies from 'js-cookie';
+import { createContext, useEffect, useReducer, useState } from 'react';
 
 export const StoreContext = createContext();
 
-import { SHOW_MENU } from './constants';
+import { addCart, getCart } from '../helpers/client/apiHelpers';
+
+import { CREATE_CART, SHOW_MENU } from './constants';
 import {
   cartReducer,
   openDrawerReducer,
@@ -11,6 +13,7 @@ import {
   darkModeReducer,
   dataProductsByBrandReducer,
   detailsProductReducer,
+  stepperReducer,
   userProfileReducer,
   userReducer,
 } from './reducers';
@@ -23,19 +26,31 @@ const initialStateDarkMode = {
 };
 const initialStateProductsByBrand = [];
 const initialStateDetailsProduct = {};
-let initialStateCart;
+const initialStateLoginUser = {};
+const initialStateProfileUser = {};
+const initialStateStepper = Number(Cookies.get('step')) || 1;
 
-if (typeof window !== 'undefined') {
-  initialStateCart = JSON.parse(localStorage.getItem('cart')) || {
+const StoreProvider = ({ children }) => {
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const initialStateCartLoggedUser = {
     products: [],
     totalCartAmount: 0,
     totalCartPrice: 0,
   };
-}
-const initialStateLoginUser = {};
-const initialStateProfileUser = {};
 
-const StoreProvider = ({ children }) => {
+  let initialStateCartNotLoggedUser;
+
+  if (typeof window !== 'undefined' && !stateLoginUser?.tokenAccess) {
+    initialStateCartNotLoggedUser = JSON.parse(
+      localStorage.getItem('cart')
+    ) || {
+      products: [],
+      totalCartAmount: 0,
+      totalCartPrice: 0,
+    };
+  }
+
   const [stateOpenDrawer, disptachOpenDrawer] = useReducer(
     openDrawerReducer,
     initialStateOpenDrawer
@@ -61,17 +76,55 @@ const StoreProvider = ({ children }) => {
     initialStateDetailsProduct
   );
 
-  const [stateCart, dispatchCart] = useReducer(cartReducer, initialStateCart);
-
   const [stateLoginUser, dispatchLoginUser] = useReducer(
     userReducer,
     initialStateLoginUser
+  );
+
+  const [stateCart, dispatchCart] = useReducer(
+    cartReducer,
+    Object.keys(stateLoginUser).length > 0 && stateLoginUser?.tokenAccess
+      ? initialStateCartLoggedUser
+      : initialStateCartNotLoggedUser
   );
 
   const [stateUserProfile, dispatchUserProfile] = useReducer(
     userProfileReducer,
     initialStateProfileUser
   );
+
+  const [stateStepper, dispatchStepper] = useReducer(
+    stepperReducer,
+    initialStateStepper
+  );
+
+  useEffect(() => {
+    if (Boolean(stateLoginUser.tokenAccess) && stateCart.products.length >= 0) {
+      const updateCart = async () => {
+        await addCart(
+          `http://localhost:3000/api/v1/cart`,
+          stateCart,
+          stateLoginUser?.tokenAccess,
+          setErrorMsg
+        );
+      };
+      updateCart();
+    }
+  }, [stateCart]);
+
+  useEffect(() => {
+    if (Boolean(stateLoginUser.tokenAccess)) {
+      const fetchCart = async () => {
+        const result = await getCart(
+          `http://localhost:3000/api/v1/cart`,
+          stateLoginUser?.tokenAccess,
+          setErrorMsg
+        );
+        dispatchCart({ type: CREATE_CART, data: result.data });
+      };
+      fetchCart();
+    }
+  }, [stateLoginUser]);
 
   return (
     <StoreContext.Provider
@@ -90,6 +143,8 @@ const StoreProvider = ({ children }) => {
         disptachOpenDrawer,
         stateProductsBrand,
         disptachProductsBrand,
+        stateStepper,
+        dispatchStepper,
         stateUserProfile,
         dispatchUserProfile,
       }}

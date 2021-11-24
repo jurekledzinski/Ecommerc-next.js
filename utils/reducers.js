@@ -1,5 +1,8 @@
 import {
   ADD_TO_CART,
+  ADD_STEP_STEPPER,
+  CLEAR_CART,
+  CREATE_CART,
   CLOSE_DRAWER,
   FETCH_DATA_BRAND_PRODUCTS,
   FETCH_DETAILS_PRODUCT,
@@ -12,6 +15,7 @@ import {
   SHOW_SIGN_UP,
   SHOW_FORGET_PASSWORD,
   TOGGLE_DARK_MODE,
+  USER_DATA_CLEAR_PROFILE,
   USER_DATA_PROFILE,
   USER_LOGIN_DATA,
   UPDATE_RATE_PRODUCT_DETAILS,
@@ -112,6 +116,14 @@ export const cartReducer = (state, action) => {
           },
         ],
       };
+    case CLEAR_CART:
+      return {
+        products: [],
+        totalCartAmount: 0,
+        totalCartPrice: 0,
+      };
+    case CREATE_CART:
+      return action.data;
     case REMOVE_FROM_CART:
       return {
         ...state,
@@ -180,6 +192,17 @@ export const userReducer = (state, action) => {
 export const userProfileReducer = (state, action) => {
   switch (action.type) {
     case USER_DATA_PROFILE:
+      return action.data;
+    case USER_DATA_CLEAR_PROFILE:
+      return action.data;
+    default:
+      return state;
+  }
+};
+
+export const stepperReducer = (state, action) => {
+  switch (action.type) {
+    case ADD_STEP_STEPPER:
       return action.data;
     default:
       return state;
