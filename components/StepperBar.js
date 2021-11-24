@@ -1,4 +1,5 @@
-import React from 'react';
+import Cookies from 'js-cookie';
+import React, { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Check from '@mui/icons-material/Check';
 import Stepper from '@mui/material/Stepper';
@@ -10,6 +11,8 @@ import {
   QontoConnector,
   QontoStepIconRoot,
 } from '../muistyles/StepperBar.styles';
+
+import { StoreContext } from '../utils/store';
 
 const steps = ['Login', 'Address', 'Place Order', 'Confirm'];
 
@@ -28,9 +31,15 @@ function QontoStepIcon(props) {
 }
 
 const StepperBar = () => {
+  const { stateStepper } = useContext(StoreContext);
+
   return (
     <Box sx={boxStepperStyles}>
-      <Stepper alternativeLabel activeStep={4} connector={<QontoConnector />}>
+      <Stepper
+        alternativeLabel
+        activeStep={stateStepper}
+        connector={<QontoConnector />}
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
