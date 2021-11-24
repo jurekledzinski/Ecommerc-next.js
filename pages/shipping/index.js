@@ -4,6 +4,10 @@ import { USER_LOGIN_DATA } from '../../utils/constants';
 
 import { StoreContext } from '../../utils/store';
 
+import StepperBar from '../../components/StepperBar';
+import OrderShippingForm from '../../components/OrderShippingForm';
+import FooterDown from '../../components/FooterDown';
+
 const Shipping = ({ user }) => {
   const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
   console.log(stateLoginUser, 'shipping stateLoginUser');
@@ -14,10 +18,24 @@ const Shipping = ({ user }) => {
     }
   }, [dispatchLoginUser, user]);
 
-  return <div>Shipping address data</div>;
+  return (
+    <>
+      <StepperBar />
+      <OrderShippingForm />
+    </>
+  );
 };
 
 export default Shipping;
+
+Shipping.getLayout = function PageLayout(page) {
+  return (
+    <>
+      {page}
+      <FooterDown />
+    </>
+  );
+};
 
 export async function getServerSideProps(context) {
   const response = await fetch(
