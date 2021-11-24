@@ -82,3 +82,15 @@ export const controlCart = (
     });
   }
 };
+
+export const copyCart = (cartState, userState) => {
+  let copy = {
+    ...cartState,
+    products: cartState.products.map((item) => ({
+      ...item,
+      details: item.details.map((item2) => ({ ...item2 })),
+    })),
+  };
+  copy.idUser = userState?.user?._id;
+  return copy;
+};
