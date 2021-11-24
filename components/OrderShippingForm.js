@@ -1,4 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import uuid from 'react-uuid';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -7,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 import SnackBarMessage from './SnackBarMessage';
 
-import { USER_DATA_PROFILE } from '../utils/constants';
+import { ADD_STEP_STEPPER } from '../utils/constants';
 
 import { StoreContext } from '../utils/store';
 
@@ -21,16 +24,17 @@ import {
   titleShipppingStyles,
 } from '../muistyles/OrderShippingForm.styles';
 
+import { addOrderDetails, getProfile } from '../helpers/client/apiHelpers';
+
 const OrderShippingForm = () => {
-  const {
-    dispatchLoginUser,
-    dispatchUserProfile,
-    stateLoginUser,
-    stateUserProfile,
-  } = useContext(StoreContext);
-  const { user } = stateLoginUser;
+  const router = useRouter();
+  const { dispatchStepper, stateCart, stateLoginUser, stateUserProfile } =
+    useContext(StoreContext);
+  const { tokenAccess, user } = stateLoginUser;
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [profileData, setProfileData] = useState({});
+  const idTimeout = useRef(null);
 
   const {
     control,
@@ -48,30 +52,35 @@ const OrderShippingForm = () => {
     },
   });
 
+  const handelRedirect = () => {
+    idTimeout.current = setTimeout(() => {
+      router.push('/shipping/place-order');
+      Cookies.set('step', '2');
+      dispatchStepper({
+        type: ADD_STEP_STEPPER,
+        data: Number(Cookies.get('step')),
+      });
+    }, 1100);
+  };
+
   const onSubmit = async (data) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/order?id=${user._id}`,
-        {
-          method: 'PATCH',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
+    const shipData = {
+      ...data,
+      cart: stateCart,
+      idUser: user._id,
+      orderId: uuid(),
+    };
 
-      const result = await response.json();
+    const result = await addOrderDetails(
+      `http://localhost:3000/api/v1/order?page=Shipping_address`,
+      shipData,
+      tokenAccess,
+      setErrorMsg
+    );
 
-      if (response.ok) {
-        // dispatchUserProfile({ type: USER_DATA_PROFILE, data: result.data });
-        setSuccessMsg(result.msgSuccess);
-      } else {
-        setErrorMsg(result.msgError);
-      }
-    } catch (error) {
-      setErrorMsg('Something went wrong! Please try later');
+    if (result?.msgSuccess) {
+      setSuccessMsg(result.msgSuccess);
+      handelRedirect();
     }
   };
 
@@ -80,18 +89,46 @@ const OrderShippingForm = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(stateUserProfile).length > 0) {
+    if (stateLoginUser?.tokenAccess) {
+      const fetchProfile = async () => {
+        const result = await getProfile(
+          'http://localhost:3000/api/v1/profile',
+          stateLoginUser.tokenAccess,
+          setErrorMsg
+        );
+
+        if (result?.userData) {
+          const { userData } = result;
+          setProfileData(userData);
+        }
+      };
+
+      fetchProfile();
+    }
+  }, [stateLoginUser]);
+
+  useEffect(() => {
+    if (Object.keys(profileData).length > 0) {
       const defaultValues = {
-        name: '',
-        surname: '',
-        street: stateUserProfile.street,
-        zipCode: stateUserProfile.zipCode,
-        city: stateUserProfile.city,
-        country: stateUserProfile.country,
+        name: profileData.name,
+        surname: profileData.surname,
+        street: profileData.street,
+        zipCode: profileData.zipCode,
+        city: profileData.city,
+        country: profileData.country,
       };
       reset(defaultValues);
     }
-  }, [stateUserProfile, reset]);
+  }, [profileData, reset]);
+
+  useEffect(() => {
+    Cookies.set('step', '1');
+    dispatchStepper({
+      type: ADD_STEP_STEPPER,
+      data: Number(Cookies.get('step')),
+    });
+    return () => clearTimeout(idTimeout.current);
+  }, []);
 
   return (
     <SectionOrderShip>
