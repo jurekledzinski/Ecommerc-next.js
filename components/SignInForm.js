@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Box from '@mui/material/Box';
@@ -21,7 +23,11 @@ import {
 
 import { StoreContext } from '../utils/store';
 
+import { copyCart } from '../helpers/carthelpers';
+import { addCart } from '../helpers/client/apiHelpers';
+
 import {
+  CREATE_CART,
   CLOSE_DRAWER,
   OPEN_DRAWER,
   SHOW_FORGET_PASSWORD,
@@ -30,10 +36,13 @@ import {
 } from '../utils/constants';
 
 const SignInForm = () => {
+  const router = useRouter();
   const {
     disptachContentDrawer,
     dispatchLoginUser,
     disptachOpenDrawer,
+    dispatchCart,
+    stateCart,
     stateLoginUser,
   } = useContext(StoreContext);
   const [errorMsg, setErrorMsg] = useState('');
@@ -41,6 +50,8 @@ const SignInForm = () => {
   const idTimeout = useRef(null);
   const idTimeoutSec = useRef(null);
   const idTimeoutThird = useRef(null);
+  const checkCart =
+    Boolean(stateCart.products) && stateCart.products.length > 0;
 
   const {
     control,
@@ -76,7 +87,20 @@ const SignInForm = () => {
   const handleCloseSignIn = () => {
     idTimeoutThird.current = setTimeout(() => {
       disptachOpenDrawer({ type: CLOSE_DRAWER });
-    }, 2000);
+    }, 1000);
+  };
+
+  const handleCartControl = async (result) => {
+    const cartState = copyCart(stateCart, result.user._id);
+
+    const dataCartBase = await addCart(
+      `http://localhost:3000/api/v1/cart`,
+      cartState,
+      result?.tokenAccess,
+      setErrorMsg
+    );
+    dispatchCart({ type: CREATE_CART, data: dataCartBase.data });
+    localStorage.removeItem('cart');
   };
 
   const onSubmit = async (data) => {
@@ -96,6 +120,11 @@ const SignInForm = () => {
         setSuccessMsg(result.msgSuccess);
         dispatchLoginUser({ type: USER_LOGIN_DATA, data: result });
         handleCloseSignIn();
+        if (Boolean(Number(Cookies.get('check')))) {
+          handleCartControl(result);
+          setTimeout(() => router.push('/shipping'), 1100);
+        }
+        if (checkCart) handleCartControl(result);
       } else {
         setErrorMsg(result.msgError);
       }
