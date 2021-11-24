@@ -27,6 +27,7 @@ export const placeOrderBoxRight = {
 };
 
 export const titlePlaceOrderStyles = {
+  marginBottom: '10px',
   color: (theme) => theme.palette.text.primary,
   textTransform: 'uppercase',
   fontSize: { xs: '1.6rem', sm: '2.1rem' },
@@ -62,7 +63,7 @@ export const btnPaymentStyles = {
 };
 
 export const boxBtnsDeliveryStyles = {
-  margin: '15px 0',
+  margin: '10px 0',
   width: { xs: '100%', sm: '500px' },
   display: 'flex',
   justifyContent: { xs: 'space-between', sm: 'initial' },
@@ -86,6 +87,7 @@ export const cardMediaDeliveryStyles = {
   maxWidth: { xs: '100%', sxm: '50px' },
   minHeight: { xs: '200px', sxm: '50px' },
   paddingLeft: { xs: 'initial', sxm: '3px' },
+  objectFit: 'contain',
 };
 
 export const cardContentDeliveryStyles = {
@@ -109,3 +111,13 @@ export const btnPlaceOrderStyles = {
   marginTop: '20px',
   borderRadius: 'initial',
 };
+
+export const shippingAddressText = {
+  fontSize: { xs: '1.3rem', sm: '1.4rem' },
+};
+
+export const FormMsgPlaceOrder = styled('p')(({}) => ({
+  width: '100%',
+  fontSize: '1rem',
+  color: 'red',
+}));
