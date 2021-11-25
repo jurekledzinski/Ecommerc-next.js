@@ -8,14 +8,14 @@ import {
 } from '../../../components/ContentEmails';
 
 const handler = async (req, res) => {
-  const idUser = isAuth(req);
-  console.log(idUser, ' email api is auth');
   console.log(req.body, ' email req.body');
   const { data, purpose } = req.body;
   try {
     if (req.method === 'POST') {
       let contentEmail;
+      let idUser;
       let subjectEmail;
+      let userEmailToSend;
       switch (purpose) {
         case 'contact':
           contentEmail = contentEmailContact(data);
@@ -24,10 +24,13 @@ const handler = async (req, res) => {
         case 'forgetPassword':
           contentEmail = contentPasswordChange(data);
           subjectEmail = 'Change password';
+          userEmailToSend = data.email;
           break;
         case 'successOrder':
+          idUser = isAuth(req);
           contentEmail = contentEmailSuccessPaidOrder(data);
           subjectEmail = 'Transaction confirmation';
+          userEmailToSend = data.email;
           break;
         default:
           contentEmail = contentEmailContact(data);
@@ -69,11 +72,11 @@ const handler = async (req, res) => {
         },
       });
 
-      if (idUser) {
+      if (Boolean(idUser)) {
         transporter.sendMail(
           {
             from: `Shoopy shop <${process.env.EMAIL_USER}>`,
-            to: process.env.EMAIL_SENDTO,
+            to: userEmailToSend,
             subject: subjectEmail,
             html: output,
           },
@@ -90,7 +93,10 @@ const handler = async (req, res) => {
         transporter.sendMail(
           {
             from: `Shoopy shop <${process.env.EMAIL_USER}>`,
-            to: process.env.EMAIL_SENDTO,
+            to:
+              purpose === 'forgetPassword'
+                ? userEmailToSend
+                : process.env.EMAIL_SENDTO,
             subject: subjectEmail,
             html: output,
           },
