@@ -8,12 +8,12 @@ export const SectionPlaceOrderShip = styled('section')(({ theme }) => ({
   [theme.breakpoints.up('xs')]: {
     flexDirection: 'column',
     padding: '0 16px',
-    minHeight: 'calc(100vh - 160px)',
+    minHeight: 'calc(100vh - 161px)',
   },
   [theme.breakpoints.up('sm')]: {
     flexDirection: 'row',
     padding: '0 24px',
-    minHeight: 'calc(100vh - 160px)',
+    minHeight: 'calc(100vh - 161px)',
   },
 }));
 
@@ -101,9 +101,11 @@ export const cardContentDeliveryStyles = {
 export const cardContentTextStyles = { fontSize: '1.2rem', fontWeight: '300' };
 
 export const summaryPlaceOrderTextStyles = {
+  color: (theme) => theme.palette.text.primary,
   fontSize: '1.6rem',
   fontWeight: '300',
   fontFamily: 'Oswald, sans-serif',
+  letterSpacing: '1px',
 };
 
 export const btnPlaceOrderStyles = {
@@ -113,6 +115,7 @@ export const btnPlaceOrderStyles = {
 };
 
 export const shippingAddressText = {
+  color: (theme) => theme.palette.text.primary,
   fontSize: { xs: '1.3rem', sm: '1.4rem' },
 };
 

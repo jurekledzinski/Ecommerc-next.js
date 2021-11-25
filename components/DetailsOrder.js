@@ -24,6 +24,7 @@ import {
   detailsSummaryBtnStyles,
   detailsSummarySubTextStyles,
   FormMsgErrorConfrim,
+  labelDetailsOrderStyles,
   SectionDetailsOrder,
   titleDetailsOrderStyles,
   titleDetailsOrderShipStyles,
@@ -305,6 +306,7 @@ const DetailsOrder = () => {
           {errors.checkbox && errorMessage(errors.checkbox.message)}
           <FormGroup>
             <FormControlLabel
+              sx={labelDetailsOrderStyles}
               control={
                 <Controller
                   name="checkbox"

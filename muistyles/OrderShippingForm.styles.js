@@ -9,11 +9,11 @@ export const SectionOrderShip = styled('section')(({ theme }) => ({
   margin: '0 auto',
   [theme.breakpoints.up('xs')]: {
     padding: '0 16px',
-    minHeight: 'calc(100vh - 140px)',
+    minHeight: 'calc(100vh - 141px)',
   },
   [theme.breakpoints.up('sm')]: {
     padding: '0 24px',
-    minHeight: 'calc(100vh - 140px)',
+    minHeight: 'calc(100vh - 141px)',
   },
 }));
 

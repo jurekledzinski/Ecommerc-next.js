@@ -89,9 +89,11 @@ export const detailsCardContentTextStyles = {
 };
 
 export const detailsSummarySubTextStyles = {
+  color: (theme) => theme.palette.text.primary,
   fontSize: '1.6rem',
   fontWeight: '300',
   fontFamily: 'Oswald, sans-serif',
+  letterSpacing: '1px',
 };
 
 export const detailsSummaryBtnStyles = {
@@ -101,6 +103,7 @@ export const detailsSummaryBtnStyles = {
 };
 
 export const shippingAddressTextDetails = {
+  color: (theme) => theme.palette.text.primary,
   fontSize: { xs: '1.3rem', sm: '1.4rem' },
 };
 
@@ -120,3 +123,7 @@ export const FormMsgErrorConfrim = styled('p')(({}) => ({
   fontSize: '1rem',
   color: 'red',
 }));
+
+export const labelDetailsOrderStyles = {
+  color: (theme) => theme.palette.text.primary,
+};

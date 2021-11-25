@@ -82,11 +82,13 @@ export const PolylineElement = styled('polyline')(({ theme }) => ({
 
 export const titleSuccesPageStyles = {
   marginTop: '10px',
+  color: (theme) => theme.palette.text.primary,
   textAlign: 'center',
 };
 
 export const subtitleSuccesPageStyles = {
   marginTop: '10px',
+  color: (theme) => theme.palette.text.primary,
   fontSize: '1.4rem',
   textAlign: 'center',
 };

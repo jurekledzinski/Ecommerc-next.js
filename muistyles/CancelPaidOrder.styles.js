@@ -87,5 +87,6 @@ export const SectionCancelPage = styled('section')(({ theme }) => ({
 
 export const titleCancelPageStyles = {
   marginTop: '10px',
+  color: (theme) => theme.palette.text.primary,
   textAlign: 'center',
 };
