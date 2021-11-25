@@ -14,6 +14,10 @@ const orderSchema = new Schema({
     type: Number,
     required: false,
   },
+  email: {
+    type: String,
+    required: false,
+  },
   timeDelivery: {
     type: Number,
     required: false,
