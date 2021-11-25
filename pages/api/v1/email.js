@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { isAuth } from '../../../helpers/api/auth-helper';
 import errorHandler from '../../../helpers/api/error-handler';
 import {
   contentEmailContact,
@@ -7,6 +8,8 @@ import {
 } from '../../../components/ContentEmails';
 
 const handler = async (req, res) => {
+  const idUser = isAuth(req);
+  console.log(idUser, ' email api is auth');
   console.log(req.body, ' email req.body');
   const { data, purpose } = req.body;
   try {
@@ -66,22 +69,41 @@ const handler = async (req, res) => {
         },
       });
 
-      transporter.sendMail(
-        {
-          from: `Shoopy shop <${process.env.EMAIL_USER}>`,
-          to: process.env.EMAIL_SENDTO,
-          subject: subjectEmail,
-          html: output,
-        },
-        (error, info) => {
-          if (error) {
-            errorHandler(error, res);
-          }
+      if (idUser) {
+        transporter.sendMail(
+          {
+            from: `Shoopy shop <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_SENDTO,
+            subject: subjectEmail,
+            html: output,
+          },
+          (error, info) => {
+            if (error) {
+              errorHandler(error, res);
+            }
 
-          info.success = 'Email has been sent';
-          return res.status(200).json({ msgSuccess: info.success });
-        }
-      );
+            info.success = 'Email has been sent';
+            return res.status(200).json({ msgSuccess: info.success });
+          }
+        );
+      } else {
+        transporter.sendMail(
+          {
+            from: `Shoopy shop <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_SENDTO,
+            subject: subjectEmail,
+            html: output,
+          },
+          (error, info) => {
+            if (error) {
+              errorHandler(error, res);
+            }
+
+            info.success = 'Email has been sent';
+            return res.status(200).json({ msgSuccess: info.success });
+          }
+        );
+      }
     }
   } catch (error) {
     errorHandler(error, res);
