@@ -57,7 +57,11 @@ const StepperBar = () => {
       >
         {steps.map((label, index) => (
           <Step key={label} completed={completed[index]}>
-            <StepButton color="inherit" onClick={handleStep(index)}>
+            <StepButton
+              color="inherit"
+              onClick={handleStep(index)}
+              sx={{ padding: '24px 0px', margin: '-24px 0px' }}
+            >
               <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
             </StepButton>
           </Step>
