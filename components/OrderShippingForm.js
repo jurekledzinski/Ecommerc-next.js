@@ -58,7 +58,7 @@ const OrderShippingForm = () => {
       Cookies.set('step', '2');
       dispatchStepper({
         type: ADD_STEP_STEPPER,
-        data: Number(Cookies.get('step')),
+        data: Cookies.get('step'),
       });
     }, 1100);
   };
@@ -125,7 +125,7 @@ const OrderShippingForm = () => {
     Cookies.set('step', '1');
     dispatchStepper({
       type: ADD_STEP_STEPPER,
-      data: Number(Cookies.get('step')),
+      data: Cookies.get('step'),
     });
     return () => clearTimeout(idTimeout.current);
   }, []);

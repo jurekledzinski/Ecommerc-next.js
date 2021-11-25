@@ -93,7 +93,7 @@ const PlaceOrder = () => {
       Cookies.set('step', '3');
       dispatchStepper({
         type: ADD_STEP_STEPPER,
-        data: Number(Cookies.get('step')),
+        data: Cookies.get('step'),
       });
     }, 1100);
   };
@@ -161,7 +161,7 @@ const PlaceOrder = () => {
     Cookies.set('step', '2');
     dispatchStepper({
       type: ADD_STEP_STEPPER,
-      data: Number(Cookies.get('step')),
+      data: Cookies.get('step'),
     });
     return () => clearTimeout(idTimeout.current);
   }, []);

@@ -66,7 +66,7 @@ const DetailsOrder = () => {
     Cookies.set('step', '4');
     dispatchStepper({
       type: ADD_STEP_STEPPER,
-      data: Number(Cookies.get('step')),
+      data: Cookies.get('step'),
     });
   };
 
