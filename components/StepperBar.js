@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import Check from '@mui/icons-material/Check';
 import Stepper from '@mui/material/Stepper';
