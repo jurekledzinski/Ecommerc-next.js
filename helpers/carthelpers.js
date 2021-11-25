@@ -83,7 +83,7 @@ export const controlCart = (
   }
 };
 
-export const copyCart = (cartState, userState) => {
+export const copyCart = (cartState, userStateId) => {
   let copy = {
     ...cartState,
     products: cartState.products.map((item) => ({
@@ -91,6 +91,6 @@ export const copyCart = (cartState, userState) => {
       details: item.details.map((item2) => ({ ...item2 })),
     })),
   };
-  copy.idUser = userState?.user?._id;
+  copy.idUser = userStateId;
   return copy;
 };

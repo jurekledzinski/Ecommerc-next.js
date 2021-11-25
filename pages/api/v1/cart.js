@@ -32,7 +32,6 @@ const checkPricesProducts = async (body) => {
   }, initalValue);
 
   const checkedCart = {
-    idUser: body.idUser,
     products: checkProducts,
     totalCartAmount: totalAmount,
     totalCartPrice: totalPriceOrder,
@@ -42,10 +41,9 @@ const checkPricesProducts = async (body) => {
 };
 
 const handler = connectDb(async (req, res) => {
-  const userID = isAuth(req);
-  console.log(userID, 'auth token bearer');
   try {
     if (req.method === 'GET') {
+      const userID = isAuth(req);
       const cartFound = await Cart.findOne({ idUser: userID }).select([
         'products',
         'totalCartAmount',
@@ -54,24 +52,23 @@ const handler = connectDb(async (req, res) => {
       ]);
       return res.status(200).json({ data: cartFound });
     } else if (req.method === 'PATCH') {
+      const userID = isAuth(req);
       const checkIsCartExist = await Cart.findOne({ idUser: userID });
-      const cartChecked = await checkPricesProducts(req.body);
 
-      if (!Boolean(checkIsCartExist)) {
-        const newCart = await Cart.create(cartChecked).select([
-          'products',
-          'totalCartAmount',
-          'totalCartPrice',
-          '-_id',
-        ]);
-        return res.status(200).json({ data: newCart });
-      } else {
+      if (Boolean(checkIsCartExist)) {
+        const cartChecked = await checkPricesProducts(req.body);
         const newCart = await Cart.findOneAndUpdate(
           { idUser: userID },
           cartChecked,
           { new: true }
         ).select(['products', 'totalCartAmount', 'totalCartPrice', '-_id']);
         return res.status(200).json({ data: newCart });
+      }
+    } else if (req.method === 'POST') {
+      const isCartExist = await Cart.findOne({ idUser: req.body.idUser });
+      if (!isCartExist) {
+        await Cart.create(req.body);
+        return res.status(200).json({ msg: 'success' });
       }
     }
   } catch (error) {

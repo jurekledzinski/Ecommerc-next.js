@@ -13,8 +13,9 @@ const handler = connectDb(async (req, res) => {
         throw 'Credentials are required';
       }
 
-      await User.create(newUser);
-      return res.status(200).json({ msgSuccess: msg1 });
+      const result = await User.create(newUser);
+      const userID = result._id;
+      return res.status(200).json({ msgSuccess: msg1, data: userID });
     }
   } catch (error) {
     errorHandler(error, res);

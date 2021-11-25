@@ -19,9 +19,11 @@ import {
 
 import SnackBarMessage from './SnackBarMessage';
 
+import { CLOSE_DRAWER, OPEN_DRAWER, SHOW_SIGN_IN } from '../utils/constants';
+
 import { StoreContext } from '../utils/store';
 
-import { CLOSE_DRAWER, OPEN_DRAWER, SHOW_SIGN_IN } from '../utils/constants';
+import { createCart } from '../helpers/client/apiHelpers';
 
 const SignUpForm = () => {
   const { disptachContentDrawer, disptachOpenDrawer } =
@@ -62,6 +64,21 @@ const SignUpForm = () => {
     }, 2000);
   };
 
+  const createCartUser = async (userID) => {
+    const defaultCart = {
+      products: [],
+      totalCartAmount: 0,
+      totalCartPrice: 0,
+      idUser: userID,
+    };
+    
+    await createCart(
+      `http://localhost:3000/api/v1/cart`,
+      defaultCart,
+      setErrorMsg
+    );
+  };
+
   const onSubmit = async (data) => {
     if (data.password !== data.confirmPassword) {
       return setError('confirmPassword', {
@@ -84,6 +101,7 @@ const SignUpForm = () => {
 
       if (response.ok) {
         setSuccessMsg(result.msgSuccess);
+        createCartUser(result.data);
         handleCloseSignUp();
       } else {
         setErrorMsg(result.msgError);

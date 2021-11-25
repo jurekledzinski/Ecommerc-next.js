@@ -120,7 +120,8 @@ const Cart = () => {
         clearTimeout(idTimeout.current);
       }, 800);
     } else {
-      const cartAndId = copyCart(stateCart, stateLoginUser);
+      const cartAndId = copyCart(stateCart, stateLoginUser.user._id);
+      console.log(cartAndId, 'cartAndId cart');
       const result = await addCart(
         `http://localhost:3000/api/v1/cart`,
         cartAndId,

@@ -67,6 +67,7 @@ const OrderShippingForm = () => {
     const shipData = {
       ...data,
       cart: stateCart,
+      email: profileData.email,
       idUser: user._id,
       orderId: uuid(),
     };
@@ -85,6 +86,7 @@ const OrderShippingForm = () => {
   };
 
   const errorMessage = (errorMsg) => {
+    console.log(errorMsg);
     return <FormMsgShipOrder>{errorMsg}</FormMsgShipOrder>;
   };
 
@@ -107,15 +109,18 @@ const OrderShippingForm = () => {
     }
   }, [stateLoginUser]);
 
+  console.log(errors);
+
   useEffect(() => {
     if (Object.keys(profileData).length > 0) {
+      console.log(profileData);
       const defaultValues = {
         name: profileData.name,
         surname: profileData.surname,
-        street: profileData.street,
-        zipCode: profileData.zipCode,
-        city: profileData.city,
-        country: profileData.country,
+        street: profileData.street || '',
+        zipCode: profileData?.zipCode || '',
+        city: profileData.city || '',
+        country: profileData.country || '',
       };
       reset(defaultValues);
     }
@@ -209,7 +214,7 @@ const OrderShippingForm = () => {
             />
           )}
         />
-        {errors.zipcode && errorMessage(errors.zipcode.message)}
+        {errors.zipCode && errorMessage(errors.zipCode.message)}
         <Controller
           name="zipCode"
           control={control}

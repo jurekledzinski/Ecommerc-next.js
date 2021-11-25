@@ -8,6 +8,15 @@ const optionsPost = (token, data) => ({
   body: JSON.stringify(data),
 });
 
+const optionsPostWithout = (data) => ({
+  method: 'POST',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+});
+
 const optionsPut = (token, data) => ({
   method: 'PUT',
   credentials: 'include',
@@ -58,6 +67,30 @@ const wrapperTryCatch = (fn) => {
     }
   };
 };
+
+const wrapperTryCatchPostCart = (fn) => {
+  return async (url, data, setErrorMsg) => {
+    try {
+      const result = await fn(url, data, setErrorMsg);
+      return result;
+    } catch (error) {
+      setErrorMsg('Error post cart register');
+    }
+  };
+};
+
+export const createCart = wrapperTryCatchPostCart(
+  async (url = '', data = {}, setErrorMsg) => {
+    const response = await fetch(url, optionsPostWithout(data));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
 
 export const addCart = wrapperTryCatch(
   async (url = '', data = {}, token, setErrorMsg) => {
