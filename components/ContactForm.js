@@ -15,13 +15,16 @@ import {
   inputContactNameStyles,
 } from '../muistyles/ContactForm.styles';
 
+import { sendEmail } from '../helpers/client/apiHelpers';
+
 import { CLOSE_DRAWER } from '../utils/constants';
 import { StoreContext } from '../utils/store';
 
 import SnackBarMessage from './SnackBarMessage';
 
 const ContactForm = () => {
-  const { disptachOpenDrawer } = useContext(StoreContext);
+  const { disptachOpenDrawer, stateLoginUser } = useContext(StoreContext);
+  const { tokenAccess } = stateLoginUser;
   const [dataContact, setDataContact] = useState({});
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -47,27 +50,22 @@ const ContactForm = () => {
   };
 
   const onSubmit = async (data) => {
-    try {
-      const response = await fetch('http://localhost:3000/api/v1/contact', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+    const contactData = {
+      data: { ...data },
+      purpose: 'contact',
+    };
 
-      const result = await response.json();
+    const result = await sendEmail(
+      'http://localhost:3000/api/v1/email',
+      contactData,
+      tokenAccess,
+      setErrorMsg
+    );
+
+    if (result) {
+      setSuccessMsg(result.msgSuccess);
       setDataContact(data);
-
-      if (response.ok) {
-        setSuccessMsg(result.msgSuccess);
-        handleCloseContact();
-      } else {
-        setErrorMsg(result.msgError);
-      }
-    } catch (error) {
-      setErrorMsg('Something went wrong! Please try later');
+      handleCloseContact();
     }
   };
 

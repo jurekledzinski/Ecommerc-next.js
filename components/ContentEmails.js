@@ -123,6 +123,7 @@ export const contentEmailSuccessPaidOrder = (data) => {
                   background-color: #ffffff;
                   color: #555555;
                   font-family: 'Roboto', sans-serif;
+                  margin-top: 10px;
                 "
                 >
                   <tr style="line-height: 0px;">
@@ -219,6 +220,7 @@ export const contentEmailSuccessPaidOrder = (data) => {
 };
 
 export const contentEmailContact = (data) => {
+  const { email, name, message } = data;
   return `
   <table
   role="presentation"
@@ -278,11 +280,19 @@ export const contentEmailContact = (data) => {
                     From:
                   </h6>     
                   <p style="font-size: 14px; margin: 0">
-                    Name: Mark
+                    Name: ${name}
                   </p>
                   <p style="font-size: 14px; margin: 0">
-                    Email: mark@gmail.com
-                  </p>       
+                    Email: ${email}
+                  </p>   
+                  <p style="font-size: 14px; margin: 0">
+                  Date: ${new Date()
+                    .toString()
+                    .split(' ')
+                    .slice(0, 5)
+                    .toString()
+                    .replace(/\,/g, ' ')}
+                </p>    
                 </td>
               </tr>     
               <table width="600" style="border-collapse: collapse; margin-bottom: 10px;">
@@ -306,7 +316,7 @@ export const contentEmailContact = (data) => {
                     >
                       Message:
                     </h5>
-                    <p style="margin: 0; font-size: 14px;text-align: justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quas quibusdam sapiente sint error unde, reiciendis incidunt totam quisquam magni molestias nemo? Perspiciatis quaerat eligendi provident ipsa quidem! Quae, ex inventore. Porro quod ea, reiciendis fuga ratione inventore laudantium eos ut itaque sunt mollitia dicta pariatur odio maxime facere adipisci dolores, quis veniam ipsa quibusdam enim optio ducimus. Ullam voluptatum cumque id pariatur dolorum alias quaerat vel officiis, quam, accusamus deleniti culpa cum reprehenderit doloribus saepe voluptate impedit totam asperiores eligendi. Corporis, officiis explicabo! Mollitia vel est cupiditate aperiam, aut numquam assumenda facilis, porro, sint distinctio in harum accusamus magnam!</p>
+                    <p style="margin: 0; font-size: 14px;text-align: justify;">${message}</p>
                   </td>
                 </tr>
               </table>
