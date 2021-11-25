@@ -16,7 +16,7 @@ class MyDocument extends Document {
             crossOrigin="true"
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Oswald:wght@500&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Oswald:wght@300;500&display=swap"
             rel="stylesheet"
           />
           <script src="https://js.stripe.com/v3" async></script>
