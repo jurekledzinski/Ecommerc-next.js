@@ -4,6 +4,14 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new Schema({
+  avatar: {
+    type: String,
+    required: false,
+  },
+  avatarId: {
+    type: String,
+    required: false,
+  },
   name: {
     type: String,
     minlength: 2,
