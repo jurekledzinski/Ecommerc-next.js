@@ -75,7 +75,9 @@ const Menu = () => {
   return (
     <Nav>
       <Typography variant="h6" sx={menuTitleStyles}>
-        Welcome
+        {stateLoginUser?.user
+          ? `Welcome ${stateLoginUser.user.name}`
+          : 'Welcome'}
       </Typography>
       <List sx={listStyles}>
         {[
