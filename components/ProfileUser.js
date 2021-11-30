@@ -16,10 +16,11 @@ import {
 } from '../muistyles/ProfileUser.styles';
 
 import UpdateFormProfile from './UpdateFormProfile';
+import AddImageProfile from './AddImageProfile';
 import FormAddShippingAddress from './FormAddShippingAddress';
 
 const ProfileUser = ({ endpoints }) => {
-  const { stateUserProfile } = useContext(StoreContext);
+  const { stateUserProfile, stateLoginUser } = useContext(StoreContext);
   return (
     <SectionProfile>
       <BreadCramps endpoints={endpoints} />
@@ -29,6 +30,7 @@ const ProfileUser = ({ endpoints }) => {
             Update profile
           </Typography>
           <UpdateFormProfile />
+          <AddImageProfile />
         </Box>
         <Box sx={boxProfileRightStyles}>
           <Typography variant="h4" sx={titleProfileUpdateStyles}>
