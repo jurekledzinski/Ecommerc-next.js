@@ -39,7 +39,7 @@ const handler = connectDb(async (req, res) => {
         { _id: payload.idUser },
         { tokenRefresh: tokenRefresh },
         { new: true }
-      ).select(['_id', 'name', 'tokenRefresh']);
+      ).select(['_id', 'avatar', 'avatarId', 'name', 'tokenRefresh']);
 
       sendAccessToken(req, res, tokenAccess, userUpdate);
     }
