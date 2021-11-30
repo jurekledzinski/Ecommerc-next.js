@@ -66,10 +66,10 @@ const FormAddShippingAddress = () => {
   useEffect(() => {
     if (Object.keys(stateUserProfile).length > 0) {
       const defaultValues = {
-        street: stateUserProfile.street,
-        zipCode: stateUserProfile.zipCode,
-        city: stateUserProfile.city,
-        country: stateUserProfile.country,
+        street: stateUserProfile.street || '',
+        zipCode: stateUserProfile.zipCode || '',
+        city: stateUserProfile.city || '',
+        country: stateUserProfile.country || '',
       };
       reset(defaultValues);
     }
@@ -108,7 +108,7 @@ const FormAddShippingAddress = () => {
           />
         )}
       />
-      {errors.zipcode && errorMessage(errors.zipcode.message)}
+      {errors.zipCode && errorMessage(errors.zipCode.message)}
       <Controller
         name="zipCode"
         control={control}
