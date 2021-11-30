@@ -75,7 +75,12 @@ export async function getServerSideProps(context) {
     if (data.tokenAccess) {
       dataChange = {
         tokenAccess: tokenAccess,
-        user: { _id: user._id, name: user.name },
+        user: {
+          _id: user._id,
+          name: user.name,
+          avatar: user.avatar ? user.avatar : '',
+          avatarId: user.avatarId ? user.avatarId : '',
+        },
       };
     }
 
