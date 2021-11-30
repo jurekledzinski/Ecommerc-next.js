@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -7,10 +7,13 @@ import TextField from '@mui/material/TextField';
 import SnackBarMessage from './SnackBarMessage';
 
 import {
+  FileNameTag,
   FormMsgUpdateProfile,
   formProfileStyles,
   inputConfirmProfileStyles,
+  InputFile,
   inputProfileStyles,
+  LabelFileTag,
   updateShipBtnStyles,
 } from '../muistyles/UpdateFormProfile.styles';
 
@@ -68,9 +71,9 @@ const UpdateFormProfile = () => {
   useEffect(() => {
     if (Object.keys(stateUserProfile).length > 0) {
       const defaultValues = {
-        name: stateUserProfile.name,
-        surname: stateUserProfile.surname,
-        email: stateUserProfile.email,
+        name: stateUserProfile.name || '',
+        surname: stateUserProfile.surname || '',
+        email: stateUserProfile.email || '',
         password: '',
         confirmPassword: '',
       };
