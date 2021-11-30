@@ -37,6 +37,15 @@ const optionsPatch = (token, data) => ({
   body: JSON.stringify(data),
 });
 
+const optionsPostFile = (token, data) => ({
+  method: 'POST',
+  credentials: 'include',
+  headers: {
+    authorization: `Bearer ${token}`,
+  },
+  body: data,
+});
+
 const optionsGet = (token) => ({
   method: 'GET',
   credentials: 'include',
@@ -225,6 +234,19 @@ export const updateProductsStock = wrapperTryCatch(
 export const sendEmail = wrapperTryCatch(
   async (url = '', data = {}, token, setErrorMsg) => {
     const response = await fetch(url, optionsPost(token, data));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
+
+export const addImageProfile = wrapperTryCatch(
+  async (url = '', data = {}, token, setErrorMsg) => {
+    const response = await fetch(url, optionsPostFile(token, data));
     const result = await response.json();
 
     if (response.ok) {
