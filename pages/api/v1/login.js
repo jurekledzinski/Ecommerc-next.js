@@ -55,7 +55,7 @@ const handler = connectDb(async (req, res) => {
         { email },
         { tokenRefresh: tokenRefresh },
         { new: true }
-      ).select(['_id', 'name']);
+      ).select(['avatar', '_id', 'name']);
 
       sendRefreshToken(res, tokenRefresh);
       sendAccessToken(res, tokenAccess, userUpdate);
