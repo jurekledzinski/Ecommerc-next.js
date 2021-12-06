@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { Fragment, useContext, useState } from 'react';
+import { formatDistance } from 'date-fns';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -29,84 +29,185 @@ import {
   wrapperEditDeleteIconsStyles,
 } from '../muistyles/SingleReview.styles';
 
-const SingleReview = ({ handleShowEditForm }) => {
-  const handleLikeReview = () => {
-    console.log('click thumb up review');
+import EditReviewForm from './EditReviewForm';
+
+import { deleteReview, updateReview } from '../helpers/client/apiHelpers';
+
+import {
+  CLOSE_EDIT_FORM,
+  DELETE_REVIEW,
+  TOGGLE_EDIT_FORM,
+  UPDATE_LIKE_REVIEW,
+  UPDATE_RATE_PRODUCT_DETAILS,
+} from '../utils/constants';
+
+import { StoreContext } from '../utils/store';
+
+import SnackBarMessage from './SnackBarMessage';
+
+const SingleReview = () => {
+  const {
+    dispatchReview,
+    stateDetailsProduct,
+    stateLoginUser,
+    stateReviews,
+    stateEditForm,
+    dispatchDetailsProduct,
+    dispatchEditForm,
+  } = useContext(StoreContext);
+  const { _id } = stateDetailsProduct;
+  const { tokenAccess, user } = stateLoginUser;
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+
+  const handleLikeReview = async (idReview, numberLikes) => {
+    const objUpdate = { likes: numberLikes, userID: Boolean(user) && user._id };
+
+    const result = await updateReview(
+      `http://localhost:3000/api/v1/reviews?productId=${_id}&idReview=${idReview}&aim=updateLikes`,
+      objUpdate,
+      tokenAccess,
+      setErrorMsg
+    );
+
+    if (Boolean(result) && result.msgSuccess) {
+      setSuccessMsg(result.msgSuccess);
+      dispatchReview({
+        type: UPDATE_LIKE_REVIEW,
+        data: result.data.likes,
+        idReview: idReview,
+      });
+    }
+  };
+
+  const handleDeleteReview = async (idReview) => {
+    const result = await deleteReview(
+      `http://localhost:3000/api/v1/reviews?idReview=${idReview}&productId=${_id}`,
+      tokenAccess,
+      setErrorMsg
+    );
+
+    console.log(result, 'delete review');
+
+    if (Boolean(result) && result.msgSuccess) {
+      setSuccessMsg(result.msgSuccess);
+      dispatchReview({
+        type: DELETE_REVIEW,
+        idReview: idReview,
+      });
+      dispatchDetailsProduct({
+        type: UPDATE_RATE_PRODUCT_DETAILS,
+        rate: parseFloat(result.rateProduct),
+      });
+      dispatchEditForm({ type: CLOSE_EDIT_FORM });
+    }
+  };
+
+  console.log(stateEditForm, 'stateEditForm');
+
+  const handleShowEditForm = () => {
+    dispatchEditForm({ type: TOGGLE_EDIT_FORM });
+  };
+
+  const checkUser = (id) => {
+    let foundUser;
+    if (Boolean(user)) {
+      foundUser = id === user._id;
+    }
+    return foundUser ? true : false;
   };
 
   return (
-    <Paper
-      variant="outlined"
-      square
-      component="article"
-      sx={paperReviewsStyles}
-    >
-      <Box sx={boxInPaperReviewsStyles}>
-        <Avatar
-          alt="Remy Sharp"
-          src="https://cdn.pixabay.com/photo/2021/09/24/22/05/woman-6653634_960_720.jpg"
-          sx={avatarReviewsOneStyles}
-        ></Avatar>
-        <Rating
-          name="half-rating"
-          defaultValue={3.5}
-          precision={0.5}
-          size="small"
-          sx={ratesReviewProductOneStyles}
-          readOnly
-        />
-      </Box>
-      <Box sx={boxNextToAvatarStyles}>
-        <Box sx={boxWrapperAvatarStyles}>
-          <Box sx={wrapperAvatarReviewStyles}>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://cdn.pixabay.com/photo/2021/09/24/22/05/woman-6653634_960_720.jpg"
-              sx={avatarReviewsTwoStyles}
-            ></Avatar>
-            <Typography style={nameUserReviewStyles}>VamosRM</Typography>
-            <Box component="span" sx={timeReviewStyles}>
-              Today 18:36:32
+    <>
+      {stateReviews.map((item, index) => (
+        <Fragment key={index}>
+          <Paper
+            variant="outlined"
+            square
+            component="article"
+            sx={paperReviewsStyles}
+          >
+            <SnackBarMessage
+              errorMsg={errorMsg}
+              successMsg={successMsg}
+              setErrorMsg={setErrorMsg}
+              setSuccessMsg={setSuccessMsg}
+            />
+            <Box sx={boxInPaperReviewsStyles}>
+              <Avatar
+                alt={item.name}
+                src={item.avatarImage}
+                sx={avatarReviewsOneStyles}
+              ></Avatar>
+              <Rating
+                name="simple-controlled"
+                value={parseFloat(item.rate)}
+                precision={0.5}
+                size="small"
+                sx={ratesReviewProductOneStyles}
+                readOnly
+              />
             </Box>
-          </Box>
-        </Box>
-        <Rating
-          name="half-rating"
-          defaultValue={3.5}
-          precision={0.5}
-          size="small"
-          sx={ratingReviewStyles}
-          readOnly
-        />
-        <Typography variant="body2" sx={reviewStyles}>
-          I would recommend to apply scrollbar styles only for the specific
-          container, cause @Global may take rendering time to apply on the All
-          elements. This works fine as for me.I would recommend to apply
-          scrollbar styles only for the specific container, cause @Global may
-          take rendering time to apply on the All elements. This works fine as
-          for me I would recommend to apply scrollbar styles only for the
-          specific container, cause @Global may take rendering time to apply on
-          the All elements. This works fine as for me.
-        </Typography>
-        <IconButton
-          aria-label="thumb"
-          sx={iconBtnThumbUp}
-          onClick={handleLikeReview}
-        >
-          <ThumbUpBadge badgeContent={1} max={99}>
-            <ThumbUpAltIcon sx={thumbUpIconStyles} />
-          </ThumbUpBadge>
-        </IconButton>
-        <Box sx={wrapperEditDeleteIconsStyles}>
-          <IconButton aria-label="edit" onClick={handleShowEditForm}>
-            <EditIcon />
-          </IconButton>
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Box>
-      </Box>
-    </Paper>
+            <Box sx={boxNextToAvatarStyles}>
+              <Box sx={boxWrapperAvatarStyles}>
+                <Box sx={wrapperAvatarReviewStyles}>
+                  <Avatar
+                    alt={item.name}
+                    src={item.avatarImage}
+                    sx={avatarReviewsTwoStyles}
+                  ></Avatar>
+                  <Typography style={nameUserReviewStyles}>
+                    {item.name}
+                  </Typography>
+                  <Box component="span" sx={timeReviewStyles}>
+                    {formatDistance(new Date(), new Date(item.updatedAt), {
+                      includeSeconds: true,
+                    })}{' '}
+                    ago
+                  </Box>
+                </Box>
+              </Box>
+              <Rating
+                name="half-rating"
+                value={parseFloat(item.rate)}
+                precision={0.5}
+                size="small"
+                sx={ratingReviewStyles}
+                readOnly
+              />
+              <Typography variant="body2" sx={reviewStyles}>
+                {item.review}
+              </Typography>
+              <IconButton
+                aria-label="thumb"
+                sx={iconBtnThumbUp}
+                onClick={() => handleLikeReview(item._id, item.likes)}
+              >
+                <ThumbUpBadge badgeContent={item.likes} max={99}>
+                  <ThumbUpAltIcon sx={thumbUpIconStyles} />
+                </ThumbUpBadge>
+              </IconButton>
+              {checkUser(item.userId) && (
+                <Box sx={wrapperEditDeleteIconsStyles}>
+                  <IconButton aria-label="edit" onClick={handleShowEditForm}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDeleteReview(item._id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
+              )}
+            </Box>
+          </Paper>
+          {stateEditForm.editForm && (
+            <EditReviewForm userId={item.userId} idReview={item._id} />
+          )}
+        </Fragment>
+      ))}
+    </>
   );
 };
 
