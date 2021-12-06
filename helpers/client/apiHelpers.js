@@ -55,6 +55,15 @@ const optionsGet = (token) => ({
   },
 });
 
+const optionsDelete = (token) => ({
+  method: 'DELETE',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  },
+});
+
 const wrapperTryCatchGet = (fn) => {
   return async (url, token, setErrorMsg) => {
     try {
@@ -247,6 +256,58 @@ export const sendEmail = wrapperTryCatch(
 export const addImageProfile = wrapperTryCatch(
   async (url = '', data = {}, token, setErrorMsg) => {
     const response = await fetch(url, optionsPostFile(token, data));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
+
+export const addReview = wrapperTryCatch(
+  async (url = '', data = {}, token, setErrorMsg) => {
+    const response = await fetch(url, optionsPost(token, data));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
+
+export const getReviews = wrapperTryCatchGet(
+  async (url = '', token, setErrorMsg) => {
+    const response = await fetch(url, optionsGet(token));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
+
+export const updateReview = wrapperTryCatch(
+  async (url = '', data = {}, token, setErrorMsg) => {
+    const response = await fetch(url, optionsPatch(token, data));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
+
+export const deleteReview = wrapperTryCatchGet(
+  async (url = '', token, setErrorMsg) => {
+    const response = await fetch(url, optionsDelete(token));
     const result = await response.json();
 
     if (response.ok) {
