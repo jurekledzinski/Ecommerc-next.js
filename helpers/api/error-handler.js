@@ -26,6 +26,12 @@ const errorHandler = (error, res) => {
     });
   }
 
+  if (error.name === 'TokenExpiredError') {
+    return res.status(401).json({
+      msgError: 'Permission required',
+    });
+  }
+
   return res.status(500).json({
     msgError: 'Something went wrong. Please try later.',
   });
