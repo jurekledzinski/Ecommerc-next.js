@@ -26,7 +26,7 @@ export const boxInPaperReviewsStyles = {
 };
 
 export const avatarReviewsOneStyles = {
-  display: { xs: 'none', sm: 'block' },
+  display: { xs: 'none', sm: 'flex' },
   width: '40px',
   height: '40px',
   marginBottom: '5px',
@@ -52,13 +52,14 @@ export const boxWrapperAvatarStyles = {
 export const avatarReviewsTwoStyles = {
   width: '40px',
   height: '40px',
-  display: { xs: 'block', sm: 'none' },
+  display: { xs: 'flex', sm: 'none' },
 };
 
 export const nameUserReviewStyles = {
   fontSize: '1.4rem',
-  marginRight: '5px',
   lineHeight: 1,
+  marginRight: '5px',
+  paddingTop: { xs: '5px', sm: 'initial' },
 };
 
 export const timeReviewStyles = {
@@ -67,7 +68,8 @@ export const timeReviewStyles = {
 };
 
 export const reviewStyles = {
-  fontSize: { xs: '1.4rem', sm: '1.6rem', fontWeight: 300 },
+  fontSize: '1.4rem',
+  fontWeight: 300,
 };
 
 export const iconBtnThumbUp = {
