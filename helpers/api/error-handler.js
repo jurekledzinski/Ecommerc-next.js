@@ -22,7 +22,7 @@ const errorHandler = (error, res) => {
 
   if (error.name === 'JsonWebTokenError') {
     return res.status(401).json({
-      msgError: 'Unauthorized',
+      msgError: 'You have to log in',
     });
   }
 
