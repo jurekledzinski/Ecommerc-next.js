@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer';
+import jwt from 'jsonwebtoken';
+import User from '../../../models/user';
 import { isAuth } from '../../../helpers/api/auth-helper';
 import errorHandler from '../../../helpers/api/error-handler';
 import {
@@ -7,8 +9,49 @@ import {
   contentPasswordChange,
 } from '../../../components/ContentEmails';
 
+const createTokenUrl = (email) => {
+  return jwt.sign({ email: email }, process.env.JWT_SECRET_FORGET_PASSWORD, {
+    expiresIn: process.env.JWT_LIFETIME_SECRET_FORGET_PASSWORD,
+  });
+};
+
+const createTokenAccessChangePassword = (email) => {
+  return jwt.sign(
+    { email: email },
+    process.env.JWT_SECRET_TOKEN_ACCESS_CHANGE_PASSWORD,
+    {
+      expiresIn: process.env.JWT_LIFETIME_TOKEN_ACCESS_CHANGE_PASSWORD,
+    }
+  );
+};
+
+const saveTokenUrl = async (token, tokenAccessChange, email) => {
+  await User.findOneAndUpdate(
+    { email },
+    {
+      tokenForgetPassword: token,
+      tokenAccessChangePassword: tokenAccessChange,
+    },
+    { new: true }
+  );
+};
+
+const check = async (data) => {
+  const result = await User.findOne({ email: data.email });
+
+  let tokenUrl;
+  let tokenAccessChange;
+  if (result) {
+    tokenUrl = createTokenUrl(data.email);
+    tokenAccessChange = createTokenAccessChangePassword(data.email);
+    saveTokenUrl(tokenUrl, tokenAccessChange, data.email);
+  } else {
+    throw 'User not found';
+  }
+  return tokenUrl;
+};
+
 const handler = async (req, res) => {
-  console.log(req.body, ' email req.body');
   const { data, purpose } = req.body;
   try {
     if (req.method === 'POST') {
@@ -22,7 +65,8 @@ const handler = async (req, res) => {
           subjectEmail = 'Contact email';
           break;
         case 'forgetPassword':
-          contentEmail = contentPasswordChange(data);
+          const resultCheck = await check(data);
+          contentEmail = contentPasswordChange(data, resultCheck);
           subjectEmail = 'Change password';
           userEmailToSend = data.email;
           break;
