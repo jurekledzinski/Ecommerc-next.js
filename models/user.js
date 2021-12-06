@@ -50,6 +50,14 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
+  tokenForgetPassword: {
+    type: String,
+    required: false,
+  },
+  tokenAccessChangePassword: {
+    type: String,
+    required: false,
+  },
 });
 
 userSchema.pre('save', async function () {
