@@ -4,15 +4,17 @@ import React, { useEffect, useContext } from 'react';
 import { StoreContext } from '../../../../utils/store';
 import {
   FETCH_DETAILS_PRODUCT,
+  GET_REVIEW,
   USER_LOGIN_DATA,
   UPDATE_ON_STOCK_PRODUCT_DETAILS,
 } from '../../../../utils/constants';
 import DetailsPageProduct from '../../../../components/DetailsPageProduct';
 
-const DetailsProduct = ({ detailsProduct, user }) => {
+const DetailsProduct = ({ detailsProduct, productReviews, user }) => {
   const {
     dispatchDetailsProduct,
     dispatchLoginUser,
+    dispatchReview,
     stateCart,
     stateLoginUser,
   } = useContext(StoreContext);
@@ -42,6 +44,10 @@ const DetailsProduct = ({ detailsProduct, user }) => {
     }
   }, [dispatchLoginUser, user]);
 
+  useEffect(() => {
+    dispatchReview({ type: GET_REVIEW, data: productReviews });
+  }, [productReviews]);
+
   return (
     <div>
       <DetailsPageProduct />
@@ -52,7 +58,7 @@ const DetailsProduct = ({ detailsProduct, user }) => {
 export default DetailsProduct;
 
 export async function getServerSideProps(context) {
-//   console.log(context.req.cookies, 'products details getserver');
+  //   console.log(context.req.cookies, 'products details getserver');
   const { category, brand, id } = context.query;
 
   const response1 = await fetch(
@@ -75,8 +81,27 @@ export async function getServerSideProps(context) {
   if (response1.ok || response2.ok) {
     const dataDetails = await response1.json();
     const data = await response2.json();
+
     const [detailsProduct] = dataDetails;
     const { tokenAccess, user } = data;
+
+    const response3 = await fetch(
+      `http://localhost:3000/api/v1/reviews?productId=${detailsProduct._id}`,
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${tokenAccess}`,
+        },
+      }
+    );
+    const dataReviews = await response3.json();
+
+    console.log(
+      dataReviews,
+      'dataReviews refresh token strona detail getserversideprops'
+    );
 
     if (data.user) {
       context.res.setHeader(
@@ -92,13 +117,19 @@ export async function getServerSideProps(context) {
     if (data.tokenAccess) {
       dataChange = {
         tokenAccess: tokenAccess,
-        user: { _id: user._id, name: user.name },
+        user: {
+          _id: user._id,
+          name: user.name,
+          avatar: user.avatar ? user.avatar : '',
+          avatarId: user.avatarId ? user.avatarId : '',
+        },
       };
     }
 
     return {
       props: {
         detailsProduct,
+        productReviews: dataReviews.data || [],
         user: dataChange || {},
       },
     };
@@ -106,6 +137,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         detailsProduct: {},
+        productReviews: [],
         user: {},
         error: {
           message: `Oops! ${response2.statusText}`,
