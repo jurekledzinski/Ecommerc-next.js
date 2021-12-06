@@ -355,7 +355,7 @@ export const contentEmailContact = (data) => {
   `;
 };
 
-export const contentPasswordChange = (data) => {
+export const contentPasswordChange = (data, token) => {
   return `
   <table
   role="presentation"
@@ -415,7 +415,9 @@ export const contentPasswordChange = (data) => {
                     Change password request:
                   </h6>     
                   <p style="font-size: 14px; margin: 0">
-                    We received a request to change the password to access to one of the account in our shop, if you asked for it, click on the link below or copy and paste it into the browser url address window, but if you didn't ask for a password change, please ignore this message.
+                    We received a request to change the password from user with email ${
+                      data.email
+                    } If you asked for it, click on the button below but if you didn't ask for a password change, please ignore this message.
                   </p>    
                 </td>
               </tr>     
@@ -429,18 +431,25 @@ export const contentPasswordChange = (data) => {
                       padding: 5px 0 10px 0;
                     "
                   >
-                    <h5
-                      style="
-                        font-size: 16px;
-                        margin: 5px 0 10px 0;
-                        font-family: 'Oswald', sans-serif;
-                        font-weight: 400;
-                        letter-spacing: 1px;
-                      "
-                    >
-                      Link:
-                    </h5>
-                    <p style="margin: 0; font-size: 14px;text-align: justify;">http:localhost:3000/forget_password/recovery?temp=12kfij34jdjf9343_45943489jerejj</p>
+                    <table cellspacing="0" cellpadding="0" style="margin-top: 10px;">
+                    <tr>
+                      <td bgcolor="#0074D9">
+                          <a  class=”link” href="http://localhost:3000/change_password/${token}" target="_blank" style="
+                          display: inline-block;
+                          padding: 8px 12px;
+                          border: 1px solid #0074D9;
+                          font-family: Helvetica, Arial, sans-serif;
+                          font-size: 14px;
+                          color: #ffffff; 
+                          text-decoration: none;
+                          font-weight: normal;
+                          letter-spacing: 1px;
+                      ">
+                              Change password         
+                          </a>
+                      </td>
+                    </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
