@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
@@ -24,7 +24,10 @@ import {
   wrapperSliderOtherProductsStyles,
 } from '../muistyles/SliderOtherProducts.styles';
 
+import { StoreContext } from '../utils/store';
+
 const SliderOtherProducts = () => {
+  const { stateReviews } = useContext(StoreContext);
   const [dataProducts, setDataProducts] = useState([]);
   const router = useRouter();
   const index = router.asPath.slice(1).indexOf('/');
@@ -37,7 +40,7 @@ const SliderOtherProducts = () => {
       setDataProducts(data);
     };
     fetchExtraProducts();
-  }, []);
+  }, [stateReviews]);
 
   return (
     <Box style={wrapperSliderOtherProductsStyles}>
@@ -75,7 +78,7 @@ const SliderOtherProducts = () => {
                 </Typography>
                 <Rating
                   name="half-rating-read"
-                  value={parseInt(item?.rate)}
+                  value={parseFloat(item?.rate)}
                   precision={0.5}
                   readOnly
                   sx={ratingTopRateSliderStyles}
