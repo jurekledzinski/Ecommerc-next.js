@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -14,13 +14,20 @@ import {
   titleStyles,
 } from '../muistyles/ForgetPassword.styles';
 
-const ForgetPassword = () => {
-  const [email, setEmail] = useState('');
+import { CLOSE_DRAWER } from '../utils/constants';
+import { StoreContext } from '../utils/store';
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    setEmail(data);
-  };
+import SnackBarMessage from './SnackBarMessage';
+
+import { sendEmail } from '../helpers/client/apiHelpers';
+
+const ForgetPassword = () => {
+  const { disptachOpenDrawer, stateLoginUser } = useContext(StoreContext);
+  const { tokenAccess } = stateLoginUser;
+  const [email, setEmail] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const idTimeout = useRef(null);
 
   const {
     control,
@@ -33,6 +40,36 @@ const ForgetPassword = () => {
     },
   });
 
+  const handleCloseContact = () => {
+    idTimeout.current = setTimeout(() => {
+      disptachOpenDrawer({ type: CLOSE_DRAWER });
+    }, 2000);
+  };
+
+  const onSubmit = async (data) => {
+    const recoveryData = {
+      data: { ...data },
+      purpose: 'forgetPassword',
+    };
+
+    const result = await sendEmail(
+      'http://localhost:3000/api/v1/email',
+      recoveryData,
+      tokenAccess,
+      setErrorMsg
+    );
+
+    if (result) {
+      setSuccessMsg(result.msgSuccess);
+      setEmail(data);
+      handleCloseContact();
+    }
+  };
+
+  const errorMessage = (errorMsg) => {
+    return <FormForgetMsgStyles>{errorMsg}</FormForgetMsgStyles>;
+  };
+
   useEffect(() => {
     if (email) {
       const defaultValues = {
@@ -43,10 +80,11 @@ const ForgetPassword = () => {
     }
   }, [email, reset]);
 
-  const errorMessage = (errorMsg) => {
-    console.log(errorMsg);
-    return <FormForgetMsgStyles>{errorMsg}</FormForgetMsgStyles>;
-  };
+  useEffect(() => {
+    return () => {
+      clearTimeout(idTimeout.current);
+    };
+  }, []);
 
   return (
     <Box sx={boxStyles}>
@@ -59,6 +97,12 @@ const ForgetPassword = () => {
         sx={boxFormStyles}
         onSubmit={handleSubmit(onSubmit)}
       >
+        <SnackBarMessage
+          errorMsg={errorMsg}
+          successMsg={successMsg}
+          setErrorMsg={setErrorMsg}
+          setSuccessMsg={setSuccessMsg}
+        />
         <Typography variant="body2" sx={infoTextStyles}>
           Send email to change password
         </Typography>
