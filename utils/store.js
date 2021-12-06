@@ -8,12 +8,14 @@ import { addCart, getCart } from '../helpers/client/apiHelpers';
 import { CREATE_CART, SHOW_MENU } from './constants';
 import {
   cartReducer,
+  editFormReducer,
   openDrawerReducer,
   contentDrawerReducer,
   darkModeReducer,
   dataProductsByBrandReducer,
   detailsProductReducer,
   stepperReducer,
+  reviewReducer,
   userProfileReducer,
   userReducer,
 } from './reducers';
@@ -24,14 +26,20 @@ const initialStateContentDrawer = { contentDrawer: SHOW_MENU };
 const initialStateDarkMode = {
   darkmode: stateMode,
 };
+const initialStateEditForm = {
+  editForm: false,
+};
 const initialStateProductsByBrand = [];
 const initialStateDetailsProduct = {};
 const initialStateLoginUser = {};
 const initialStateProfileUser = {};
+const initialStateReview = [];
 const initialStateStepper = Number(Cookies.get('step')) || 1;
 
 const StoreProvider = ({ children }) => {
   const [errorMsg, setErrorMsg] = useState('');
+
+  console.log('Store');
 
   const initialStateCartLoggedUser = {
     products: [],
@@ -98,6 +106,16 @@ const StoreProvider = ({ children }) => {
     initialStateStepper
   );
 
+  const [stateReviews, dispatchReview] = useReducer(
+    reviewReducer,
+    initialStateReview
+  );
+
+  const [stateEditForm, dispatchEditForm] = useReducer(
+    editFormReducer,
+    initialStateEditForm
+  );
+
   useEffect(() => {
     if (Boolean(stateLoginUser.tokenAccess) && stateCart.products.length >= 0) {
       const updateCart = async () => {
@@ -137,12 +155,16 @@ const StoreProvider = ({ children }) => {
         dispatchDarkMode,
         stateDetailsProduct,
         dispatchDetailsProduct,
+        stateEditForm,
+        dispatchEditForm,
         stateLoginUser,
         dispatchLoginUser,
         stateOpenDrawer,
         disptachOpenDrawer,
         stateProductsBrand,
         disptachProductsBrand,
+        stateReviews,
+        dispatchReview,
         stateStepper,
         dispatchStepper,
         stateUserProfile,

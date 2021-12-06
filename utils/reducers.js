@@ -1,11 +1,15 @@
 import {
   ADD_TO_CART,
+  ADD_REVIEW,
   ADD_STEP_STEPPER,
   CLEAR_CART,
   CREATE_CART,
   CLOSE_DRAWER,
+  CLOSE_EDIT_FORM,
+  DELETE_REVIEW,
   FETCH_DATA_BRAND_PRODUCTS,
   FETCH_DETAILS_PRODUCT,
+  GET_REVIEW,
   OPEN_DRAWER,
   REMOVE_FROM_CART,
   SHOW_CART,
@@ -15,10 +19,13 @@ import {
   SHOW_SIGN_UP,
   SHOW_FORGET_PASSWORD,
   TOGGLE_DARK_MODE,
+  TOGGLE_EDIT_FORM,
   USER_DATA_CLEAR_PROFILE,
   USER_DATA_PROFILE,
+  UPDATE_LIKE_REVIEW,
   USER_LOGIN_DATA,
   UPDATE_RATE_PRODUCT_DETAILS,
+  UPDATE_REVIEW,
   UPDATE_ON_STOCK_PRODUCT_DETAILS,
   UPDATE_ON_STOCK_CART_PRODUCT,
   UPDATE_TOTAL_PRICE_CART_PRODUCT,
@@ -204,6 +211,42 @@ export const stepperReducer = (state, action) => {
   switch (action.type) {
     case ADD_STEP_STEPPER:
       return action.data;
+    default:
+      return state;
+  }
+};
+
+export const reviewReducer = (state, action) => {
+  switch (action.type) {
+    case ADD_REVIEW:
+      return [...state, action.data];
+    case DELETE_REVIEW:
+      return state.filter((item) => item._id !== action.idReview);
+    case GET_REVIEW:
+      return action.data;
+    case UPDATE_LIKE_REVIEW:
+      return state.map((item) => ({
+        ...item,
+        likes: item._id === action.idReview ? action.data : item.likes,
+      }));
+    case UPDATE_REVIEW:
+      return state.map((item) => ({
+        ...item,
+        rate: item._id === action.idReview ? action.editRateData : item.rate,
+        review:
+          item._id === action.idReview ? action.editReviewData : item.review,
+      }));
+    default:
+      return state;
+  }
+};
+
+export const editFormReducer = (state, action) => {
+  switch (action.type) {
+    case TOGGLE_EDIT_FORM:
+      return { ...state, editForm: !state.editForm };
+    case CLOSE_EDIT_FORM:
+      return { ...state, editForm: false };
     default:
       return state;
   }
