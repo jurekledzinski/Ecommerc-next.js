@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Rating from '@mui/material/Rating';
@@ -80,7 +74,7 @@ const DescriptionProduct = () => {
         <Stack spacing={1} sx={ratingStyles}>
           <Rating
             name="half-rating-read"
-            value={parseInt(rate)}
+            value={parseFloat(rate)}
             precision={0.5}
             readOnly
             size="medium"
