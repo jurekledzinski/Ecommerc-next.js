@@ -64,6 +64,15 @@ const optionsDelete = (token) => ({
   },
 });
 
+const optionsPutChange = (data) => ({
+  method: 'PUT',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+});
+
 const wrapperTryCatchGet = (fn) => {
   return async (url, token, setErrorMsg) => {
     try {
@@ -308,6 +317,19 @@ export const updateReview = wrapperTryCatch(
 export const deleteReview = wrapperTryCatchGet(
   async (url = '', token, setErrorMsg) => {
     const response = await fetch(url, optionsDelete(token));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
+
+export const passwordChange = wrapperTryCatch(
+  async (url = '', data = {}, setErrorMsg) => {
+    const response = await fetch(url, optionsPutChange(data));
     const result = await response.json();
 
     if (response.ok) {
