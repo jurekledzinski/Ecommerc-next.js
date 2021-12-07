@@ -14,6 +14,7 @@ import {
   darkModeReducer,
   dataProductsByBrandReducer,
   detailsProductReducer,
+  ordersUserReducer,
   stepperReducer,
   reviewReducer,
   userProfileReducer,
@@ -32,6 +33,7 @@ const initialStateEditForm = {
 const initialStateProductsByBrand = [];
 const initialStateDetailsProduct = {};
 const initialStateLoginUser = {};
+const initialStateOrdersUser = [];
 const initialStateProfileUser = {};
 const initialStateReview = [];
 const initialStateStepper = Number(Cookies.get('step')) || 1;
@@ -116,6 +118,11 @@ const StoreProvider = ({ children }) => {
     initialStateEditForm
   );
 
+  const [stateOrdersUser, dispatchOrdersUser] = useReducer(
+    ordersUserReducer,
+    initialStateOrdersUser
+  );
+
   useEffect(() => {
     if (Boolean(stateLoginUser.tokenAccess) && stateCart.products.length >= 0) {
       const updateCart = async () => {
@@ -169,6 +176,8 @@ const StoreProvider = ({ children }) => {
         dispatchStepper,
         stateUserProfile,
         dispatchUserProfile,
+        stateOrdersUser,
+        dispatchOrdersUser,
       }}
     >
       {children}

@@ -1,4 +1,5 @@
 import {
+  ADD_ORDERS_USER,
   ADD_TO_CART,
   ADD_REVIEW,
   ADD_STEP_STEPPER,
@@ -28,6 +29,7 @@ import {
   UPDATE_REVIEW,
   UPDATE_ON_STOCK_PRODUCT_DETAILS,
   UPDATE_ON_STOCK_CART_PRODUCT,
+  UPDATE_ORDERS_USER_DELIVERY,
   UPDATE_TOTAL_PRICE_CART_PRODUCT,
   UPDATE_TOTAL_CART_AMOUNT,
   UPDATE_TOTAL_CART_PRICE,
@@ -247,6 +249,21 @@ export const editFormReducer = (state, action) => {
       return { ...state, editForm: !state.editForm };
     case CLOSE_EDIT_FORM:
       return { ...state, editForm: false };
+    default:
+      return state;
+  }
+};
+
+export const ordersUserReducer = (state, action) => {
+  switch (action.type) {
+    case ADD_ORDERS_USER:
+      return action.data;
+    case UPDATE_ORDERS_USER_DELIVERY:
+      return state.map((item) => ({
+        ...item,
+        dateDelivery: item.orderId === action.orderId ? new Date() : null,
+        isDelivered: item.orderId === action.orderId ? true : false,
+      }));
     default:
       return state;
   }
