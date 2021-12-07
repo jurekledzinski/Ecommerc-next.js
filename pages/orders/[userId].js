@@ -1,12 +1,14 @@
 import cookie from 'cookie';
 import React, { useContext, useEffect } from 'react';
-import { USER_LOGIN_DATA } from '../../utils/constants';
+
+import { ADD_ORDERS_USER, USER_LOGIN_DATA } from '../../utils/constants';
 
 import { StoreContext } from '../../utils/store';
 
-const OrdersUser = ({ user }) => {
-  const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
-  console.log(stateLoginUser, 'orders stateLoginUser');
+import PaidOrdersUser from '../../components/PaidOrdersUser';
+
+const OrdersUser = ({ ordersUser, user }) => {
+  const { dispatchLoginUser, dispatchOrdersUser } = useContext(StoreContext);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {
@@ -14,7 +16,13 @@ const OrdersUser = ({ user }) => {
     }
   }, [dispatchLoginUser, user]);
 
-  return <div>Orders user</div>;
+  useEffect(() => {
+    if (ordersUser) {
+      dispatchOrdersUser({ type: ADD_ORDERS_USER, data: ordersUser });
+    }
+  }, []);
+
+  return <PaidOrdersUser />;
 };
 
 export default OrdersUser;
@@ -37,6 +45,17 @@ export async function getServerSideProps(context) {
     const data = await response.json();
     const { tokenAccess, user } = data;
 
+    const responseOrders = await fetch(`http://localhost:3000/api/v1/order`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${tokenAccess}`,
+      },
+    });
+
+    const dataOrdersUser = await responseOrders.json();
+
     if (data.user) {
       context.res.setHeader(
         'Set-Cookie',
@@ -57,12 +76,14 @@ export async function getServerSideProps(context) {
 
     return {
       props: {
+        ordersUser: dataOrdersUser.data.allPaidOrders,
         user: dataChange || {},
       },
     };
   } else {
     return {
       props: {
+        ordersUser: [],
         user: {},
         error: {
           message: `Oops! ${response.statusText}`,
