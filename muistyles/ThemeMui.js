@@ -36,6 +36,7 @@ export const getTheme = (mode) => ({
       xs: 0,
       sxm: 500,
       sm: 600,
+      mxd: 730,
       md: 900,
       lg: 1200,
       xl: 1536,
