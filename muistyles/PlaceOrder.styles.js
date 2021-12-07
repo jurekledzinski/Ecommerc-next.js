@@ -33,7 +33,7 @@ export const titlePlaceOrderStyles = {
   fontSize: { xs: '1.6rem', sm: '2.1rem' },
   fontWeight: 500,
   fontFamily: 'Oswald, sans-serif',
-  letterSpacing: 1,
+  letterSpacing: '1px',
 };
 
 export const boxCardsWrapper = {
