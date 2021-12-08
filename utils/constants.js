@@ -1,3 +1,4 @@
+export const ADD_CATEGORY_BRANDS = 'ADD_CATEGORY_BRANDS';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const ADD_ORDERS_USER = 'ADD_ORDERS_USER';
 export const ADD_REVIEW = 'ADD_REVIEW';

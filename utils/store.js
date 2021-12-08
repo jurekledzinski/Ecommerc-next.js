@@ -8,6 +8,7 @@ import { addCart, getCart } from '../helpers/client/apiHelpers';
 import { CREATE_CART, SHOW_MENU } from './constants';
 import {
   cartReducer,
+  categoryBrandsReducer,
   editFormReducer,
   openDrawerReducer,
   contentDrawerReducer,
@@ -23,6 +24,7 @@ import {
 
 const stateMode = Cookies.get('darkmode') === 'on' ? true : false;
 
+const initialStateCategoryBrands = [];
 const initialStateContentDrawer = { contentDrawer: SHOW_MENU };
 const initialStateDarkMode = {
   darkmode: stateMode,
@@ -128,6 +130,11 @@ const StoreProvider = ({ children }) => {
     initialStateOrdersUser
   );
 
+  const [stateCategoryBrands, dispatchStateCategoryBrands] = useReducer(
+    categoryBrandsReducer,
+    initialStateCategoryBrands
+  );
+
   useEffect(() => {
     if (Boolean(stateLoginUser.tokenAccess) && stateCart.products.length >= 0) {
       const updateCart = async () => {
@@ -159,6 +166,8 @@ const StoreProvider = ({ children }) => {
   return (
     <StoreContext.Provider
       value={{
+        stateCategoryBrands,
+        dispatchStateCategoryBrands,
         stateCart,
         dispatchCart,
         stateContentDrawer,

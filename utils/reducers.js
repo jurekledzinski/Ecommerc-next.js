@@ -1,4 +1,5 @@
 import {
+  ADD_CATEGORY_BRANDS,
   ADD_ORDERS_USER,
   ADD_TO_CART,
   ADD_REVIEW,
@@ -270,6 +271,15 @@ export const ordersUserReducer = (state, action) => {
         dateDelivery: item.orderId === action.orderId ? new Date() : null,
         isDelivered: item.orderId === action.orderId ? true : false,
       }));
+    default:
+      return state;
+  }
+};
+
+export const categoryBrandsReducer = (state, action) => {
+  switch (action.type) {
+    case ADD_CATEGORY_BRANDS:
+      return action.data;
     default:
       return state;
   }
