@@ -4,6 +4,7 @@ export const ADD_REVIEW = 'ADD_REVIEW';
 export const ADD_STEP_STEPPER = 'ADD_STEP_STEPPER';
 export const CREATE_CART = 'CREATE_CART';
 export const CLEAR_CART = 'CLEAR_CART';
+export const CLEAR_USER_LOGIN_DATA = 'CLEAR_USER_LOGIN_DATA';
 export const CLOSE_DRAWER = 'CLOSE_DRAWER';
 export const CLOSE_EDIT_FORM = 'CLOSE_EDIT_FORM';
 export const DELETE_REVIEW = 'DELETE_REVIEW';

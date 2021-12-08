@@ -4,6 +4,7 @@ import {
   ADD_REVIEW,
   ADD_STEP_STEPPER,
   CLEAR_CART,
+  CLEAR_USER_LOGIN_DATA,
   CREATE_CART,
   CLOSE_DRAWER,
   CLOSE_EDIT_FORM,
@@ -196,6 +197,8 @@ export const userReducer = (state, action) => {
   switch (action.type) {
     case USER_LOGIN_DATA:
       return action.data;
+    case CLEAR_USER_LOGIN_DATA:
+      return {};
     default:
       return state;
   }
