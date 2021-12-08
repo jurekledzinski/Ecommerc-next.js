@@ -15,7 +15,7 @@ const brandsSchema = new Schema({
   },
   background: {
     type: String,
-    required: [true, 'Background color is required'],
+    required: false,
   },
 });
 
