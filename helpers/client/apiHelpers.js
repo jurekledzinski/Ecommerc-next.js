@@ -17,6 +17,15 @@ const optionsPostWithout = (data) => ({
   body: JSON.stringify(data),
 });
 
+const optionsPostWithOutData = (token) => ({
+  method: 'POST',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  },
+});
+
 const optionsPut = (token, data) => ({
   method: 'PUT',
   credentials: 'include',
@@ -330,6 +339,19 @@ export const deleteReview = wrapperTryCatchGet(
 export const passwordChange = wrapperTryCatch(
   async (url = '', data = {}, setErrorMsg) => {
     const response = await fetch(url, optionsPutChange(data));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
+
+export const logOutUser = wrapperTryCatch(
+  async (url = '', token, setErrorMsg) => {
+    const response = await fetch(url, optionsPostWithOutData(token));
     const result = await response.json();
 
     if (response.ok) {
