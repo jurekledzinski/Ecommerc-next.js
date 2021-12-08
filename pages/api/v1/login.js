@@ -1,6 +1,7 @@
 import cookie from 'cookie';
 import { connectDb } from '../../../utils/db';
 import User from '../../../models/user';
+import { isAuth } from '../../../helpers/api/auth-helper';
 
 import errorHandler from '../../../helpers/api/error-handler';
 
@@ -16,6 +17,17 @@ const sendRefreshToken = (res, tokenRefresh) => {
     cookie.serialize('refreshToken', tokenRefresh, {
       httpOnly: true,
       path: '/',
+    })
+  );
+};
+
+const clearCookie = (res) => {
+  return res.setHeader(
+    'Set-Cookie',
+    cookie.serialize('refreshToken', '', {
+      httpOnly: true,
+      path: '/',
+      expires: new Date('Thu, 01 Jan 1970 00:00:00 GMT'),
     })
   );
 };
@@ -59,6 +71,19 @@ const handler = connectDb(async (req, res) => {
 
       sendRefreshToken(res, tokenRefresh);
       sendAccessToken(res, tokenAccess, userUpdate);
+    } else if (req.method === 'POST') {
+      const idUser = isAuth(req);
+      console.log(idUser, ' logout idUser auth check');
+      if (idUser) {
+        clearCookie(res);
+      }
+      await User.findOneAndUpdate(
+        { _id: idUser },
+        { $set: { tokenRefresh: '', tokenAccessChangePassword: '' } },
+        { upsert: true }
+      );
+
+      return res.status(200).json({ msgSuccess: 'You are logged out' });
     }
   } catch (error) {
     errorHandler(error, res);
