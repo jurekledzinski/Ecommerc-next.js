@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -13,9 +13,8 @@ import {
   Nav,
 } from '../muistyles/Navbar.styles';
 
-import { StoreContext } from '../utils/store';
-
 import {
+  CLEAR_USER_LOGIN_DATA,
   CLOSE_DRAWER,
   OPEN_DRAWER,
   SELECT_OPTION_MENU,
@@ -24,14 +23,25 @@ import {
   SHOW_SIGN_UP,
 } from '../utils/constants';
 
+import { optionsInMenu } from '../utils/data';
+
+import SnackBarMessage from './SnackBarMessage';
+
+import { StoreContext } from '../utils/store';
+
+import { logOutUser } from '../helpers/client/apiHelpers';
+
 const Menu = () => {
   const router = useRouter();
   const {
     disptachContentDrawer,
+    dispatchLoginUser,
     disptachOpenDrawer,
     stateLoginUser,
     stateOpenDrawer,
   } = useContext(StoreContext);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const idTimeout = useRef(null);
   const idTimeoutSec = useRef(null);
   const idTimeoutThird = useRef(null);
@@ -61,7 +71,7 @@ const Menu = () => {
     return { orderUrl: false, profileUrl: false };
   };
 
-  const handleItemMenu = (e, index) => {
+  const handleItemMenu = async (e, index) => {
     disptachOpenDrawer({ type: SELECT_OPTION_MENU, selectOption: index });
 
     switch (e.target.textContent) {
@@ -117,37 +127,57 @@ const Menu = () => {
         }, 800);
         break;
       case 'Log out':
+        const result = await logOutUser(
+          `http://localhost:3000/api/v1/login`,
+          stateLoginUser?.tokenAccess,
+          setErrorMsg
+        );
+
+        if (result.msgSuccess) {
+          setSuccessMsg(result.msgSuccess);
+        }
+        Cookies.remove('darkmode');
         Cookies.remove('_mso');
+        dispatchLoginUser({ type: CLEAR_USER_LOGIN_DATA });
+        router.push('/');
+        break;
       default:
-        return null;
+        router.push('/');
+        break;
     }
   };
 
+  const renderMenuItems = (item, index) => (
+    <ListItemButton
+      key={index}
+      onClick={(e) => handleItemMenu(e, index)}
+      selected={stateOpenDrawer.selectOption === index}
+    >
+      <ListItemText primary={item.name} sx={listItemStyles} />
+    </ListItemButton>
+  );
+
   return (
     <Nav>
+      <SnackBarMessage
+        errorMsg={errorMsg}
+        successMsg={successMsg}
+        setErrorMsg={setErrorMsg}
+        setSuccessMsg={setSuccessMsg}
+      />
       <Typography variant="h6" sx={menuTitleStyles}>
         {stateLoginUser?.user
           ? `Welcome ${stateLoginUser.user.name}`
           : 'Welcome'}
       </Typography>
       <List sx={listStyles}>
-        {[
-          'Home',
-          'Contact',
-          'Orders',
-          'Profile',
-          'Sign In',
-          'Sign Up',
-          'Log out',
-        ].map((item, index) => (
-          <ListItemButton
-            key={item}
-            onClick={(e) => handleItemMenu(e, index)}
-            selected={stateOpenDrawer.selectOption === index}
-          >
-            <ListItemText primary={item} sx={listItemStyles} />
-          </ListItemButton>
-        ))}
+        {optionsInMenu.map((item, index) => {
+          if (Boolean(stateLoginUser?.tokenAccess) && item.logged) {
+            return renderMenuItems(item, index);
+          } else if (!Boolean(stateLoginUser?.tokenAccess) && item.notLogged) {
+            return renderMenuItems(item, index);
+          }
+        })}
       </List>
     </Nav>
   );
