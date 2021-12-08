@@ -19,7 +19,7 @@ const Home = ({ brands, user }) => {
   }, [dispatchLoginUser, user]);
 
   return (
-    <Layout>
+    <Layout brandsProducts={brands}>
       <BrandsProducts brands={brands} />
     </Layout>
   );
