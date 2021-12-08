@@ -22,7 +22,7 @@ import {
 } from './reducers';
 
 const stateMode = Cookies.get('darkmode') === 'on' ? true : false;
-const initialStateOpenDrawer = { openDrawer: false };
+
 const initialStateContentDrawer = { contentDrawer: SHOW_MENU };
 const initialStateDarkMode = {
   darkmode: stateMode,
@@ -41,7 +41,12 @@ const initialStateStepper = Number(Cookies.get('step')) || 1;
 const StoreProvider = ({ children }) => {
   const [errorMsg, setErrorMsg] = useState('');
 
-  console.log('Store');
+  const menuOption = Number(Cookies.get('_mso'));
+
+  const initialStateOpenDrawer = {
+    openDrawer: false,
+    selectOption: Boolean(menuOption) ? menuOption : 0,
+  };
 
   const initialStateCartLoggedUser = {
     products: [],

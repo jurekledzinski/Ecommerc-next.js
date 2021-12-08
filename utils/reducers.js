@@ -13,6 +13,7 @@ import {
   GET_REVIEW,
   OPEN_DRAWER,
   REMOVE_FROM_CART,
+  SELECT_OPTION_MENU,
   SHOW_CART,
   SHOW_CONTACT,
   SHOW_MENU,
@@ -42,6 +43,8 @@ export const openDrawerReducer = (state, action) => {
       return { ...state, openDrawer: true };
     case CLOSE_DRAWER:
       return { ...state, openDrawer: false };
+    case SELECT_OPTION_MENU:
+      return { ...state, selectOption: action.selectOption };
     default:
       return state;
   }
