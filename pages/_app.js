@@ -1,6 +1,8 @@
 import Error from 'next/error';
-import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import React, { useEffect, useState } from 'react';
+
+import NextNprogress from 'nextjs-progressbar';
 import '../styles/globals.css';
 import {
   appWrapperStyles,
@@ -77,6 +79,14 @@ function MyApp({ Component, pageProps }) {
                   content="Buy phones, watches, tablets in good and cheap price"
                 />
               </Head>
+              <NextNprogress
+                color="#0074d9"
+                startPosition={0.3}
+                stopDelayMs={200}
+                height={2}
+                showOnShallow={true}
+                options={{ showSpinner: false }}
+              />
               {loaded && <Component {...pageProps} />}
               {inputGlobalStyles}
             </Box>
@@ -98,6 +108,14 @@ function MyApp({ Component, pageProps }) {
                 content="Buy phones, watches, tablets in good and cheap price"
               />
             </Head>
+            <NextNprogress
+              color="#0074d9"
+              startPosition={0.3}
+              stopDelayMs={200}
+              height={2}
+              showOnShallow={true}
+              options={{ showSpinner: false }}
+            />
             {loaded && <NavBar />}
             {loaded && <Component {...pageProps} />}
             <FooterDown />
