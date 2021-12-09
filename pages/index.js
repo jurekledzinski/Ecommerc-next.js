@@ -1,15 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import Cookies from 'js-cookie';
 import cookie from 'cookie';
 import Layout from '../components/Layout';
+import Box from '@mui/material/Box';
 import BrandsProducts from '../components/BrandsProducts';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { USER_LOGIN_DATA, USER_DATA_CLEAR_PROFILE } from '../utils/constants';
 
 import { StoreContext } from '../utils/store';
 
-const Home = ({ brands, user }) => {
-  const { dispatchLoginUser, dispatchUserProfile, stateUserProfile } =
-    useContext(StoreContext);
+const Home = ({ brands, user, pageLoad }) => {
+  const { dispatchLoginUser, dispatchUserProfile } = useContext(StoreContext);
+  const [pageLoading, setPageLoading] = useState(
+    false || Boolean(Cookies.get('_ls'))
+  );
+  const idTimeout = useRef(null);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {
@@ -18,10 +24,46 @@ const Home = ({ brands, user }) => {
     }
   }, [dispatchLoginUser, user]);
 
+  useEffect(() => {
+    window.onbeforeunload = function (e) {
+      Cookies.remove('_ls');
+    };
+    window.onload = function () {
+      idTimeout.current = setTimeout(() => {
+        Cookies.set('_ls', '1');
+        setPageLoading(pageLoad);
+      }, 300);
+    };
+
+    return () => clearTimeout(idTimeout.current);
+  }, []);
+
   return (
-    <Layout brandsProducts={brands}>
-      <BrandsProducts brands={brands} />
-    </Layout>
+    <>
+      {pageLoading ? (
+        <Layout brandsProducts={brands}>
+          <BrandsProducts brands={brands} />
+        </Layout>
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100vh',
+            backgroundColor: 'white',
+          }}
+        >
+          <Box>
+            <CircularProgress sx={{ color: '#2196f3' }} />
+          </Box>
+        </Box>
+      )}
+    </>
   );
 };
 
@@ -70,11 +112,13 @@ export async function getServerSideProps(context) {
       props: {
         brands: dataBrands,
         user: dataChange || {},
+        pageLoad: true,
       },
     };
   } else {
     return {
       props: {
+        pageLoad: true,
         brands: [],
         user: {},
         error: {
