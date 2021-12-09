@@ -11,8 +11,6 @@ import {
   linkBrandStyles,
 } from '../muistyles/BrandsProducts.styles';
 
-// stateCategoryBrands
-
 import { StoreContext } from '../utils/store';
 
 const BrandsProducts = ({ brands }) => {
