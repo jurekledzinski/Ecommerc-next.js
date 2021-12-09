@@ -1,4 +1,5 @@
 import cookie from 'cookie';
+import Cookies from 'js-cookie';
 import React, { useEffect, useContext } from 'react';
 
 import { StoreContext } from '../../../../utils/store';
@@ -47,6 +48,12 @@ const DetailsProduct = ({ detailsProduct, productReviews, user }) => {
   useEffect(() => {
     dispatchReview({ type: GET_REVIEW, data: productReviews });
   }, [productReviews]);
+
+  useEffect(() => {
+    window.onload = function () {
+      Cookies.set('_ls', '1');
+    };
+  }, []);
 
   return (
     <div>

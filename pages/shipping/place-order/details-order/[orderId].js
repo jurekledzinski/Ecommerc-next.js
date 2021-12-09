@@ -1,4 +1,5 @@
 import cookie from 'cookie';
+import Cookies from 'js-cookie';
 import React, { useContext, useEffect } from 'react';
 import { USER_LOGIN_DATA } from '../../../../utils/constants';
 
@@ -19,6 +20,12 @@ const DetailsOrder = ({ user }) => {
       dispatchLoginUser({ type: USER_LOGIN_DATA, data: user });
     }
   }, [dispatchLoginUser, user]);
+
+  useEffect(() => {
+    window.onload = function () {
+      Cookies.set('_ls', '1');
+    };
+  }, []);
 
   return (
     <>

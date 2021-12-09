@@ -1,4 +1,5 @@
 import cookie from 'cookie';
+import Cookies from 'js-cookie';
 import React, { useContext, useEffect } from 'react';
 
 import { ADD_ORDERS_USER, USER_LOGIN_DATA } from '../../utils/constants';
@@ -20,6 +21,10 @@ const OrdersUser = ({ ordersUser, user }) => {
     if (ordersUser) {
       dispatchOrdersUser({ type: ADD_ORDERS_USER, data: ordersUser });
     }
+
+    window.onload = function () {
+      Cookies.set('_ls', '1');
+    };
   }, []);
 
   return <PaidOrdersUser />;
