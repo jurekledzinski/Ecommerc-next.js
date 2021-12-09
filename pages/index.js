@@ -59,7 +59,7 @@ const Home = ({ brands, user, pageLoad }) => {
           }}
         >
           <Box>
-            <CircularProgress sx={{ color: '#2196f3' }} />
+            <CircularProgress sx={{ color: '#2196f3' }} thickness={2} />
           </Box>
         </Box>
       )}
