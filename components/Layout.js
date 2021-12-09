@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Box, Button, ButtonGroup, Container, Typography } from '@mui/material';
@@ -42,8 +43,19 @@ const changeArrayBrands = (copy) => {
 const Layout = ({ brandsProducts, children }) => {
   const { dispatchStateCategoryBrands } = useContext(StoreContext);
   const [btnCategory, setBtnCategory] = useState([]);
+  const [btnIndex, setBtnIndex] = useState({
+    category: Cookies.get('_cb'),
+    index: Number(Cookies.get('_bi')),
+  });
 
-  const handleChooseCategory = (categoryItems) => {
+  const handleChooseCategory = (categoryItems, index) => {
+    Cookies.set('_bi', JSON.stringify(index));
+    Cookies.set('_cb', categoryItems);
+    setBtnIndex({
+      ...btnIndex,
+      category: categoryItems,
+      index: index,
+    });
     const copy = createCopyBrands(brandsProducts);
     const filterItems = copy.filter((item) => item.category === categoryItems);
 
@@ -56,14 +68,20 @@ const Layout = ({ brandsProducts, children }) => {
   useEffect(() => {
     const copy = createCopyBrands(brandsProducts);
     const onlyCategory = changeArrayBrands(copy);
-    const filterItems = copy.filter(
-      (item) => item.category === onlyCategory[0].category
+    const filterItems = copy.filter((item) =>
+      Boolean(Cookies.get('_cb'))
+        ? item.category === Cookies.get('_cb')
+        : item.category === onlyCategory[0].category
     );
     dispatchStateCategoryBrands({
       type: ADD_CATEGORY_BRANDS,
       data: filterItems,
     });
     setBtnCategory(onlyCategory);
+    if (!Cookies.get('_bi')) {
+      Cookies.set('_bi', '0');
+      Cookies.set('_cb', onlyCategory[0].category);
+    }
   }, []);
 
   return (
@@ -84,9 +102,9 @@ const Layout = ({ brandsProducts, children }) => {
             btnCategory.map((item, index) => (
               <Button
                 key={index}
-                variant="contained"
+                variant={btnIndex.index === index ? 'contained' : 'outlined'}
                 sx={buttonProductStyles}
-                onClick={() => handleChooseCategory(item.category)}
+                onClick={() => handleChooseCategory(item.category, index)}
               >
                 {item.category}
               </Button>
