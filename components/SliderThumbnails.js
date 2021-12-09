@@ -61,17 +61,22 @@ const SliderThumbnails = () => {
           ? imagesSlider.map((item, index) => (
               <SplideSlide key={index}>
                 <WrapperSlideMainThumbNails>
-                  <img
-                    src={item}
-                    srcSet={`${item}?tr=w-305,h-250,cm-pad_resize,bg-transparent`}
-                    sizes="150px"
-                    alt={name}
-                    onLoad={handleOnLoadImage}
-                  />
-                  {!isLoad && (
+                  {!isLoad ? (
                     <Box sx={boxOverlayImageStyles}>
-                      <CircularProgress sx={{ color: '#0074d9' }} size={40} />
+                      <CircularProgress
+                        sx={{ color: '#0074d9' }}
+                        size={40}
+                        thickness={2}
+                      />
                     </Box>
+                  ) : (
+                    <img
+                      src={item}
+                      srcSet={`${item}?tr=w-305,h-250,cm-pad_resize,bg-transparent`}
+                      sizes="150px"
+                      alt={name}
+                      onLoad={handleOnLoadImage}
+                    />
                   )}
                 </WrapperSlideMainThumbNails>
               </SplideSlide>
@@ -83,17 +88,22 @@ const SliderThumbnails = () => {
           ? imagesSlider.map((item, index) => (
               <SplideSlide key={index}>
                 <WrapperSliderThumbNails>
-                  <img
-                    src={item}
-                    alt={name}
-                    srcSet={`${item}?tr=h-80, 80h`}
-                    sizes="80px"
-                    onLoad={handleOnLoadImage}
-                  />
-                  {!isLoad && (
+                  {!isLoad ? (
                     <Box sx={boxOverlayImageStyles}>
-                      <CircularProgress sx={{ color: '#0074d9' }} size={20} />
+                      <CircularProgress
+                        sx={{ color: '#0074d9' }}
+                        size={20}
+                        thickness={2}
+                      />
                     </Box>
+                  ) : (
+                    <img
+                      src={item}
+                      alt={name}
+                      srcSet={`${item}?tr=h-80, 80h`}
+                      sizes="80px"
+                      onLoad={handleOnLoadImage}
+                    />
                   )}
                 </WrapperSliderThumbNails>
               </SplideSlide>
