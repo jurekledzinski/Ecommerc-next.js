@@ -4,12 +4,12 @@ import '@splidejs/splide/dist/css/splide.min.css';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { StoreContext } from '../utils/store';
 
 import ModalPopUp from './ModalPopUp';
 import SliderProductsModal from './SliderProductsModal';
-import CircleSpinner from '../loaders/CircleSpinner';
 
 import {
   boxOverlayImageStyles,
@@ -47,7 +47,7 @@ const SliderThumbnails = () => {
   }, []);
 
   const handleOnLoadImage = (e) => {
-    setIsLoad(true);
+    setTimeout(() => setIsLoad(true), 500);
   };
 
   return (
@@ -70,7 +70,7 @@ const SliderThumbnails = () => {
                   />
                   {!isLoad && (
                     <Box sx={boxOverlayImageStyles}>
-                      <CircleSpinner radius="20" />
+                      <CircularProgress sx={{ color: '#0074d9' }} size={40} />
                     </Box>
                   )}
                 </WrapperSlideMainThumbNails>
@@ -92,7 +92,7 @@ const SliderThumbnails = () => {
                   />
                   {!isLoad && (
                     <Box sx={boxOverlayImageStyles}>
-                      <CircleSpinner radius="8" />
+                      <CircularProgress sx={{ color: '#0074d9' }} size={20} />
                     </Box>
                   )}
                 </WrapperSliderThumbNails>
