@@ -361,3 +361,16 @@ export const logOutUser = wrapperTryCatch(
     }
   }
 );
+
+export const deleteUser = wrapperTryCatchGet(
+  async (url = '', token, setErrorMsg) => {
+    const response = await fetch(url, optionsDelete(token));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
