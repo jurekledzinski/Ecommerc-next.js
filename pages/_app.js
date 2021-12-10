@@ -1,4 +1,3 @@
-import Error from 'next/error';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 
@@ -44,24 +43,45 @@ function MyApp({ Component, pageProps }) {
     switch (true) {
       case statusCode >= 400 && statusCode < 500:
         return (
-          <NotFoundPage
-            statusCode={pageProps.error.statusCode}
-            title={pageProps.error.message}
-          />
+          <StoreProvider>
+            <ThemeMui>
+              {loaded && (
+                <NotFoundPage
+                  statusCode={pageProps.error.statusCode}
+                  title={pageProps.error.message}
+                />
+              )}
+              {inputGlobalStyles}
+            </ThemeMui>
+          </StoreProvider>
         );
       case statusCode >= 500 && statusCode < 600:
         return (
-          <ServerErrorPage
-            statusCode={pageProps.error.statusCode}
-            title={pageProps.error.message}
-          />
+          <StoreProvider>
+            <ThemeMui>
+              {loaded && (
+                <ServerErrorPage
+                  statusCode={pageProps.error.statusCode}
+                  title={pageProps.error.message}
+                />
+              )}
+              {inputGlobalStyles}
+            </ThemeMui>
+          </StoreProvider>
         );
       default:
         return (
-          <NotFoundPage
-            statusCode={pageProps.error.statusCode}
-            title={pageProps.error.message}
-          />
+          <StoreProvider>
+            <ThemeMui>
+              {loaded && (
+                <NotFoundPage
+                  statusCode={pageProps.error.statusCode}
+                  title={pageProps.error.message}
+                />
+              )}
+              {inputGlobalStyles}
+            </ThemeMui>
+          </StoreProvider>
         );
     }
   }
