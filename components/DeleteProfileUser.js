@@ -5,7 +5,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import {} from '../muistyles/DeleteProfileUser.styles';
+import {
+  boxBtnDeleteUserStyles,
+  boxWrapperBtnsDeleteUserStyles,
+  boxWrapperDeleteUserStyles,
+  titleQuestionDeleteUserStyles,
+} from '../muistyles/DeleteProfileUser.styles';
 
 import ModalPopUp from './ModalPopUp';
 import SnackBarMessage from './SnackBarMessage';
@@ -59,37 +64,11 @@ const DeleteProfileUser = () => {
   return (
     <>
       <ModalPopUp openModal={openModal} handleClose={handleClose}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: { xs: '95%', sm: '400px' },
-            height: '250px',
-            backgroundColor: 'white',
-            zIndex: '1',
-          }}
-        >
-          <Typography
-            variant="h6"
-            sx={{
-              textTransform: 'uppercase',
-              textAlign: 'center',
-              fontFamily: 'Oswald,sans-serif',
-              fontWeight: '400',
-            }}
-          >
+        <Box sx={boxWrapperDeleteUserStyles}>
+          <Typography variant="h6" sx={titleQuestionDeleteUserStyles}>
             Are you sure you want delete your account?
           </Typography>
-          <Box
-            sx={{
-              width: { xs: '80%', sm: '50%' },
-              display: 'flex',
-              justifyContent: 'space-evenly',
-              marginTop: '10px',
-            }}
-          >
+          <Box sx={boxWrapperBtnsDeleteUserStyles}>
             <Button onClick={handleDeleteUser} variant="contained">
               Yes
             </Button>
@@ -105,7 +84,7 @@ const DeleteProfileUser = () => {
         setErrorMsg={setErrorMsg}
         setSuccessMsg={setSuccessMsg}
       />
-      <Box sx={{ marginBottom: { xs: '15px', sm: 'initial' } }}>
+      <Box sx={boxBtnDeleteUserStyles}>
         <Button onClick={handleOpenModal} color="error" variant="contained">
           Delete account
         </Button>
