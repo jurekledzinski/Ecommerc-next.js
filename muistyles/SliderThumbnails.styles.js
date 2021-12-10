@@ -2,6 +2,8 @@ import { styled } from '@mui/material/styles';
 
 export const WrapperSlideMainThumbNails = styled('div')(({ theme }) => ({
   position: 'relative',
+  width: '100%',
+  height: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -36,6 +38,8 @@ export const WrapperSlideMainThumbNails = styled('div')(({ theme }) => ({
 
 export const WrapperSliderThumbNails = styled('div')(({ theme }) => ({
   position: 'relative',
+  width: '100%',
+  height: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
