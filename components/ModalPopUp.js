@@ -15,7 +15,11 @@ const ModalPopUp = ({ children, handleClose, openModal }) => {
       BackdropProps={{
         timeout: 500,
       }}
-      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
     >
       <Fade in={openModal}>{children}</Fade>
     </Modal>
