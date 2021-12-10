@@ -73,10 +73,11 @@ const handler = connectDb(async (req, res) => {
       sendAccessToken(res, tokenAccess, userUpdate);
     } else if (req.method === 'POST') {
       const idUser = isAuth(req);
-      console.log(idUser, ' logout idUser auth check');
+
       if (idUser) {
         clearCookie(res);
       }
+
       await User.findOneAndUpdate(
         { _id: idUser },
         { $set: { tokenRefresh: '', tokenAccessChangePassword: '' } },
