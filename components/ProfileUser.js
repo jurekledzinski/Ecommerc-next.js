@@ -17,6 +17,7 @@ import {
 
 import UpdateFormProfile from './UpdateFormProfile';
 import AddImageProfile from './AddImageProfile';
+import DeleteProfileUser from './DeleteProfileUser';
 import FormAddShippingAddress from './FormAddShippingAddress';
 
 const ProfileUser = ({ endpoints }) => {
@@ -31,6 +32,7 @@ const ProfileUser = ({ endpoints }) => {
           </Typography>
           <UpdateFormProfile />
           <AddImageProfile />
+          <DeleteProfileUser />
         </Box>
         <Box sx={boxProfileRightStyles}>
           <Typography variant="h4" sx={titleProfileUpdateStyles}>
