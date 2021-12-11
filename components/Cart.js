@@ -10,7 +10,14 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { CLOSE_DRAWER, OPEN_DRAWER, SHOW_SIGN_IN } from '../utils/constants';
+import {
+  ADD_INVENTORY_ISSUE_PRODUCTS,
+  CLOSE_DRAWER,
+  HIDE_MODAL,
+  OPEN_DRAWER,
+  SHOW_MODAL,
+  SHOW_SIGN_IN,
+} from '../utils/constants';
 
 import {
   boxButtonsStyles,
@@ -39,29 +46,53 @@ import {
 import { headersCart } from '../utils/data';
 import { StoreContext } from '../utils/store';
 import { controlCart, copyCart } from '../helpers/carthelpers';
+
+import CheckInventory from './CheckInventory';
+import ModalPopUp from './ModalPopUp';
 import SnackBarMessage from './SnackBarMessage';
 
-import { addCart } from '../helpers/client/apiHelpers';
+import { addCart, checkProductsInventory } from '../helpers/client/apiHelpers';
 
 const Cart = () => {
   const router = useRouter();
   const {
     dispatchCart,
     disptachContentDrawer,
+    dispatchInventory,
+    dispatchModal,
     disptachProductsBrand,
     dispatchDetailsProduct,
     disptachOpenDrawer,
     stateCart,
+    stateModal,
     stateLoginUser,
   } = useContext(StoreContext);
   const { tokenAccess } = stateLoginUser;
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+
   const idTimeout = useRef(null);
   let flagOperation = false;
   const addedAmountToCart = 1;
   const removeProductFlag = true;
   const flagTemp = false;
+
+  const handleCheckInventory = async () => {
+    const result = await checkProductsInventory(
+      `http://localhost:3000/api/v1/products`,
+      { data: stateCart.products },
+      setErrorMsg
+    );
+    console.log(result);
+
+    if (result.data.length > 0) {
+      dispatchInventory({
+        type: ADD_INVENTORY_ISSUE_PRODUCTS,
+        data: result.data,
+      });
+    }
+    return result.data.length > 0 ? true : false;
+  };
 
   const handelOrderedProductsAmount = (idProduct, flag) => {
     const singleProduct = stateCart.products.find(
@@ -110,6 +141,11 @@ const Cart = () => {
   const handleProccedToCheckout = async (e) => {
     e.preventDefault();
 
+    const isIssusInventory = await handleCheckInventory();
+    console.log(isIssusInventory, 'isIssusInventory');
+    if (isIssusInventory) return dispatchModal({ type: SHOW_MODAL });
+    console.log('dalej nie idzie');
+
     if (!tokenAccess) {
       Cookies.set('check', '1');
       disptachOpenDrawer({ type: CLOSE_DRAWER });
@@ -121,7 +157,6 @@ const Cart = () => {
       }, 800);
     } else {
       const cartAndId = copyCart(stateCart, stateLoginUser.user._id);
-      console.log(cartAndId, 'cartAndId cart');
       const result = await addCart(
         `http://localhost:3000/api/v1/cart`,
         cartAndId,
@@ -138,8 +173,15 @@ const Cart = () => {
     }
   };
 
+  const handleClose = () => {
+    dispatchModal({ type: HIDE_MODAL });
+  };
+
   return (
     <Section>
+      <ModalPopUp openModal={stateModal} handleClose={handleClose}>
+        <CheckInventory />
+      </ModalPopUp>
       <SnackBarMessage
         errorMsg={errorMsg}
         successMsg={successMsg}
