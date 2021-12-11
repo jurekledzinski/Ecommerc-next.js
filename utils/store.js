@@ -10,11 +10,13 @@ import {
   cartReducer,
   categoryBrandsReducer,
   editFormReducer,
+  modalReducer,
   openDrawerReducer,
   contentDrawerReducer,
   darkModeReducer,
   dataProductsByBrandReducer,
   detailsProductReducer,
+  inventoryIssueReducer,
   ordersUserReducer,
   stepperReducer,
   reviewReducer,
@@ -32,6 +34,8 @@ const initialStateDarkMode = {
 const initialStateEditForm = {
   editForm: false,
 };
+const initialStateInventory = [];
+const initialStateModal = false;
 const initialStateProductsByBrand = [];
 const initialStateDetailsProduct = {};
 const initialStateLoginUser = {};
@@ -135,6 +139,16 @@ const StoreProvider = ({ children }) => {
     initialStateCategoryBrands
   );
 
+  const [stateInventory, dispatchInventory] = useReducer(
+    inventoryIssueReducer,
+    initialStateInventory
+  );
+
+  const [stateModal, dispatchModal] = useReducer(
+    modalReducer,
+    initialStateModal
+  );
+
   useEffect(() => {
     if (Boolean(stateLoginUser.tokenAccess) && stateCart.products.length >= 0) {
       const updateCart = async () => {
@@ -178,6 +192,10 @@ const StoreProvider = ({ children }) => {
         dispatchDetailsProduct,
         stateEditForm,
         dispatchEditForm,
+        stateInventory,
+        dispatchInventory,
+        stateModal,
+        dispatchModal,
         stateLoginUser,
         dispatchLoginUser,
         stateOpenDrawer,

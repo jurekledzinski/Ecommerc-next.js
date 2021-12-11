@@ -1,5 +1,6 @@
 import {
   ADD_CATEGORY_BRANDS,
+  ADD_INVENTORY_ISSUE_PRODUCTS,
   ADD_ORDERS_USER,
   ADD_TO_CART,
   ADD_REVIEW,
@@ -13,11 +14,13 @@ import {
   FETCH_DATA_BRAND_PRODUCTS,
   FETCH_DETAILS_PRODUCT,
   GET_REVIEW,
+  HIDE_MODAL,
   OPEN_DRAWER,
   REMOVE_FROM_CART,
   SELECT_OPTION_MENU,
   SHOW_CART,
   SHOW_CONTACT,
+  SHOW_MODAL,
   SHOW_MENU,
   SHOW_SIGN_IN,
   SHOW_SIGN_UP,
@@ -280,6 +283,26 @@ export const categoryBrandsReducer = (state, action) => {
   switch (action.type) {
     case ADD_CATEGORY_BRANDS:
       return action.data;
+    default:
+      return state;
+  }
+};
+
+export const inventoryIssueReducer = (state, action) => {
+  switch (action.type) {
+    case ADD_INVENTORY_ISSUE_PRODUCTS:
+      return action.data;
+    default:
+      return state;
+  }
+};
+
+export const modalReducer = (state, action) => {
+  switch (action.type) {
+    case SHOW_MODAL:
+      return true;
+    case HIDE_MODAL:
+      return false;
     default:
       return state;
   }
