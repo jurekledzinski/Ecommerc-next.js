@@ -4,10 +4,31 @@ import errorHandler from '../../../helpers/api/error-handler';
 import { isAuth } from '../../../helpers/api/auth-helper';
 
 const handler = connectDb(async (req, res) => {
-  const idUser = isAuth(req);
-  const products = req.body.cart.products;
   try {
-    if (req.method === 'PATCH') {
+    if (req.method === 'POST') {
+      const { data } = req.body;
+
+      const result = data.map(async (item) => {
+        return await Product.find({
+          _id: item._id,
+          $or: [
+            { onStock: { $lt: item.amount - item.onStock } },
+            { onStock: { $eq: 0 } },
+          ],
+        });
+      });
+
+      const productsData = await Promise.all(result);
+
+      let changeProducts = productsData.map((item) => {
+        const singleObj = item[0];
+        return singleObj;
+      });
+
+      return res.status(200).json({ data: changeProducts });
+    } else if (req.method === 'PATCH') {
+      const products = req.body.cart.products;
+      const idUser = isAuth(req);
       if (idUser) {
         products.forEach(async (item) => {
           await Product.findByIdAndUpdate(
