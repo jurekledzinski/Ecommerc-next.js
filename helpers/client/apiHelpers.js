@@ -64,6 +64,14 @@ const optionsGet = (token) => ({
   },
 });
 
+const optionsGetOnly = () => ({
+  method: 'GET',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 const optionsDelete = (token) => ({
   method: 'DELETE',
   credentials: 'include',
@@ -365,6 +373,19 @@ export const logOutUser = wrapperTryCatch(
 export const deleteUser = wrapperTryCatchGet(
   async (url = '', token, setErrorMsg) => {
     const response = await fetch(url, optionsDelete(token));
+    const result = await response.json();
+
+    if (response.ok) {
+      return result;
+    } else {
+      setErrorMsg(result.msgError);
+    }
+  }
+);
+
+export const checkProductsInventory = wrapperTryCatchGet(
+  async (url = '', data = {}, setErrorMsg) => {
+    const response = await fetch(url, optionsPostWithout(data));
     const result = await response.json();
 
     if (response.ok) {
