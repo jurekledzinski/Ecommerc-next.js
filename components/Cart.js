@@ -83,15 +83,14 @@ const Cart = () => {
       { data: stateCart.products },
       setErrorMsg
     );
-    console.log(result);
 
-    if (result.data.length > 0) {
+    if (Boolean(result) && result?.data.length > 0) {
       dispatchInventory({
         type: ADD_INVENTORY_ISSUE_PRODUCTS,
-        data: result.data,
+        data: result?.data,
       });
     }
-    return result.data.length > 0 ? true : false;
+    return result?.data?.length > 0 ? true : false;
   };
 
   const handelOrderedProductsAmount = (idProduct, flag) => {
@@ -142,9 +141,7 @@ const Cart = () => {
     e.preventDefault();
 
     const isIssusInventory = await handleCheckInventory();
-    console.log(isIssusInventory, 'isIssusInventory');
     if (isIssusInventory) return dispatchModal({ type: SHOW_MODAL });
-    console.log('dalej nie idzie');
 
     if (!tokenAccess) {
       Cookies.set('check', '1');
