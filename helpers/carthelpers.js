@@ -7,6 +7,11 @@ import {
   UPDATE_TOTAL_PRICE_CART_PRODUCT,
   UPDATE_TOTAL_CART_AMOUNT,
   UPDATE_TOTAL_CART_PRICE,
+  UPDATE_CART_AMOUNT_INVENTORY,
+  UPDATE_ON_STOCK_CART_PRODUCT_INVENTORY,
+  UPDATE_TOTAL_PRICE_CART_PRODUCT_INVENTORY,
+  UPDATE_TOTAL_CART_AMOUNT_INVENTORY,
+  UPDATE_TOTAL_CART_PRICE_INVENTORY,
 } from '../utils/constants';
 
 export const controlCart = (
@@ -18,7 +23,9 @@ export const controlCart = (
   operator = true,
   removeProductFlag = false,
   disptachProductsBrand,
-  dispatchDetailsProduct
+  dispatchDetailsProduct,
+  isInvetory = false,
+  invetoryStock = 0
 ) => {
   const checkCart = stateCart.products.find((item) => item._id === idProduct);
 
@@ -62,12 +69,12 @@ export const controlCart = (
     disptachProductsBrand({
       type: UPDATE_PRODUCTS_BRAND_ON_STOCK,
       productId: idProduct,
-      amountOnStock: checkCart.amount,
+      amountOnStock: isInvetory ? invetoryStock : checkCart.amount,
     });
     dispatchDetailsProduct({
       type: UPDATE_ON_STOCK_PRODUCT_DETAILS,
       productId: idProduct,
-      updateOnStock: checkCart.amount,
+      updateOnStock: isInvetory ? invetoryStock : checkCart.amount,
     });
     dispatchCart({
       type: UPDATE_TOTAL_CART_AMOUNT,
@@ -81,6 +88,39 @@ export const controlCart = (
       addedAmountToCart: checkCart.amount - checkCart.onStock,
     });
   }
+};
+
+export const controlInventory = (
+  data,
+  idProduct,
+  dispatchCart,
+  reduceAmountFromCart
+) => {
+  dispatchCart({
+    type: UPDATE_CART_AMOUNT_INVENTORY,
+    idProduct,
+    originalAmount: reduceAmountFromCart,
+  });
+  dispatchCart({
+    type: UPDATE_ON_STOCK_CART_PRODUCT_INVENTORY,
+    idProduct,
+  });
+  dispatchCart({
+    type: UPDATE_TOTAL_PRICE_CART_PRODUCT_INVENTORY,
+    idProduct,
+    reduceAmountFromCart,
+  });
+  dispatchCart({
+    type: UPDATE_TOTAL_CART_AMOUNT_INVENTORY,
+    idProduct,
+    reduceAmountFromCart,
+  });
+  dispatchCart({
+    type: UPDATE_TOTAL_CART_PRICE_INVENTORY,
+    idProduct,
+    product: data,
+    reduceAmountFromCart,
+  });
 };
 
 export const copyCart = (cartState, userStateId) => {
