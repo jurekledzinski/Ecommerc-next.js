@@ -35,6 +35,7 @@ export const buttonRedirect = {
   minWidth: 'initial',
   padding: 'initial',
   textTransform: 'initial',
+  textIndent: '5px',
 };
 
 export const questionTextStyles = {
