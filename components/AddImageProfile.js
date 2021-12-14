@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { USER_LOGIN_DATA } from '../utils/constants';
 
@@ -16,6 +17,7 @@ import { addImageProfile } from '../helpers/client/apiHelpers';
 import {
   addProfileImageBtnStyles,
   cardAvatarProfileStyles,
+  loaderImageAvatarProfile,
   FileNameTag,
   formAddImageStyles,
   FormMsgAvatarProfile,
@@ -29,6 +31,7 @@ const ProfileImage = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [nameFile, setNameFile] = useState('');
+  const [isLoad, setIsLoad] = useState(false);
 
   const {
     control,
@@ -88,7 +91,15 @@ const ProfileImage = () => {
             height="50"
             image={stateLoginUser.user.avatar}
             alt="User avatar"
+            onLoad={() => setIsLoad(true)}
           />
+          {!Boolean(isLoad) && (
+            <CircularProgress
+              size={15}
+              thickness={2}
+              sx={loaderImageAvatarProfile}
+            />
+          )}
         </Card>
       )}
       <Box

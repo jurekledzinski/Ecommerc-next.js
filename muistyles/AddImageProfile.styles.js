@@ -31,8 +31,10 @@ export const addProfileImageBtnStyles = {
 };
 
 export const cardAvatarProfileStyles = {
+  position: 'relative',
   maxWidth: '50px',
   margin: '20px 0 0 0',
+  borderRadius: 'initial',
 };
 
 export const FormMsgAvatarProfile = styled('p')(({}) => ({
@@ -40,3 +42,10 @@ export const FormMsgAvatarProfile = styled('p')(({}) => ({
   fontSize: '1rem',
   color: 'red',
 }));
+
+export const loaderImageAvatarProfile = {
+  position: 'absolute',
+  top: '40%',
+  left: '35%',
+  transform: 'translate(-50%,-50%)',
+};
