@@ -6,12 +6,17 @@ import Box from '@mui/material/Box';
 import BrandsProducts from '../components/BrandsProducts';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { USER_LOGIN_DATA, USER_DATA_CLEAR_PROFILE } from '../utils/constants';
+import {
+  SELECT_OPTION_MENU,
+  USER_LOGIN_DATA,
+  USER_DATA_CLEAR_PROFILE,
+} from '../utils/constants';
 
 import { StoreContext } from '../utils/store';
 
 const Home = ({ brands, user, pageLoad }) => {
-  const { dispatchLoginUser, dispatchUserProfile } = useContext(StoreContext);
+  const { dispatchLoginUser, disptachOpenDrawer, dispatchUserProfile } =
+    useContext(StoreContext);
   const [pageLoading, setPageLoading] = useState(
     false || Boolean(Cookies.get('_ls'))
   );
@@ -25,6 +30,9 @@ const Home = ({ brands, user, pageLoad }) => {
   }, [dispatchLoginUser, user]);
 
   useEffect(() => {
+    Cookies.remove('_mso');
+    disptachOpenDrawer({ type: SELECT_OPTION_MENU, selectOption: 0 });
+
     window.onbeforeunload = function (e) {
       Cookies.remove('_ls');
     };
