@@ -40,6 +40,11 @@ import {
   UPDATE_TOTAL_CART_AMOUNT,
   UPDATE_TOTAL_CART_PRICE,
   UPDATE_PRODUCTS_BRAND_ON_STOCK,
+  UPDATE_CART_AMOUNT_INVENTORY,
+  UPDATE_ON_STOCK_CART_PRODUCT_INVENTORY,
+  UPDATE_TOTAL_PRICE_CART_PRODUCT_INVENTORY,
+  UPDATE_TOTAL_CART_AMOUNT_INVENTORY,
+  UPDATE_TOTAL_CART_PRICE_INVENTORY,
 } from './constants';
 
 export const openDrawerReducer = (state, action) => {
@@ -133,14 +138,17 @@ export const cartReducer = (state, action) => {
           },
         ],
       };
+
     case CLEAR_CART:
       return {
         products: [],
         totalCartAmount: 0,
         totalCartPrice: 0,
       };
+
     case CREATE_CART:
       return action.data;
+
     case REMOVE_FROM_CART:
       return {
         ...state,
@@ -148,6 +156,7 @@ export const cartReducer = (state, action) => {
           (item) => item._id !== action.idProduct
         ),
       };
+
     case UPDATE_ON_STOCK_CART_PRODUCT:
       return {
         ...state,
@@ -183,6 +192,7 @@ export const cartReducer = (state, action) => {
           ? state.totalCartAmount + action.addedAmountToCart
           : state.totalCartAmount - action.addedAmountToCart,
       };
+
     case UPDATE_TOTAL_CART_PRICE:
       return {
         ...state,
@@ -192,6 +202,54 @@ export const cartReducer = (state, action) => {
           : state.totalCartPrice -
             action.product.price * action.addedAmountToCart,
       };
+
+    case UPDATE_CART_AMOUNT_INVENTORY:
+      return {
+        ...state,
+        products: state.products.map((item) => ({
+          ...item,
+          amount:
+            item._id === action.idProduct
+              ? item.amount - item.onStock - action.originalAmount
+              : item.amount,
+        })),
+      };
+
+    case UPDATE_ON_STOCK_CART_PRODUCT_INVENTORY:
+      return {
+        ...state,
+        products: state.products.map((item) => ({
+          ...item,
+          onStock: item._id === action.idProduct ? 0 : item.onStock,
+        })),
+      };
+
+    case UPDATE_TOTAL_PRICE_CART_PRODUCT_INVENTORY:
+      return {
+        ...state,
+        products: state.products.map((item) => ({
+          ...item,
+          totalPrice:
+            item._id === action.idProduct
+              ? item.totalPrice - item.price * action.reduceAmountFromCart
+              : item.totalPrice,
+        })),
+      };
+
+    case UPDATE_TOTAL_CART_AMOUNT_INVENTORY:
+      return {
+        ...state,
+        totalCartAmount: state.totalCartAmount - action.reduceAmountFromCart,
+      };
+
+    case UPDATE_TOTAL_CART_PRICE_INVENTORY:
+      return {
+        ...state,
+        totalCartPrice:
+          state.totalCartPrice -
+          action.product.price * action.reduceAmountFromCart,
+      };
+
     default:
       return state;
   }
