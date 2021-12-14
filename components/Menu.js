@@ -135,6 +135,10 @@ const Menu = () => {
 
         if (result.msgSuccess) {
           setSuccessMsg(result.msgSuccess);
+          idTimeout.current = setTimeout(
+            () => disptachOpenDrawer({ type: CLOSE_DRAWER }),
+            1100
+          );
         }
         Cookies.remove('darkmode');
         Cookies.remove('_mso');
