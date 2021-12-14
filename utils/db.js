@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import errorHandler from '../helpers/api/error-handler';
 
 export const connectDb = (fn) => {
   return async (req, res) => {
@@ -10,7 +11,7 @@ export const connectDb = (fn) => {
       await mongoose.connect(process.env.ATLAS_URL);
       return await fn(req, res);
     } catch (error) {
-      console.log(error, 'error connect baza danych');
+      errorHandler(error, res);
     }
   };
 };
