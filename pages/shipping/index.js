@@ -11,7 +11,6 @@ import FooterDown from '../../components/FooterDown';
 
 const Shipping = ({ user }) => {
   const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
-  console.log(stateLoginUser, 'shipping stateLoginUser');
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {

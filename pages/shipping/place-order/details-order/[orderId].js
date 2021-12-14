@@ -10,10 +10,7 @@ import DetailsOrderComponent from '../../../../components/DetailsOrder';
 import FooterDown from '../../../../components/FooterDown';
 
 const DetailsOrder = ({ user }) => {
-  console.log(user, 'refresh user');
-
-  const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
-  console.log(stateLoginUser, 'details stateLoginUser');
+  const { dispatchLoginUser } = useContext(StoreContext);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {

@@ -20,8 +20,6 @@ const handler = connectDb(async (req, res) => {
 
       let payload = jwt.verify(token, process.env.JWT_SECRET_REFRESH);
 
-      console.log(payload, 'payload');
-
       const result = await User.findOne({ _id: payload.idUser });
 
       if (!result) {

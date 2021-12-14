@@ -19,9 +19,6 @@ import { StoreContext } from '../utils/store';
 const ReviewsProduct = () => {
   const { stateReviews, stateLoginUser } = useContext(StoreContext);
   const { user } = stateLoginUser;
-  console.log(stateLoginUser, ' ReviewsProduct');
-
-  console.log(stateReviews, 'stateReviews reviews products');
 
   return (
     <Box>

@@ -87,8 +87,6 @@ const SingleReview = () => {
       setErrorMsg
     );
 
-    console.log(result, 'delete review');
-
     if (Boolean(result) && result.msgSuccess) {
       setSuccessMsg(result.msgSuccess);
       dispatchReview({
@@ -102,8 +100,6 @@ const SingleReview = () => {
       dispatchEditForm({ type: CLOSE_EDIT_FORM });
     }
   };
-
-  console.log(stateEditForm, 'stateEditForm');
 
   const handleShowEditForm = () => {
     dispatchEditForm({ type: TOGGLE_EDIT_FORM });

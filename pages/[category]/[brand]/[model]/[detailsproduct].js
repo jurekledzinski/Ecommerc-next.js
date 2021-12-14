@@ -65,7 +65,6 @@ const DetailsProduct = ({ detailsProduct, productReviews, user }) => {
 export default DetailsProduct;
 
 export async function getServerSideProps(context) {
-  //   console.log(context.req.cookies, 'products details getserver');
   const { category, brand, id } = context.query;
 
   const response1 = await fetch(
@@ -104,11 +103,6 @@ export async function getServerSideProps(context) {
       }
     );
     const dataReviews = await response3.json();
-
-    console.log(
-      dataReviews,
-      'dataReviews refresh token strona detail getserversideprops'
-    );
 
     if (data.user) {
       context.res.setHeader(

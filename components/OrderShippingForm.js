@@ -86,7 +86,6 @@ const OrderShippingForm = () => {
   };
 
   const errorMessage = (errorMsg) => {
-    console.log(errorMsg);
     return <FormMsgShipOrder>{errorMsg}</FormMsgShipOrder>;
   };
 
@@ -109,11 +108,8 @@ const OrderShippingForm = () => {
     }
   }, [stateLoginUser]);
 
-  console.log(errors);
-
   useEffect(() => {
     if (Object.keys(profileData).length > 0) {
-      console.log(profileData);
       const defaultValues = {
         name: profileData.name,
         surname: profileData.surname,

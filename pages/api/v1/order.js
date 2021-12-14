@@ -4,7 +4,6 @@ import errorHandler from '../../../helpers/api/error-handler';
 import { isAuth } from '../../../helpers/api/auth-helper';
 
 const handler = connectDb(async (req, res) => {
-  //   console.log(req.query.page.replace(/\_/g, ' '), 'order query');
   const userID = isAuth(req);
   try {
     if (req.method === 'GET') {

@@ -11,7 +11,6 @@ import FooterDown from '../../../components/FooterDown';
 
 const PlaceOrder = ({ user }) => {
   const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
-  console.log(stateLoginUser, 'place order stateLoginUser');
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {

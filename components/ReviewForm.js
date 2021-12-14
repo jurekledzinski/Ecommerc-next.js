@@ -43,8 +43,6 @@ const ReviewForm = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const isReviewed = useRef(true);
 
-  console.log(isReviewed, 'isReviewed');
-
   const {
     control,
     formState: { errors },
@@ -57,8 +55,6 @@ const ReviewForm = () => {
       rating: 0,
     },
   });
-
-  console.log(user, 'add post form');
 
   const onSubmit = async (data) => {
     if (!parseFloat(data.rating)) {
@@ -79,8 +75,6 @@ const ReviewForm = () => {
       userId: user._id,
     };
 
-    console.log(dataReview, 'dataReview first post');
-
     const result = await addReview(
       `http://localhost:3000/api/v1/reviews?productId=${_id}`,
       dataReview,
@@ -89,8 +83,6 @@ const ReviewForm = () => {
     );
 
     setDataForm(result);
-
-    console.log(result, 'add review result');
 
     if (Boolean(result) && result.msgSuccess) {
       setSuccessMsg(result.msgSuccess);

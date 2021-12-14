@@ -15,7 +15,6 @@ import {
 
 const NotFoundPage = ({ statusCode, title }) => {
   const router = useRouter();
-  console.log(statusCode, title);
 
   useEffect(() => {
     window.onload = function () {

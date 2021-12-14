@@ -21,11 +21,15 @@ const handler = connectDb(async (req, res) => {
       const productsData = await Promise.all(result);
 
       let changeProducts = productsData.map((item) => {
-        const singleObj = item[0];
-        return singleObj;
+        const singleObj = item.length !== 0 && item[0];
+        return singleObj ? singleObj : item;
       });
 
-      return res.status(200).json({ data: changeProducts });
+      const filterProducts = changeProducts.filter(
+        (item) => !Array.isArray(item)
+      );
+
+      return res.status(200).json({ data: filterProducts });
     } else if (req.method === 'PATCH') {
       const products = req.body.cart.products;
       const idUser = isAuth(req);

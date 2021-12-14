@@ -9,7 +9,6 @@ import CancelPaidOrder from '../../components/CancelPaidOrder';
 
 const CancelOrder = ({ user }) => {
   const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
-  console.log(stateLoginUser, 'orders stateLoginUser');
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {

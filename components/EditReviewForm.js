@@ -65,7 +65,6 @@ const EditReviewForm = ({ idReview, userId }) => {
         message: 'Rating is required',
       });
     }
-    console.log(user, 'comment edit');
 
     const dataEdit = {
       avatarImage: user.avatar,
@@ -80,8 +79,6 @@ const EditReviewForm = ({ idReview, userId }) => {
       tokenAccess,
       setErrorMsg
     );
-
-    console.log(result, 'edit result from server');
 
     if (Boolean(result) && result.msgSuccess) {
       dispatchReview({
@@ -117,9 +114,7 @@ const EditReviewForm = ({ idReview, userId }) => {
 
   useEffect(() => {
     if (stateReviews.length > 0) {
-      console.log(idReview, 'idReview edit form id comment');
       const reviewToEdit = stateReviews.find((item) => item._id === idReview);
-      console.log(reviewToEdit, 'reviewToEdit');
       const defaultValues = {
         editReview: reviewToEdit.review || '',
         editRating: parseFloat(reviewToEdit.rate) || 0,
@@ -130,7 +125,6 @@ const EditReviewForm = ({ idReview, userId }) => {
 
   useEffect(() => {
     return () => {
-      console.log('clear timeout');
       clearTimeout(idTimeout.current);
     };
   }, []);
