@@ -16,7 +16,7 @@ export const Section500Page = styled('section')(({ theme }) => ({
 }));
 
 export const title500PageStyles = {
-  backgroundImage: `url("https://firebasestorage.googleapis.com/v0/b/dictionary-cc280.appspot.com/o/Night-sky.jpg?alt=media&token=6915fb77-a0a0-476e-9e92-7fca8fcaa7a4")`,
+  backgroundImage: `url("https://ik.imagekit.io/mdklwracd5rti/Shoppy/Others/Night-sky_qbg3LjX354.jpg")`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
