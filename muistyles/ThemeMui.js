@@ -9,6 +9,7 @@ export const getTheme = (mode) => ({
             primary: '#555555',
           },
           background: {
+            brandCard: '#a7a7a729',
             cardbottom: '#ffffff',
             cardtop: '#ffffff',
             default: '#eeeeee',
@@ -20,6 +21,7 @@ export const getTheme = (mode) => ({
             main: blue[500],
           },
           background: {
+            brandCard: '#555555',
             default: '#555555',
             paper: '#333333',
             cardbottom: '#555555',
