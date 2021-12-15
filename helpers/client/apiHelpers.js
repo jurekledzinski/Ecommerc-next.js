@@ -64,14 +64,6 @@ const optionsGet = (token) => ({
   },
 });
 
-const optionsGetOnly = () => ({
-  method: 'GET',
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
 const optionsDelete = (token) => ({
   method: 'DELETE',
   credentials: 'include',
