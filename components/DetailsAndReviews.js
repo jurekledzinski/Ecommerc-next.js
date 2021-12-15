@@ -8,8 +8,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 
-import { tabelWrapperStyles } from '../muistyles/DetailsAndReviews.styles';
-
 import TableDetailsProduct from './TableDetailsProduct';
 import ReviewsProduct from './ReviewsProduct';
 
