@@ -5,7 +5,6 @@ const checkError = (error) => {
 };
 
 const errorHandler = (error, res) => {
-  console.log('error handling funkcja api', error);
   if (typeof error === 'string') {
     return res.status(400).json({ msgError: error });
   }
