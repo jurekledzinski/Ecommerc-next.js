@@ -46,3 +46,30 @@ export const inputConfirmChangePasswordStyles = {
 export const submitBtnChangePasswordStyles = {
   width: '95%',
 };
+
+export const boxNoPermissionWrapperStyles = {
+  width: { xs: '80%', sm: 'initial' },
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+};
+
+export const titleNoPermissionStyles = {
+  maxWidth: { xs: '95%', sm: 'initial' },
+  color: (theme) => theme.palette.text.primary,
+  fontSize: {
+    xs: '14px',
+    sm: '24px',
+  },
+  textAlign: { xs: 'center', sm: 'initial' },
+  letterSpacing: '1px',
+  textTransform: 'uppercase',
+  fontWeight: 300,
+  fontFamily: 'Oswald, sans-serif',
+};
+
+export const btnNoPermissionStyles = {
+  minWidth: { xs: '95%', sm: 'initial' },
+  maxWidth: { xs: 'initial', sm: '150px' },
+  marginTop: '20px',
+};
