@@ -69,3 +69,23 @@ export const boxBtnsInventoryWrapperStyles = {
 export const boxApplyChangeInventoryStyles = {
   marginBottom: { xs: '5px', sm: 'initial' },
 };
+
+export const boxCheckInventoryWrapStyles = {
+  maxHeight: { xs: '160px', sm: '190px' },
+  overflowY: 'auto',
+  scrollbarWidth: 'thin',
+  scrollbarColor: 'rgb(240, 239, 239)',
+  margin: '10px 0',
+  '&::-webkit-scrollbar': {
+    width: '3px',
+    height: '3px',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: 'transparent',
+    borderRadius: '3px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#bdb6b6',
+    borderRadius: '3px',
+  },
+};

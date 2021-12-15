@@ -25,6 +25,7 @@ import {
   boxCardMediaInventoryStyles,
   cardInventoryStyles,
   cardMediaInventoryStyles,
+  boxCheckInventoryWrapStyles,
   FormMsgInvetory,
   formControlLabelInventoryStyles,
   mainTitleInventoryStyles,
@@ -201,115 +202,117 @@ const CheckInventory = forwardRef((props, ref) => {
         stock.
       </Typography>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        {stateInventory.map((item, index) => {
-          if (item.onStock !== 0) {
-            return (
-              <Fragment key={index}>
-                {errors[item?._id] && errorMessage(errors, item._id)}
-                <Card key={index} sx={cardInventoryStyles}>
-                  <Box sx={boxCardMediaInventoryStyles}>
-                    <CardMedia
-                      component="img"
-                      image={item.imagesSlider[0]}
-                      alt={item.name}
-                      sx={cardMediaInventoryStyles}
-                    />
-                  </Box>
-                  <Box sx={boxCardContentInventoryStyles}>
-                    <Typography
-                      variant="h6"
-                      sx={titleCardContentInventoryStyles}
-                    >
-                      {item.name}
-                    </Typography>
-                    <FormControl component="fieldset">
-                      <Controller
-                        name={item._id}
-                        control={control}
-                        rules={{
-                          required: {
-                            value: true,
-                            message: `Please choose option for ${item.name}`,
-                          },
-                        }}
-                        render={({ field }) => (
-                          <RadioGroup
-                            {...field}
-                            aria-label="gender"
-                            name={item.name}
-                          >
-                            <FormControlLabel
-                              value={item.onStock}
-                              control={<Radio size="small" />}
-                              label={`Reduce quantity to ${item.onStock}`}
-                              sx={formControlLabelInventoryStyles}
-                            />
-                            <FormControlLabel
-                              value={0}
-                              control={<Radio size="small" />}
-                              label="Remove item from order"
-                              sx={formControlLabelInventoryStyles}
-                            />
-                          </RadioGroup>
-                        )}
+        <Box sx={boxCheckInventoryWrapStyles}>
+          {stateInventory.map((item, index) => {
+            if (item.onStock !== 0) {
+              return (
+                <Fragment key={index}>
+                  {errors[item?._id] && errorMessage(errors, item._id)}
+                  <Card key={index} sx={cardInventoryStyles}>
+                    <Box sx={boxCardMediaInventoryStyles}>
+                      <CardMedia
+                        component="img"
+                        image={item.imagesSlider[0]}
+                        alt={item.name}
+                        sx={cardMediaInventoryStyles}
                       />
-                    </FormControl>
-                  </Box>
-                </Card>
-              </Fragment>
-            );
-          } else {
-            return (
-              <Fragment key={index}>
-                {errors[item?._id] && errorMessage(errors, item._id)}
-                <Card key={index} sx={cardInventoryStyles}>
-                  <Box sx={boxCardMediaInventoryStyles}>
-                    <CardMedia
-                      component="img"
-                      image={item.imagesSlider[0]}
-                      alt={item.name}
-                      sx={cardMediaInventoryStyles}
-                    />
-                  </Box>
-                  <Box sx={boxCardContentInventoryStyles}>
-                    <Typography
-                      variant="h6"
-                      sx={titleCardContentInventoryStyles}
-                    >
-                      {item.name}
-                    </Typography>
-                    <FormControl component="fieldset">
-                      <Controller
-                        name={item._id}
-                        control={control}
-                        rules={{
-                          required: {
-                            value: true,
-                            message: `Please choose option for ${item.name}`,
-                          },
-                        }}
-                        render={({ field }) => (
-                          <RadioGroup
-                            {...field}
-                            aria-label="gender"
-                            name="row-radio-buttons-group"
-                          >
-                            <FormControlLabel
-                              value={item.onStock}
-                              control={<Radio size="small" />}
-                              label="Remove item from order"
-                              sx={formControlLabelInventoryStyles}
-                            />
-                          </RadioGroup>
-                        )}
+                    </Box>
+                    <Box sx={boxCardContentInventoryStyles}>
+                      <Typography
+                        variant="h6"
+                        sx={titleCardContentInventoryStyles}
+                      >
+                        {item.name}
+                      </Typography>
+                      <FormControl component="fieldset">
+                        <Controller
+                          name={item._id}
+                          control={control}
+                          rules={{
+                            required: {
+                              value: true,
+                              message: `Please choose option for ${item.name}`,
+                            },
+                          }}
+                          render={({ field }) => (
+                            <RadioGroup
+                              {...field}
+                              aria-label="gender"
+                              name={item.name}
+                            >
+                              <FormControlLabel
+                                value={item.onStock}
+                                control={<Radio size="small" />}
+                                label={`Reduce quantity to ${item.onStock}`}
+                                sx={formControlLabelInventoryStyles}
+                              />
+                              <FormControlLabel
+                                value={0}
+                                control={<Radio size="small" />}
+                                label="Remove item from order"
+                                sx={formControlLabelInventoryStyles}
+                              />
+                            </RadioGroup>
+                          )}
+                        />
+                      </FormControl>
+                    </Box>
+                  </Card>
+                </Fragment>
+              );
+            } else {
+              return (
+                <Fragment key={index}>
+                  {errors[item?._id] && errorMessage(errors, item._id)}
+                  <Card key={index} sx={cardInventoryStyles}>
+                    <Box sx={boxCardMediaInventoryStyles}>
+                      <CardMedia
+                        component="img"
+                        image={item.imagesSlider[0]}
+                        alt={item.name}
+                        sx={cardMediaInventoryStyles}
                       />
-                    </FormControl>
-                  </Box>
-                </Card>
-              </Fragment>
-            );
-          }
-        })}
+                    </Box>
+                    <Box sx={boxCardContentInventoryStyles}>
+                      <Typography
+                        variant="h6"
+                        sx={titleCardContentInventoryStyles}
+                      >
+                        {item.name}
+                      </Typography>
+                      <FormControl component="fieldset">
+                        <Controller
+                          name={item._id}
+                          control={control}
+                          rules={{
+                            required: {
+                              value: true,
+                              message: `Please choose option for ${item.name}`,
+                            },
+                          }}
+                          render={({ field }) => (
+                            <RadioGroup
+                              {...field}
+                              aria-label="gender"
+                              name="row-radio-buttons-group"
+                            >
+                              <FormControlLabel
+                                value={item.onStock}
+                                control={<Radio size="small" />}
+                                label="Remove item from order"
+                                sx={formControlLabelInventoryStyles}
+                              />
+                            </RadioGroup>
+                          )}
+                        />
+                      </FormControl>
+                    </Box>
+                  </Card>
+                </Fragment>
+              );
+            }
+          })}
+        </Box>
         <Box sx={boxBtnsInventoryWrapperStyles}>
           {Object.keys(errors).length === 0 && (
             <Button
