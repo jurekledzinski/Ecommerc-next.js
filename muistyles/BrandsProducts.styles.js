@@ -4,25 +4,25 @@ export const containerBrandsStyles = {
 };
 
 export const brandTitleStyles = {
-  color: 'white',
+  color: (theme) => theme.palette.text.primary,
   textTransform: 'uppercase',
   letterSpacing: '1px',
-  fontSize: '1.6rem',
+  fontSize: '1.4rem',
   fontFamily: 'Oswald, sans-serif',
   fontWeight: 500,
 };
 
 export const imageBrandsStyles = {
-  height: '180px',
+  height: '200px',
   objectFit: 'contain',
   padding: '20px',
 };
 
 export const boxBrandStyles = {
   display: 'flex',
-  justifyContent: 'center',
   alignItems: 'center',
   height: '50px',
+  textIndent: '20px',
 };
 
 export const linkBrandStyles = {
@@ -49,4 +49,10 @@ export const loaderBrandsImageStyles = {
   top: 'calc(50% - 10px)',
   left: 'calc(50% - 10px)',
   transform: 'translate(-50%,-50%)',
+};
+
+export const boxWrapperImagesBrandsStyles = {
+  width: '100%',
+  position: 'relative',
+  backgroundColor: (theme) => theme.palette.background.brandCard,
 };

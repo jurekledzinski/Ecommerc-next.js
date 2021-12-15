@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import {
   brandTitleStyles,
   boxBrandStyles,
+  boxWrapperImagesBrandsStyles,
   cardActionBrandsStyles,
   cardContentBrandsStyles,
   containerBrandsStyles,
@@ -37,7 +38,7 @@ const BrandsProducts = () => {
                 <Link href={`/${item.category}/${item.brand}`} passHref>
                   <a style={linkBrandStyles}>
                     <CardActionArea sx={cardActionBrandsStyles}>
-                      <Box sx={{ position: 'relative' }}>
+                      <Box sx={boxWrapperImagesBrandsStyles}>
                         <CardMedia
                           component="img"
                           image={item.image}
@@ -54,14 +55,7 @@ const BrandsProducts = () => {
                         )}
                       </Box>
                       <CardContent sx={cardContentBrandsStyles}>
-                        <Box
-                          sx={{
-                            ...boxBrandStyles,
-                            background: item.background1,
-                            background: item.background2,
-                            background: item.background3,
-                          }}
-                        >
+                        <Box sx={boxBrandStyles}>
                           <Typography variant="h3" sx={brandTitleStyles}>
                             {item.brand}
                           </Typography>
