@@ -6,11 +6,12 @@ export const boxWrapperDeleteUserStyles = {
   width: { xs: '95%', sm: '400px' },
   height: '250px',
   padding: '20px',
-  backgroundColor: 'white',
+  backgroundColor: (theme) => theme.palette.background.paper,
   zIndex: '1',
 };
 
 export const titleQuestionDeleteUserStyles = {
+  color: (theme) => theme.palette.text.primary,
   textTransform: 'uppercase',
   textAlign: 'center',
   fontFamily: 'Oswald,sans-serif',
