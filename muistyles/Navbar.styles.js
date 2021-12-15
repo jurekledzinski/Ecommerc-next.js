@@ -91,10 +91,3 @@ export const listItemStyles = {
     fontSize: { xs: '1.4rem', sm: '1.6rem' },
   },
 };
-
-// [theme.breakpoints.up("xs")]: {
-//     minHeight: "calc(100vh - 90px)",
-//   },
-//   [theme.breakpoints.up("sm")]: {
-//     minHeight: "calc(100vh - 138px)",
-//   },
