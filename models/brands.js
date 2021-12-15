@@ -17,6 +17,10 @@ const brandsSchema = new Schema({
     type: String,
     required: false,
   },
+  image: {
+    type: String,
+    required: false,
+  },
 });
 
 const Brand = mongoose.models.Brand || mongoose.model('Brand', brandsSchema);
