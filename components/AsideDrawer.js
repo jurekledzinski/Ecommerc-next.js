@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Drawer } from '@mui/material';
+import Drawer from '@mui/material/Drawer';
 
 import Cart from './Cart';
 import ForgetPassword from './ForgetPassword';

@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-} from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { useRoutesHook } from '../customHooks/useRoutesHook';
 import BreadCramps from './BreadCramps';
 import SliderThumbnails from './SliderThumbnails';

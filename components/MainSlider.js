@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { useRouter } from 'next//router';
 
-import { Button, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';

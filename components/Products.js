@@ -1,16 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { Section } from '../muistyles/Products.styles';
 
@@ -21,6 +20,7 @@ import {
   cardMediaStyles,
   cardStyles,
   containerProductsStyles,
+  loaderProductsImageStyles,
   productTitleStyles,
   productBoxesStyles,
 } from '../muistyles/Products.styles';
@@ -40,6 +40,7 @@ const Products = ({ endpoints }) => {
     stateLoginUser,
     stateProductsBrand,
   } = useContext(StoreContext);
+  const [isLoad, setIsLoad] = useState(false);
 
   const handleAddToCart = (idProduct) => {
     const singleProductAdded = stateProductsBrand.find(
@@ -53,8 +54,6 @@ const Products = ({ endpoints }) => {
 
     controlCart(copyProduct, idProduct, stateCart, dispatchCart);
   };
-
-  //   TODO: Zmiana
 
   useEffect(() => {
     if (!Boolean(stateLoginUser.tokenAccess)) {
@@ -93,7 +92,15 @@ const Products = ({ endpoints }) => {
                         sx={cardMediaStyles}
                         srcSet={`${item.imagesSlider[0]}?tr=w-250,h-250,cm-pad_resize,bg-transparent`}
                         sizes="250px"
+                        onLoad={() => setIsLoad(true)}
                       />
+                      {!Boolean(isLoad) && (
+                        <CircularProgress
+                          size={20}
+                          thickness={2}
+                          sx={loaderProductsImageStyles}
+                        />
+                      )}
                     </Box>
                   </CardActionArea>
                 </a>

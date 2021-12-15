@@ -1,7 +1,11 @@
 import Cookies from 'js-cookie';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Box, Button, ButtonGroup, Container, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 import {
   buttonGroupStyles,
