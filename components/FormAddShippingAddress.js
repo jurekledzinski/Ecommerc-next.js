@@ -100,7 +100,7 @@ const FormAddShippingAddress = () => {
         render={({ field }) => (
           <TextField
             {...field}
-            id="outlined-basic"
+            id="outlined-basic-5"
             label="Street"
             variant="outlined"
             size="small"
@@ -121,7 +121,7 @@ const FormAddShippingAddress = () => {
         render={({ field }) => (
           <TextField
             {...field}
-            id="outlined-basic"
+            id="outlined-basic-6"
             label="Post code"
             variant="outlined"
             size="small"
@@ -142,7 +142,7 @@ const FormAddShippingAddress = () => {
         render={({ field }) => (
           <TextField
             {...field}
-            id="outlined-basic"
+            id="outlined-basic-7"
             label="City"
             variant="outlined"
             size="small"
@@ -163,7 +163,7 @@ const FormAddShippingAddress = () => {
         render={({ field }) => (
           <TextField
             {...field}
-            id="outlined-basic"
+            id="outlined-basic-8"
             label="Country"
             variant="outlined"
             size="small"
