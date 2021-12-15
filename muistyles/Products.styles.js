@@ -23,6 +23,7 @@ export const productTitleStyles = {
 };
 
 export const productBoxesStyles = {
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -59,3 +60,9 @@ export const boxWrapper = {
   marginTop: '20px',
 };
 
+export const loaderProductsImageStyles = {
+  position: 'absolute',
+  top: 'calc(50% - 10px)',
+  left: 'calc(50% - 10px)',
+  transform: 'translate(-50%,-50%)',
+};
