@@ -17,6 +17,7 @@ const sendRefreshToken = (res, tokenRefresh) => {
     cookie.serialize('refreshToken', tokenRefresh, {
       httpOnly: true,
       path: '/',
+      secure: process.env.NODE_ENV !== 'development',
     })
   );
 };

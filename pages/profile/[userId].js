@@ -74,6 +74,7 @@ export async function getServerSideProps(context) {
         cookie.serialize('refreshToken', data.user.tokenRefresh, {
           httpOnly: true,
           path: '/',
+          secure: process.env.NODE_ENV !== 'development',
         })
       );
     }
