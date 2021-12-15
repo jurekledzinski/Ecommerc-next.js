@@ -16,7 +16,6 @@ const ProductsListPage = ({ products, user }) => {
     dispatchLoginUser,
     disptachProductsBrand,
     stateCart,
-    stateLoginUser,
     stateProductsBrand,
   } = useContext(StoreContext);
   const { endpoints } = useRoutesHook();

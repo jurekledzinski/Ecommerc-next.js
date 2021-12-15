@@ -8,7 +8,7 @@ import { StoreContext } from '../../utils/store';
 import CancelPaidOrder from '../../components/CancelPaidOrder';
 
 const CancelOrder = ({ user }) => {
-  const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
+  const { dispatchLoginUser } = useContext(StoreContext);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {

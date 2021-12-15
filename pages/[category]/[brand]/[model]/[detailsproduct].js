@@ -17,7 +17,6 @@ const DetailsProduct = ({ detailsProduct, productReviews, user }) => {
     dispatchLoginUser,
     dispatchReview,
     stateCart,
-    stateLoginUser,
   } = useContext(StoreContext);
 
   useEffect(() => {

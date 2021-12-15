@@ -10,7 +10,7 @@ import PlaceOrderComponent from '../../../components/PlaceOrder';
 import FooterDown from '../../../components/FooterDown';
 
 const PlaceOrder = ({ user }) => {
-  const { stateLoginUser, dispatchLoginUser } = useContext(StoreContext);
+  const { dispatchLoginUser } = useContext(StoreContext);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {
