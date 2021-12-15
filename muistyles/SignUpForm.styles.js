@@ -28,7 +28,7 @@ export const inputFormStyles = {
 };
 
 export const inputConfirmPasswordStyles = {
-  width: '95%',
+  width: '100%',
   margin: '6px 0 20px 0',
 };
 
@@ -55,4 +55,10 @@ export const FormMsgSignUp = styled('p')(({}) => ({
 export const alertSnackSignUpStyles = {
   width: '100%',
   fontSize: '1.4rem',
+};
+
+export const iconBtnSignUpStyles = {
+  position: 'absolute',
+  top: '6px',
+  right: '0px',
 };

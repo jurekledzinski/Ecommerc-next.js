@@ -2,18 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import SnackBarMessage from './SnackBarMessage';
 
 import {
-  FileNameTag,
   FormMsgUpdateProfile,
   formProfileStyles,
+  iconBtnUpdateProfileStyles,
   inputConfirmProfileStyles,
-  InputFile,
   inputProfileStyles,
-  LabelFileTag,
   updateShipBtnStyles,
 } from '../muistyles/UpdateFormProfile.styles';
 
@@ -22,11 +23,11 @@ import { addUpdateProfile } from '../helpers/client/apiHelpers';
 import { StoreContext } from '../utils/store';
 
 const UpdateFormProfile = () => {
-  const { dispatchLoginUser, stateLoginUser, stateUserProfile } =
-    useContext(StoreContext);
+  const { stateLoginUser, stateUserProfile } = useContext(StoreContext);
   const { tokenAccess } = stateLoginUser;
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     control,
@@ -110,7 +111,7 @@ const UpdateFormProfile = () => {
         render={({ field }) => (
           <TextField
             {...field}
-            id="outlined-basic"
+            id="outlined-basic-1"
             label="Name"
             variant="outlined"
             size="small"
@@ -135,7 +136,7 @@ const UpdateFormProfile = () => {
         render={({ field }) => (
           <TextField
             {...field}
-            id="outlined-basic"
+            id="outlined-basic-2"
             label="Surname"
             variant="outlined"
             size="small"
@@ -160,7 +161,7 @@ const UpdateFormProfile = () => {
         render={({ field }) => (
           <TextField
             {...field}
-            id="outlined-basic"
+            id="outlined-basic-3"
             label="Email"
             variant="outlined"
             size="small"
@@ -185,7 +186,7 @@ const UpdateFormProfile = () => {
         render={({ field }) => (
           <TextField
             {...field}
-            id="outlined-basic"
+            id="outlined-basic-4"
             label="password"
             variant="outlined"
             size="small"
@@ -194,26 +195,35 @@ const UpdateFormProfile = () => {
         )}
       />
       {errors.confirmPassword && errorMessage(errors.confirmPassword.message)}
-      <Controller
-        name="confirmPassword"
-        control={control}
-        rules={{
-          required: {
-            value: true,
-            message: 'Confirm password is required',
-          },
-        }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            id="outlined-basic"
-            label="Confirm Password"
-            variant="outlined"
-            size="small"
-            sx={inputConfirmProfileStyles}
-          />
-        )}
-      />
+      <Box sx={{ position: 'relative', width: '100%' }}>
+        <Controller
+          name="confirmPassword"
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: 'Confirm password is required',
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              id="outlined-adornment-password"
+              label="Confirm Password"
+              variant="outlined"
+              size="small"
+              sx={inputConfirmProfileStyles}
+              type={showPassword ? 'text' : 'password'}
+            />
+          )}
+        />
+        <IconButton
+          onClick={() => setShowPassword((prevValue) => !prevValue)}
+          sx={iconBtnUpdateProfileStyles}
+        >
+          {showPassword ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      </Box>
       <Button
         variant="contained"
         size="large"

@@ -2,14 +2,18 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import {
   boxFormStyles,
   buttonRedirect,
   FormMsgSignUp,
   questionTextStyles,
+  iconBtnSignUpStyles,
   inputConfirmPasswordStyles,
   inputFormStyles,
   inputNameStyles,
@@ -31,8 +35,10 @@ const SignUpForm = () => {
   const [dataForm, setDataForm] = useState({});
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const idTimeout = useRef(null);
   const idTimeoutSec = useRef(null);
+
   const {
     control,
     formState: { errors },
@@ -71,7 +77,7 @@ const SignUpForm = () => {
       totalCartPrice: 0,
       idUser: userID,
     };
-    
+
     await createCart(
       `http://localhost:3000/api/v1/cart`,
       defaultCart,
@@ -173,7 +179,7 @@ const SignUpForm = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              id="outlined-basic"
+              id="outlined-basic-1"
               label="Name"
               variant="outlined"
               size="small"
@@ -198,7 +204,7 @@ const SignUpForm = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              id="outlined-basic"
+              id="outlined-basic-2"
               label="Surname"
               variant="outlined"
               size="small"
@@ -223,7 +229,7 @@ const SignUpForm = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              id="outlined-basic"
+              id="outlined-basic-3"
               label="Email"
               variant="outlined"
               size="small"
@@ -248,7 +254,7 @@ const SignUpForm = () => {
           render={({ field }) => (
             <TextField
               {...field}
-              id="outlined-basic"
+              id="outlined-basic-4"
               label="password"
               variant="outlined"
               size="small"
@@ -257,26 +263,35 @@ const SignUpForm = () => {
           )}
         />
         {errors.confirmPassword && errorMessage(errors.confirmPassword.message)}
-        <Controller
-          name="confirmPassword"
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: 'Confirm password is required',
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              id="outlined-basic"
-              label="Confirm Password"
-              variant="outlined"
-              size="small"
-              sx={inputConfirmPasswordStyles}
-            />
-          )}
-        />
+        <Box sx={{ position: 'relative', width: '95%' }}>
+          <Controller
+            name="confirmPassword"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: 'Confirm password is required',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="outlined-adornment-password"
+                label="Confirm Password"
+                variant="outlined"
+                size="small"
+                sx={inputConfirmPasswordStyles}
+                type={showPassword ? 'text' : 'password'}
+              />
+            )}
+          />
+          <IconButton
+            onClick={() => setShowPassword((prevValue) => !prevValue)}
+            sx={iconBtnSignUpStyles}
+          >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </IconButton>
+        </Box>
         <Button
           variant="contained"
           size="large"

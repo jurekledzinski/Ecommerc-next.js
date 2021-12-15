@@ -27,3 +27,9 @@ export const inputConfirmProfileStyles = {
 export const updateShipBtnStyles = {
   width: '100%',
 };
+
+export const iconBtnUpdateProfileStyles = {
+  position: 'absolute',
+  top: '6px',
+  right: '0px',
+};

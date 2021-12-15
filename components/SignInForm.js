@@ -4,8 +4,11 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import SnackBarMessage from './SnackBarMessage';
 
@@ -14,6 +17,7 @@ import {
   boxFormStyles,
   FormMsgSignIn,
   forgetPasswordStyles,
+  iconBtnSignInStyles,
   inputEmailStyles,
   inputFormStyles,
   questionTextStyles,
@@ -47,6 +51,7 @@ const SignInForm = () => {
   } = useContext(StoreContext);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const idTimeout = useRef(null);
   const idTimeoutSec = useRef(null);
   const idTimeoutThird = useRef(null);
@@ -199,26 +204,35 @@ const SignInForm = () => {
           )}
         />
         {errors.password && errorMessage(errors.password.message)}
-        <Controller
-          name="password"
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: 'Password is required',
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              id="outlined-basic"
-              label="Password"
-              variant="outlined"
-              size="small"
-              sx={inputFormStyles}
-            />
-          )}
-        />
+        <Box sx={{ position: 'relative', width: '95%' }}>
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: 'Password is required',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="outlined-adornment-password"
+                label="Password"
+                variant="outlined"
+                size="small"
+                sx={inputFormStyles}
+                type={showPassword ? 'text' : 'password'}
+              />
+            )}
+          />
+          <IconButton
+            onClick={() => setShowPassword((prevValue) => !prevValue)}
+            sx={iconBtnSignInStyles}
+          >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </IconButton>
+        </Box>
         <Button
           variant="contained"
           size="large"

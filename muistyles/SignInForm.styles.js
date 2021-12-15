@@ -23,7 +23,7 @@ export const inputEmailStyles = {
 };
 
 export const inputFormStyles = {
-  width: '95%',
+  width: '100%',
   margin: '6px 0 20px 0',
 };
 
@@ -55,3 +55,9 @@ export const FormMsgSignIn = styled('p')(({}) => ({
   fontSize: '1rem',
   color: 'red',
 }));
+
+export const iconBtnSignInStyles = {
+  position: 'absolute',
+  top: '6px',
+  right: '0px',
+};
