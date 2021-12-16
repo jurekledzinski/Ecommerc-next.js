@@ -127,7 +127,6 @@ function MyApp({ Component, pageProps }) {
                 name="description"
                 content="Buy phones, watches, tablets in good and cheap price"
               />
-              <link rel="icon" href="/favicon.ico" />
               <link
                 rel="icon"
                 type="image/png"
