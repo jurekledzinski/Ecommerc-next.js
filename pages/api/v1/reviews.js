@@ -77,6 +77,22 @@ const updateReview = async (req, res, idReview, productId) => {
   }
 };
 
+const downVote = async (req, res, idReview, productId) => {
+  const numberLikes = req.body.likes;
+
+  const result = await Review.findOneAndUpdate(
+    { _id: productId },
+    { $pull: { likesUsers: idReview }, likes: numberLikes - 1 },
+    {
+      new: true,
+    }
+  );
+
+  if (result) {
+    return res.status(200).json({ data: result, msgSuccess: 'Review updated' });
+  }
+};
+
 const handler = connectDb(async (req, res) => {
   const { aim, idReview, productId } = req.query;
 
@@ -108,7 +124,7 @@ const handler = connectDb(async (req, res) => {
         case 'updateLikes':
           const isUserUpVote = await likesUpdate(idUser, idReview);
           if (isUserUpVote) {
-            throw 'You already upvote this review';
+            return await downVote(req, res, idUser, idReview);
           }
         default:
           await updateReview(req, res, idReview, productId);
