@@ -70,7 +70,6 @@ export const ContentLeftBox = styled('div')(({ theme }) => ({
 }));
 
 export const optionsSlider = {
-  autoplay: true,
   arrows: 'slider',
   breakpoints: {
     280: {
