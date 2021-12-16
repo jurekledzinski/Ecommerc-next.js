@@ -88,6 +88,7 @@ export const cardMediaDeliveryStyles = {
   minHeight: { xs: '200px', sxm: '50px' },
   paddingLeft: { xs: 'initial', sxm: '3px' },
   objectFit: 'contain',
+  paddingTop: '20px',
 };
 
 export const cardContentDeliveryStyles = {
@@ -110,7 +111,7 @@ export const summaryPlaceOrderTextStyles = {
 
 export const btnPlaceOrderStyles = {
   minWidth: '100%',
-  marginTop: '20px',
+  margin: '20px 0px 10px 0',
 };
 
 export const shippingAddressText = {

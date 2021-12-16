@@ -73,6 +73,7 @@ export const detailsCardMediaStyles = {
   minHeight: { xs: '200px', sxm: '50px' },
   paddingLeft: { xs: 'initial', sxm: '3px' },
   objectFit: 'contain',
+  paddingTop: '20px',
 };
 
 export const detailsCardContentStyles = {
