@@ -5,7 +5,7 @@ export const ThumbUpBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     padding: '0 4px',
     background: 'transparent',
-    color: theme.palette.primary.dark,
+    color: theme.palette.text.primary,
   },
 }));
 
@@ -23,6 +23,7 @@ export const boxInPaperReviewsStyles = {
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'center',
+  paddingTop: { xs: 'initial', sm: '20px' },
 };
 
 export const avatarReviewsOneStyles = {
@@ -38,6 +39,7 @@ export const ratesReviewProductOneStyles = {
 
 export const boxNextToAvatarStyles = {
   width: { xs: 'initial', sm: 'calc(100% - 80px)' },
+  paddingTop: { xs: 'initial', sm: '20px' },
 };
 
 export const boxWrapperAvatarStyles = {
@@ -53,6 +55,7 @@ export const avatarReviewsTwoStyles = {
   width: '40px',
   height: '40px',
   display: { xs: 'flex', sm: 'none' },
+  marginBottom: '5px',
 };
 
 export const nameUserReviewStyles = {
