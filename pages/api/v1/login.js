@@ -48,8 +48,6 @@ const handler = connectDb(async (req, res) => {
         throw 'User not found';
       }
 
-      console.log(req.cookies, 'req.cookies');
-
       const check = Boolean(req.cookies._sp) && Boolean(user.tokenRefresh);
 
       if (check && req.cookies._sp === user.tokenRefresh) {
