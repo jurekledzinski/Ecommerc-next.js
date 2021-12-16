@@ -43,7 +43,6 @@ export const inputLastOrderShipStyles = {
 
 export const addOrderBtnStyles = {
   width: { xs: '100%', sm: '100%' },
-  lineHeight: { xs: '2.5', sm: '1.75' },
 };
 
 export const titleShipppingStyles = {

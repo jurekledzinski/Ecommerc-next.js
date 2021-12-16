@@ -99,8 +99,6 @@ export const detailsSummarySubTextStyles = {
 export const detailsSummaryBtnStyles = {
   minWidth: '100%',
   marginTop: '20px',
-  borderRadius: 'initial',
-  lineHeight: { xs: '2.5', sm: '1.75' },
 };
 
 export const shippingAddressTextDetails = {
