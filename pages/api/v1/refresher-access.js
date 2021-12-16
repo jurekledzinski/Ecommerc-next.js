@@ -12,7 +12,7 @@ const handler = connectDb(async (req, res) => {
   try {
     if (req.method === 'PATCH') {
       const cookieRefresh = JSON.parse(req.headers.cookie);
-      const token = cookieRefresh.refreshToken;
+      const token = cookieRefresh._sp;
 
       if (!token) {
         throw 'Unauthorized';

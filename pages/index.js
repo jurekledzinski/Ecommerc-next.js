@@ -101,7 +101,7 @@ export async function getServerSideProps(context) {
     if (dataUser.user) {
       context.res.setHeader(
         'Set-Cookie',
-        cookie.serialize('refreshToken', dataUser.user.tokenRefresh, {
+        cookie.serialize('_sp', dataUser.user.tokenRefresh, {
           httpOnly: true,
           path: '/',
           secure: process.env.NODE_ENV !== 'development',

@@ -19,7 +19,7 @@ const updatePassword = async (password) => {
 const clearCookie = (res) => {
   return res.setHeader(
     'Set-Cookie',
-    cookie.serialize('refreshToken', '', {
+    cookie.serialize('_sp', '', {
       httpOnly: true,
       path: '/',
       expires: new Date('Thu, 01 Jan 1970 00:00:00 GMT'),

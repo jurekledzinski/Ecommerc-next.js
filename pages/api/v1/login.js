@@ -14,7 +14,7 @@ const sendAccessToken = (res, tokenAccess, userUpdate) => {
 const sendRefreshToken = (res, tokenRefresh) => {
   return res.setHeader(
     'Set-Cookie',
-    cookie.serialize('refreshToken', tokenRefresh, {
+    cookie.serialize('_sp', tokenRefresh, {
       httpOnly: true,
       path: '/',
       secure: process.env.NODE_ENV !== 'development',
@@ -25,7 +25,7 @@ const sendRefreshToken = (res, tokenRefresh) => {
 const clearCookie = (res) => {
   return res.setHeader(
     'Set-Cookie',
-    cookie.serialize('refreshToken', '', {
+    cookie.serialize('_sp', '', {
       httpOnly: true,
       path: '/',
       expires: new Date('Thu, 01 Jan 1970 00:00:00 GMT'),
@@ -48,10 +48,11 @@ const handler = connectDb(async (req, res) => {
         throw 'User not found';
       }
 
-      const check =
-        Boolean(req.cookies.refreshToken) && Boolean(user.tokenRefresh);
+      console.log(req.cookies, 'req.cookies');
 
-      if (check && req.cookies.refreshToken === user.tokenRefresh) {
+      const check = Boolean(req.cookies._sp) && Boolean(user.tokenRefresh);
+
+      if (check && req.cookies._sp === user.tokenRefresh) {
         throw 'You are already logged in';
       }
 
