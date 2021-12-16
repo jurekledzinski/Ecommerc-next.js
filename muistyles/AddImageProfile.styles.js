@@ -18,12 +18,13 @@ export const LabelFileTag = styled('label')(({ theme }) => ({
 
 export const FileNameTag = styled('span')(({ theme }) => ({
   width: '50%',
-  color: (theme) => theme.palette.text.primary,
+  color: theme.palette.text.primary,
   fontSize: '1.2rem',
   textIndent: '5px',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
+  fontWeight: '300',
 }));
 
 export const addProfileImageBtnStyles = {
