@@ -9,7 +9,7 @@ export const SectionChangePassword = styled('section')(({ theme }) => ({
 }));
 
 export const FormMsgChangePassword = styled('p')(({}) => ({
-  width: '95%',
+  width: '100%',
   fontSize: '1rem',
   color: 'red',
 }));
@@ -34,17 +34,17 @@ export const formChangePasswordStyles = {
 };
 
 export const inputFormChangePasswordStyles = {
-  width: '95%',
+  width: '100%',
   margin: '6px 0',
 };
 
 export const inputConfirmChangePasswordStyles = {
-  width: '95%',
+  width: '100%',
   margin: '6px 0 20px 0',
 };
 
 export const submitBtnChangePasswordStyles = {
-  width: '95%',
+  width: '100%',
 };
 
 export const boxNoPermissionWrapperStyles = {
