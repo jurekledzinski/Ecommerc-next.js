@@ -39,13 +39,13 @@ const SuccessPaidOrder = () => {
                   className="circle"
                   cx="75"
                   cy="75"
-                  r="60"
+                  r="55"
                 ></CircleElementOne>
                 <CircleElementTwo
                   id="colored"
                   cx="75"
                   cy="75"
-                  r="60"
+                  r="55"
                 ></CircleElementTwo>
                 <PolylineElement
                   className="polyline"
