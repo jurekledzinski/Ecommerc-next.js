@@ -14,10 +14,11 @@ import {
   rediretSuccessBtn,
   SectionSuccessPage,
   subtitleSuccesPageStyles,
+  successOrderPleaseWaitStyles,
   titleSuccesPageStyles,
 } from '../muistyles/SuccessPaidOrder.styles';
 
-const SuccessPaidOrder = () => {
+const SuccessPaidOrder = ({ emailReceive }) => {
   const router = useRouter();
 
   const handleBackHomePage = () => {
@@ -70,15 +71,23 @@ const SuccessPaidOrder = () => {
           Soon you should receive confirmation email with order details, please
           keep it in case of any situation.
         </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          sx={rediretSuccessBtn}
-          type="submit"
-          onClick={handleBackHomePage}
-        >
-          Back to home page
-        </Button>
+        {emailReceive ? (
+          <Button
+            variant="contained"
+            size="large"
+            sx={rediretSuccessBtn}
+            type="submit"
+            onClick={handleBackHomePage}
+          >
+            Back to home page
+          </Button>
+        ) : (
+          <Typography variant="body1" sx={successOrderPleaseWaitStyles}>
+            Please wait <span className="success_dot">.</span>
+            <span className="success_dot">.</span>
+            <span className="success_dot">.</span>
+          </Typography>
+        )}
       </Box>
     </SectionSuccessPage>
   );

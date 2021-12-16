@@ -28,6 +28,15 @@ const coloredCircle = keyframes`
 }
 `;
 
+const fadeDots = keyframes`
+from{
+    opacity: 0;
+  }
+to{
+    opacity: 1;
+  }
+`;
+
 export const SectionSuccessPage = styled('section')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
@@ -96,4 +105,20 @@ export const subtitleSuccesPageStyles = {
 export const rediretSuccessBtn = {
   display: 'block',
   margin: '20px auto 0 auto',
+};
+
+export const successOrderPleaseWaitStyles = {
+  marginTop: '20px',
+  color: (theme) => theme.palette.text.primary,
+  fontSize: '1.4rem',
+  textAlign: 'center',
+  '& > .success_dot:nth-of-type(1)': {
+    animation: `${fadeDots} 1s 0.2s forwards linear infinite`,
+  },
+  '& > .success_dot:nth-of-type(2)': {
+    animation: `${fadeDots} 1s 0.4s forwards linear infinite`,
+  },
+  '& > .success_dot:nth-of-type(3)': {
+    animation: `${fadeDots} 1s 0.6s forwards linear infinite`,
+  },
 };
