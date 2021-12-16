@@ -99,7 +99,7 @@ const SignInForm = () => {
     const cartState = copyCart(stateCart, result.user._id);
 
     const dataCartBase = await addCart(
-      `http://localhost:3000/api/v1/cart`,
+      `/api/v1/cart`,
       cartState,
       result?.tokenAccess,
       setErrorMsg
@@ -110,7 +110,7 @@ const SignInForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('http://localhost:3000/api/v1/login', {
+      const response = await fetch('/api/v1/login', {
         method: 'PATCH',
         credentials: 'include',
         headers: {

@@ -28,10 +28,11 @@ ChangePasswordPage.getLayout = function PageLayout(page) {
 };
 
 export async function getServerSideProps(context) {
+  const domainUrl = context.req.headers.host;
   const urlToken = context.query.tokenUrl;
 
   const response1 = await fetch(
-    `http://localhost:3000/api/v1/register?tokenUrl=${urlToken}`
+    `https://${domainUrl}/api/v1/register?tokenUrl=${urlToken}`
   );
 
   if (response1.ok) {
@@ -39,7 +40,7 @@ export async function getServerSideProps(context) {
 
     if (dataToken.data === urlToken) {
       const response2 = await fetch(
-        `http://localhost:3000/api/v1/register?tokenUrl=${urlToken}`,
+        `https://${domainUrl}/api/v1/register?tokenUrl=${urlToken}`,
         {
           method: 'PATCH',
           credentials: 'include',

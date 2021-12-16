@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -21,12 +21,8 @@ import { USER_DATA_PROFILE } from '../utils/constants';
 import { StoreContext } from '../utils/store';
 
 const FormAddShippingAddress = () => {
-  const {
-    dispatchLoginUser,
-    dispatchUserProfile,
-    stateLoginUser,
-    stateUserProfile,
-  } = useContext(StoreContext);
+  const { dispatchUserProfile, stateLoginUser, stateUserProfile } =
+    useContext(StoreContext);
   const { tokenAccess } = stateLoginUser;
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -47,7 +43,7 @@ const FormAddShippingAddress = () => {
 
   const onSubmit = async (data) => {
     const result = await addUpdateProfile(
-      'http://localhost:3000/api/v1/profile',
+      '/api/v1/profile',
       data,
       tokenAccess,
       setErrorMsg

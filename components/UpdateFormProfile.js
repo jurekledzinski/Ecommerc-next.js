@@ -54,7 +54,7 @@ const UpdateFormProfile = () => {
     }
 
     const result = await addUpdateProfile(
-      'http://localhost:3000/api/v1/profile',
+      '/api/v1/profile',
       data,
       tokenAccess,
       setErrorMsg

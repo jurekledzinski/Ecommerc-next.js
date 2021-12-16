@@ -73,7 +73,7 @@ const OrderShippingForm = () => {
     };
 
     const result = await addOrderDetails(
-      `http://localhost:3000/api/v1/order?page=Shipping_address`,
+      `/api/v1/order?page=Shipping_address`,
       shipData,
       tokenAccess,
       setErrorMsg
@@ -93,7 +93,7 @@ const OrderShippingForm = () => {
     if (stateLoginUser?.tokenAccess) {
       const fetchProfile = async () => {
         const result = await getProfile(
-          'http://localhost:3000/api/v1/profile',
+          '/api/v1/profile',
           stateLoginUser.tokenAccess,
           setErrorMsg
         );

@@ -87,7 +87,7 @@ const DetailsOrder = () => {
     };
 
     const responseOrder = await addOrderDetails(
-      `http://localhost:3000/api/v1/order?page=Details_order`,
+      `/api/v1/order?page=Details_order`,
       dataOrder,
       tokenAccess,
       setErrorMsg
@@ -98,7 +98,7 @@ const DetailsOrder = () => {
     }
 
     const result = await createCheckout(
-      'http://localhost:3000/api/create-checkout-session',
+      '/api/create-checkout-session',
       productsOrder,
       tokenAccess,
       setErrorMsg
@@ -120,7 +120,7 @@ const DetailsOrder = () => {
     if (stateLoginUser?.tokenAccess) {
       const fetchDetailsOrder = async () => {
         const result = await getOrderDetails(
-          'http://localhost:3000/api/v1/order',
+          '/api/v1/order',
           tokenAccess,
           setErrorMsg
         );
@@ -142,7 +142,7 @@ const DetailsOrder = () => {
     if (stateLoginUser?.tokenAccess) {
       const loadingStripe = async () => {
         const result = await getKey(
-          'http://localhost:3000/api/create-checkout-session',
+          '/api/create-checkout-session',
           tokenAccess,
           setErrorMsg
         );

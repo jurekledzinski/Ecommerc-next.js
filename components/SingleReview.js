@@ -64,7 +64,7 @@ const SingleReview = () => {
     const objUpdate = { likes: numberLikes, userID: Boolean(user) && user._id };
 
     const result = await updateReview(
-      `http://localhost:3000/api/v1/reviews?productId=${_id}&idReview=${idReview}&aim=updateLikes`,
+      `/api/v1/reviews?productId=${_id}&idReview=${idReview}&aim=updateLikes`,
       objUpdate,
       tokenAccess,
       setErrorMsg
@@ -82,7 +82,7 @@ const SingleReview = () => {
 
   const handleDeleteReview = async (idReview) => {
     const result = await deleteReview(
-      `http://localhost:3000/api/v1/reviews?idReview=${idReview}&productId=${_id}`,
+      `/api/v1/reviews?idReview=${idReview}&productId=${_id}`,
       tokenAccess,
       setErrorMsg
     );

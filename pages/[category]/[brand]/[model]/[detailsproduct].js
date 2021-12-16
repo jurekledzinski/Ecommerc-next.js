@@ -65,13 +65,14 @@ export default DetailsProduct;
 
 export async function getServerSideProps(context) {
   const { category, brand, id } = context.query;
+  const domainUrl = context.req.headers.host;
 
   const response1 = await fetch(
-    `http://localhost:3000/api/v1/${category}/${brand}/${id}`
+    `https://${domainUrl}/api/v1/${category}/${brand}/${id}`
   );
 
   const response2 = await fetch(
-    'http://localhost:3000/api/v1/refresher-access',
+    `https://${domainUrl}/api/v1/refresher-access`,
     {
       method: 'PATCH',
       credentials: 'include',
@@ -91,7 +92,7 @@ export async function getServerSideProps(context) {
     const { tokenAccess, user } = data;
 
     const response3 = await fetch(
-      `http://localhost:3000/api/v1/reviews?productId=${detailsProduct._id}`,
+      `https://${domainUrl}/api/v1/reviews?productId=${detailsProduct._id}`,
       {
         method: 'GET',
         credentials: 'include',

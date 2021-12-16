@@ -128,7 +128,7 @@ const Menu = () => {
         break;
       case 'Log out':
         const result = await logOutUser(
-          `http://localhost:3000/api/v1/login`,
+          `/api/v1/login`,
           stateLoginUser?.tokenAccess,
           setErrorMsg
         );

@@ -49,7 +49,7 @@ const ProfileImage = () => {
     formData.append('image', data.image);
 
     const result = await addImageProfile(
-      'http://localhost:3000/api/v1/files/upload',
+      '/api/v1/files/upload',
       formData,
       tokenAccess,
       setErrorMsg

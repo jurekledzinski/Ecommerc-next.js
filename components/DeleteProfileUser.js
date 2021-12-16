@@ -40,7 +40,7 @@ const DeleteProfileUser = () => {
 
   const handleDeleteUser = async () => {
     const result = await deleteUser(
-      'http://localhost:3000/api/v1/register',
+      '/api/v1/register',
       tokenAccess,
       setErrorMsg
     );

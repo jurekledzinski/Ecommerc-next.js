@@ -7,8 +7,7 @@ export const sliderData = [
     title: 'VIVO S1 PRO',
     description:
       'VIVO S1 PRO will let you multitask on the go, without worrying about ...',
-    redirect:
-      'http://localhost:3000/phones/vivo/model/vivo-s1-pro?id=618a6e500694c22e1517574a',
+    redirect: '/phones/vivo/model/vivo-s1-pro?id=618a6e500694c22e1517574a',
   },
   {
     id: 2,
@@ -18,8 +17,7 @@ export const sliderData = [
     title: 'IPHONE 12',
     description:
       'Modern, elegant and efficient. This smartphone model is one of the best choices ...',
-    redirect:
-      'http://localhost:3000/phones/apple/model/iphone-12?id=618a6e500694c22e15175736',
+    redirect: '/phones/apple/model/iphone-12?id=618a6e500694c22e15175736',
   },
   {
     id: 3,
@@ -29,8 +27,7 @@ export const sliderData = [
     title: 'ONEPLUS 9',
     description:
       'The ONEPLUS 9 has a 6.55-inch AMOLED panel with sloping sides, a wide colour gamut ...',
-    redirect:
-      'http://localhost:3000/phones/oneplus/model/oneplus-9?id=618a6e500694c22e15175744',
+    redirect: '/phones/oneplus/model/oneplus-9?id=618a6e500694c22e15175744',
   },
 ];
 

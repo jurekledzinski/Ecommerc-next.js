@@ -53,7 +53,7 @@ const ForgetPassword = () => {
     };
 
     const result = await sendEmail(
-      'http://localhost:3000/api/v1/email',
+      '/api/v1/email',
       recoveryData,
       tokenAccess,
       setErrorMsg

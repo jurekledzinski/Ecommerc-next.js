@@ -33,24 +33,22 @@ const OrdersUser = ({ ordersUser, user }) => {
 export default OrdersUser;
 
 export async function getServerSideProps(context) {
-  const response = await fetch(
-    'http://localhost:3000/api/v1/refresher-access',
-    {
-      method: 'PATCH',
+  const domainUrl = context.req.headers.host;
+  const response = await fetch(`https://${domainUrl}/api/v1/refresher-access`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'applications/json',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'applications/json',
-        credentials: 'include',
-        cookie: JSON.stringify(context.req.cookies),
-      },
-    }
-  );
+      cookie: JSON.stringify(context.req.cookies),
+    },
+  });
 
   if (response.ok) {
     const data = await response.json();
     const { tokenAccess, user } = data;
 
-    const responseOrders = await fetch(`http://localhost:3000/api/v1/order`, {
+    const responseOrders = await fetch(`https://${domainUrl}/api/v1/order`, {
       method: 'GET',
       credentials: 'include',
       headers: {

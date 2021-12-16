@@ -24,8 +24,8 @@ const handler = connectDb(async (req, res) => {
     });
 
     const session = await stripe.checkout.sessions.create({
-      success_url: `http://${domainURL}/success/order?id=${orderID}`,
-      cancel_url: `http://${domainURL}/cancel/order?id=${orderID}`,
+      success_url: `https://${domainURL}/success/order?id=${orderID}`,
+      cancel_url: `https://${domainURL}/cancel/order?id=${orderID}`,
       payment_method_types: ['card'],
       line_items: changedProducts,
       mode: 'payment',

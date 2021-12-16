@@ -78,8 +78,9 @@ const Home = ({ brands, user, pageLoad }) => {
 export default Home;
 
 export async function getServerSideProps(context) {
+  const domainUrl = context.req.headers.host;
   const response1 = await fetch(
-    'http://localhost:3000/api/v1/refresher-access',
+    `https://${domainUrl}/api/v1/refresher-access`,
     {
       method: 'PATCH',
       credentials: 'include',
@@ -91,7 +92,7 @@ export async function getServerSideProps(context) {
     }
   );
 
-  const response2 = await fetch('http://localhost:3000/api/v1/brands');
+  const response2 = await fetch(`https://${domainUrl}/api/v1/brands`);
 
   if (response1.ok || response2.ok) {
     const dataUser = await response1.json();

@@ -74,7 +74,7 @@ const EditReviewForm = ({ idReview, userId }) => {
     };
 
     const result = await updateReview(
-      `http://localhost:3000/api/v1/reviews?idReview=${idReview}&productId=${_id}`,
+      `/api/v1/reviews?idReview=${idReview}&productId=${_id}`,
       dataEdit,
       tokenAccess,
       setErrorMsg

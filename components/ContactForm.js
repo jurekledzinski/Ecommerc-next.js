@@ -56,7 +56,7 @@ const ContactForm = () => {
     };
 
     const result = await sendEmail(
-      'http://localhost:3000/api/v1/email',
+      '/api/v1/email',
       contactData,
       tokenAccess,
       setErrorMsg

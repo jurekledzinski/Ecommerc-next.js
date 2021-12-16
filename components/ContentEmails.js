@@ -355,7 +355,7 @@ export const contentEmailContact = (data) => {
   `;
 };
 
-export const contentPasswordChange = (data, token) => {
+export const contentPasswordChange = (data, token, req) => {
   return `
   <table
   role="presentation"
@@ -434,7 +434,9 @@ export const contentPasswordChange = (data, token) => {
                     <table cellspacing="0" cellpadding="0" style="margin-top: 10px;">
                     <tr>
                       <td bgcolor="#0074D9">
-                          <a  class=”link” href="http://localhost:3000/change_password/${token}" target="_blank" style="
+                          <a  class=”link” href="https://${
+                            req.headers.host
+                          }/change_password/${token}" target="_blank" style="
                           display: inline-block;
                           padding: 8px 12px;
                           border: 1px solid #0074D9;

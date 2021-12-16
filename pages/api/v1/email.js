@@ -66,7 +66,7 @@ const handler = async (req, res) => {
           break;
         case 'forgetPassword':
           const resultCheck = await check(data);
-          contentEmail = contentPasswordChange(data, resultCheck);
+          contentEmail = contentPasswordChange(data, resultCheck, req);
           subjectEmail = 'Change password';
           userEmailToSend = data.email;
           break;

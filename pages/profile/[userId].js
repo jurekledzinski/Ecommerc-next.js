@@ -19,7 +19,7 @@ const ProfileUser = ({ user }) => {
     if (stateLoginUser?.tokenAccess) {
       const fetchData = async () => {
         const result = await getProfile(
-          'http://localhost:3000/api/v1/profile',
+          '/api/v1/profile',
           stateLoginUser.tokenAccess,
           setErrorMsg
         );
@@ -51,18 +51,17 @@ const ProfileUser = ({ user }) => {
 export default ProfileUser;
 
 export async function getServerSideProps(context) {
-  const response = await fetch(
-    'http://localhost:3000/api/v1/refresher-access',
-    {
-      method: 'PATCH',
+  const domainUrl = context.req.headers.host;
+
+  const response = await fetch(`https://${domainUrl}/api/v1/refresher-access`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'applications/json',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'applications/json',
-        credentials: 'include',
-        cookie: JSON.stringify(context.req.cookies),
-      },
-    }
-  );
+      cookie: JSON.stringify(context.req.cookies),
+    },
+  });
 
   if (response.ok) {
     const data = await response.json();

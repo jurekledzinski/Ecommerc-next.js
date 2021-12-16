@@ -35,7 +35,7 @@ const SliderOtherProducts = () => {
 
   useEffect(() => {
     const fetchExtraProducts = async () => {
-      const response = await fetch(`http://localhost:3000/api/v1/${category}`);
+      const response = await fetch(`/api/v1/${category}`);
       const data = await response.json();
       setDataProducts(data);
     };
@@ -52,11 +52,9 @@ const SliderOtherProducts = () => {
           <SplideSlide key={index}>
             <Card sx={{ height: '320px' }}>
               <Link
-                href={`http://localhost:3000/${item.category}/${
-                  item.brand
-                }/model/${item?.name?.toLowerCase()?.replace(/\s/g, '-')}?id=${
-                  item._id
-                }`}
+                href={`/${item.category}/${item.brand}/model/${item?.name
+                  ?.toLowerCase()
+                  ?.replace(/\s/g, '-')}?id=${item._id}`}
               >
                 <a>
                   <CardActionArea sx={cardActionTopRatedStyles}>

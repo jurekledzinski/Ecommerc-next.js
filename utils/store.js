@@ -153,7 +153,7 @@ const StoreProvider = ({ children }) => {
     if (Boolean(stateLoginUser.tokenAccess) && stateCart.products.length >= 0) {
       const updateCart = async () => {
         await addCart(
-          `http://localhost:3000/api/v1/cart`,
+          `/api/v1/cart`,
           stateCart,
           stateLoginUser?.tokenAccess,
           setErrorMsg
@@ -167,7 +167,7 @@ const StoreProvider = ({ children }) => {
     if (Boolean(stateLoginUser.tokenAccess)) {
       const fetchCart = async () => {
         const result = await getCart(
-          `http://localhost:3000/api/v1/cart`,
+          `/api/v1/cart`,
           stateLoginUser?.tokenAccess,
           setErrorMsg
         );

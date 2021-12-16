@@ -50,7 +50,7 @@ const ChangePasswordForm = ({ urlCode }) => {
     }
 
     const result = await passwordChange(
-      `http://localhost:3000/api/v1/register?tokenAccessChange=${urlCode}`,
+      `/api/v1/register?tokenAccessChange=${urlCode}`,
       data,
       setErrorMsg
     );

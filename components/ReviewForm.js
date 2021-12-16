@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -34,14 +34,12 @@ const ReviewForm = () => {
     dispatchReview,
     stateDetailsProduct,
     stateLoginUser,
-    stateReviews,
   } = useContext(StoreContext);
   const { _id } = stateDetailsProduct;
   const { tokenAccess, user } = stateLoginUser;
   const [dataForm, setDataForm] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
-  const isReviewed = useRef(true);
 
   const {
     control,
@@ -76,7 +74,7 @@ const ReviewForm = () => {
     };
 
     const result = await addReview(
-      `http://localhost:3000/api/v1/reviews?productId=${_id}`,
+      `/api/v1/reviews?productId=${_id}`,
       dataReview,
       tokenAccess,
       setErrorMsg

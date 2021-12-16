@@ -127,7 +127,7 @@ const PlaceOrder = () => {
     };
 
     const result = await addOrderDetails(
-      `http://localhost:3000/api/v1/order?page=Place_order`,
+      `/api/v1/order?page=Place_order`,
       placeOrderData,
       tokenAccess,
       setErrorMsg
@@ -143,7 +143,7 @@ const PlaceOrder = () => {
     if (stateLoginUser?.tokenAccess) {
       const fetchDetailsOrder = async () => {
         const result = await getOrderDetails(
-          'http://localhost:3000/api/v1/order',
+          '/api/v1/order',
           tokenAccess,
           setErrorMsg
         );

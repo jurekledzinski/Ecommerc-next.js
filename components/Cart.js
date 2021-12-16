@@ -79,7 +79,7 @@ const Cart = () => {
 
   const handleCheckInventory = async () => {
     const result = await checkProductsInventory(
-      `http://localhost:3000/api/v1/products`,
+      `/api/v1/products`,
       { data: stateCart.products },
       setErrorMsg
     );
@@ -155,7 +155,7 @@ const Cart = () => {
     } else {
       const cartAndId = copyCart(stateCart, stateLoginUser.user._id);
       const result = await addCart(
-        `http://localhost:3000/api/v1/cart`,
+        `/api/v1/cart`,
         cartAndId,
         tokenAccess,
         setErrorMsg

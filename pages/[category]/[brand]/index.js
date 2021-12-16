@@ -71,13 +71,14 @@ export default ProductsListPage;
 export async function getServerSideProps(context) {
   const { params } = context;
   const { category, brand } = params;
+  const domainUrl = context.req.headers.host;
 
   const response1 = await fetch(
-    `http://localhost:3000/api/v1/${category}/${brand}`
+    `https://${domainUrl}/api/v1/${category}/${brand}`
   );
 
   const response2 = await fetch(
-    'http://localhost:3000/api/v1/refresher-access',
+    `https://${domainUrl}/api/v1/refresher-access`,
     {
       method: 'PATCH',
       credentials: 'include',

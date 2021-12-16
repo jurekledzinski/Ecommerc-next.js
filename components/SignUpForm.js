@@ -78,11 +78,7 @@ const SignUpForm = () => {
       idUser: userID,
     };
 
-    await createCart(
-      `http://localhost:3000/api/v1/cart`,
-      defaultCart,
-      setErrorMsg
-    );
+    await createCart(`/api/v1/cart`, defaultCart, setErrorMsg);
   };
 
   const onSubmit = async (data) => {
@@ -94,7 +90,7 @@ const SignUpForm = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/v1/register', {
+      const response = await fetch('/api/v1/register', {
         method: 'POST',
         credentials: 'include',
         headers: {

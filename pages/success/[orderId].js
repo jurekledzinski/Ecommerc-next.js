@@ -25,7 +25,7 @@ const SuccessOrder = ({ user }) => {
 
   const sendSuccessEmail = async (orderData) => {
     const result = await sendEmail(
-      'http://localhost:3000/api/v1/email',
+      '/api/v1/email',
       orderData,
       tokenAccess,
       setErrorMsg
@@ -67,7 +67,7 @@ const SuccessOrder = ({ user }) => {
     if (tokenAccess) {
       const fetchDetailsOrder = async () => {
         const result = await getOrderDetails(
-          'http://localhost:3000/api/v1/order',
+          '/api/v1/order',
           tokenAccess,
           setErrorMsg
         );
@@ -88,7 +88,7 @@ const SuccessOrder = ({ user }) => {
     if (Object.keys(orderState).length > 0) {
       const paidOrderAdd = async () => {
         await addPaidOrder(
-          'http://localhost:3000/api/v1/order',
+          '/api/v1/order',
           orderState,
           tokenAccess,
           setErrorMsg
@@ -102,7 +102,7 @@ const SuccessOrder = ({ user }) => {
     if (Object.keys(orderState).length > 0) {
       const updateProducts = async () => {
         const result = await updateProductsStock(
-          'http://localhost:3000/api/v1/products',
+          '/api/v1/products',
           orderState,
           tokenAccess,
           setErrorMsg
@@ -145,18 +145,17 @@ SuccessOrder.getLayout = function PageLayout(page) {
 };
 
 export async function getServerSideProps(context) {
-  const response = await fetch(
-    'http://localhost:3000/api/v1/refresher-access',
-    {
-      method: 'PATCH',
+  const domainUrl = context.req.headers.host;
+
+  const response = await fetch(`https://${domainUrl}/api/v1/refresher-access`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'applications/json',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'applications/json',
-        credentials: 'include',
-        cookie: JSON.stringify(context.req.cookies),
-      },
-    }
-  );
+      cookie: JSON.stringify(context.req.cookies),
+    },
+  });
 
   if (response.ok) {
     const data = await response.json();
