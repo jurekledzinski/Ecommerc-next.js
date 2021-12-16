@@ -21,6 +21,7 @@ const SuccessOrder = ({ user }) => {
   const { tokenAccess } = stateLoginUser;
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [emailReceive, setEmailReceive] = useState(false);
   const [orderState, setOrderState] = useState({});
 
   const sendSuccessEmail = async (orderData) => {
@@ -30,7 +31,11 @@ const SuccessOrder = ({ user }) => {
       tokenAccess,
       setErrorMsg
     );
-    setSuccessMsg(result.msgSuccess);
+
+    if (Boolean(result.msgSuccess)) {
+      setSuccessMsg(result.msgSuccess);
+      setEmailReceive(true);
+    }
   };
 
   const copyOrderPaid = (result) => {
@@ -133,7 +138,7 @@ const SuccessOrder = ({ user }) => {
         setErrorMsg={setErrorMsg}
         setSuccessMsg={setSuccessMsg}
       />
-      <SuccessPaidOrder />
+      <SuccessPaidOrder emailReceive={emailReceive} />
     </>
   );
 };

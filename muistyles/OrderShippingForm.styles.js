@@ -9,7 +9,7 @@ export const SectionOrderShip = styled('section')(({ theme }) => ({
   margin: '0 auto',
   [theme.breakpoints.up('xs')]: {
     padding: '0 16px',
-    minHeight: 'calc(100vh - 141px)',
+    minHeight: 'calc(100vh - 140.5px)',
   },
   [theme.breakpoints.up('sm')]: {
     padding: '0 24px',
@@ -43,6 +43,7 @@ export const inputLastOrderShipStyles = {
 
 export const addOrderBtnStyles = {
   width: { xs: '100%', sm: '100%' },
+  lineHeight: { xs: '2.5', sm: '1.75' },
 };
 
 export const titleShipppingStyles = {
