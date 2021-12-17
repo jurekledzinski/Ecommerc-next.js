@@ -73,7 +73,7 @@ const SuccessPaidOrder = ({ emailReceive }) => {
         </Typography>
         {emailReceive ? (
           <Button
-            variant="contained"
+            variant="outlined"
             size="large"
             sx={rediretSuccessBtn}
             type="submit"

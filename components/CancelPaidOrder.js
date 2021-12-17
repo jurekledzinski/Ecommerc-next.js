@@ -62,7 +62,7 @@ const CancelPaidOrder = () => {
           Your order has been canceled successfully
         </Typography>
         <Button
-          variant="contained"
+          variant="outlined"
           size="large"
           sx={rediretCancelBtn}
           type="submit"
