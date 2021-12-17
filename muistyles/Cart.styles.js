@@ -97,7 +97,7 @@ export const InputNumber = styled('input')(({ theme }) => ({
     margin: 0,
     WebkitAppearance: 'none',
   },
-  '&': { Mozappearance: 'textfield' },
+  MozAppearance: 'textfield',
 }));
 
 export const boxButtonsStyles = {

@@ -48,6 +48,7 @@ export const InputNumber = styled('input')(({ theme }) => ({
     margin: 0,
     WebkitAppearance: 'none',
   },
+  MozAppearance: 'textfield',
 }));
 
 export const btnStyles = {
