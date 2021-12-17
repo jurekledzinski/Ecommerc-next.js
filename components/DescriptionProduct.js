@@ -81,7 +81,7 @@ const DescriptionProduct = () => {
           />
         </Stack>
         <Typography variant="h4" sx={priceStyles}>
-          Price: {price.toFixed(2)}€
+          Price: {Boolean(price) && price?.toFixed(2)}€
         </Typography>
         <Typography variant="body2" sx={descriptionStyles}>
           {description}
