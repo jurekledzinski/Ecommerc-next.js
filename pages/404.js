@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -15,12 +14,6 @@ import {
 
 const NotFoundPage = ({ statusCode, title }) => {
   const router = useRouter();
-
-  useEffect(() => {
-    window.onload = function () {
-      Cookies.set('_ls', '1');
-    };
-  }, []);
 
   return (
     <Section404Page>

@@ -124,12 +124,6 @@ const SuccessOrder = ({ user }) => {
     }
   }, [orderState]);
 
-  useEffect(() => {
-    window.onload = function () {
-      Cookies.set('_ls', '1');
-    };
-  }, []);
-
   return (
     <>
       <SnackBarMessage

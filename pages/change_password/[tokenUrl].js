@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import ChangePasswordForm from '../../components/ChangePasswordForm';
 import NoPermissionsPage from '../../components/NoPermissionsPage';
@@ -11,12 +10,6 @@ const ChangePasswordPage = ({ tokenAccessChange, tokenUrl }) => {
   if (router.query.tokenUrl !== tokenUrl) {
     return <NoPermissionsPage />;
   }
-
-  useEffect(() => {
-    window.onload = function () {
-      Cookies.set('_ls', '1');
-    };
-  }, []);
 
   return <ChangePasswordForm urlCode={tokenAccessChange} />;
 };

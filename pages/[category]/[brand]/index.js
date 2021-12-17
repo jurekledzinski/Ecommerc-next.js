@@ -1,5 +1,4 @@
 import cookie from 'cookie';
-import Cookies from 'js-cookie';
 import React, { useContext, useEffect } from 'react';
 import Products from '../../../components/Products';
 
@@ -56,12 +55,6 @@ const ProductsListPage = ({ products, user }) => {
       });
     });
   }, [stateProductsBrand.length]);
-
-  useEffect(() => {
-    window.onload = function () {
-      Cookies.set('_ls', '1');
-    };
-  }, []);
 
   return <Products endpoints={endpoints} />;
 };

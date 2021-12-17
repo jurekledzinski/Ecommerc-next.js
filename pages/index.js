@@ -18,7 +18,7 @@ const Home = ({ brands, user, pageLoad }) => {
   const { dispatchLoginUser, disptachOpenDrawer, dispatchUserProfile } =
     useContext(StoreContext);
   const [pageLoading, setPageLoading] = useState(
-    false || Boolean(Cookies.get('_ls'))
+    false || Boolean(sessionStorage.getItem('_ls'))
   );
   const idTimeout = useRef(null);
 
@@ -34,11 +34,11 @@ const Home = ({ brands, user, pageLoad }) => {
     disptachOpenDrawer({ type: SELECT_OPTION_MENU, selectOption: 0 });
 
     window.onbeforeunload = function (e) {
-      Cookies.remove('_ls');
+        sessionStorage.removeItem('_ls', '1');
     };
     window.onload = function () {
       idTimeout.current = setTimeout(() => {
-        Cookies.set('_ls', '1');
+        sessionStorage.setItem('_ls', '1');
         setPageLoading(pageLoad);
       }, 300);
     };
