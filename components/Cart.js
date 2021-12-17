@@ -267,14 +267,14 @@ const Cart = () => {
               <Grid item xs={3}>
                 <Card sx={cardStyles}>
                   <Typography variant="h6" sx={cardStylesThree}>
-                    {item.price}€
+                    {item.price.toFixed(2)}€
                   </Typography>
                 </Card>
               </Grid>
               <Grid item xs={3}>
                 <Card sx={cardStyles}>
                   <Typography variant="h6" sx={cardStylesThree}>
-                    {item.totalPrice}€
+                    {item.totalPrice.toFixed(2)}€
                   </Typography>
                 </Card>
               </Grid>
@@ -291,7 +291,7 @@ const Cart = () => {
         ))}
       </Box>
       <Typography variant="h5" sx={titleCartSummaryStyles}>
-        Subtotal: {stateCart.totalCartPrice}€
+        Subtotal: {stateCart.totalCartPrice.toFixed(2)}€
       </Typography>
       <form onSubmit={handleProccedToCheckout}>
         <Button

@@ -110,7 +110,7 @@ const Products = ({ endpoints }) => {
                   {item.name}
                 </Typography>
                 <Typography variant="h6" sx={productTitleStyles}>
-                  Price: {item.price}€
+                  Price: {item.price.toFixed(2)}€
                 </Typography>
                 <Box sx={boxWrapper}>
                   <Button

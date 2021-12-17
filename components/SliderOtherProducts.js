@@ -82,7 +82,7 @@ const SliderOtherProducts = () => {
                   sx={ratingTopRateSliderStyles}
                 />
                 <Typography variant="h6" sx={titleContentTopRatesTwoStyles}>
-                  Price: {item.price}€
+                  Price: {item.price.toFixed(2)}€
                 </Typography>
                 <Button variant="contained">Add to cart</Button>
               </CardContent>
