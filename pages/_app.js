@@ -38,6 +38,12 @@ function MyApp({ Component, pageProps }) {
     setLoaded(true);
   }, []);
 
+  useEffect(() => {
+    window.onload = function () {
+      sessionStorage.setItem('_ls', '1');
+    };
+  }, []);
+
   if (pageProps.error) {
     const { statusCode } = pageProps.error;
     switch (true) {
