@@ -34,7 +34,7 @@ const Home = ({ brands, user, pageLoad }) => {
     disptachOpenDrawer({ type: SELECT_OPTION_MENU, selectOption: 0 });
 
     window.onbeforeunload = function (e) {
-        sessionStorage.removeItem('_ls', '1');
+      sessionStorage.removeItem('_ls', '1');
     };
     window.onload = function () {
       idTimeout.current = setTimeout(() => {
@@ -64,6 +64,7 @@ const Home = ({ brands, user, pageLoad }) => {
             width: '100%',
             height: '100vh',
             backgroundColor: 'white',
+            zIndex: '2',
           }}
         >
           <Box>
