@@ -49,11 +49,11 @@ const Layout = ({ brandsProducts, children }) => {
   const [btnCategory, setBtnCategory] = useState([]);
   const [btnIndex, setBtnIndex] = useState({
     category: Cookies.get('_cb'),
-    index: Number(Cookies.get('_bi')),
+    index: Number(sessionStorage.getItem('_bi')),
   });
 
   const handleChooseCategory = (categoryItems, index) => {
-    Cookies.set('_bi', JSON.stringify(index));
+    sessionStorage.setItem('_bi', JSON.stringify(index));
     Cookies.set('_cb', categoryItems);
     setBtnIndex({
       ...btnIndex,
@@ -82,8 +82,8 @@ const Layout = ({ brandsProducts, children }) => {
       data: filterItems,
     });
     setBtnCategory(onlyCategory);
-    if (!Cookies.get('_bi')) {
-      Cookies.set('_bi', '0');
+    if (!sessionStorage.getItem('_bi')) {
+      sessionStorage.setItem('_bi', '0');
       Cookies.set('_cb', onlyCategory[0].category);
     }
   }, []);

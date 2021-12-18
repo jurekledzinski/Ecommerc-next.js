@@ -49,7 +49,7 @@ const DeleteProfileUser = () => {
       Cookies.remove('darkmode');
       Cookies.remove('_mso');
       Cookies.remove('_cb');
-      Cookies.remove('_bi');
+      sessionStorage.removeItem('_bi');
       dispatchLoginUser({ type: CLEAR_USER_LOGIN_DATA });
       setSuccessMsg(result.msgSuccess);
       idTimeout.current = setTimeout(() => router.push('/'), 1100);
