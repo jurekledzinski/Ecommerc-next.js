@@ -126,7 +126,7 @@ export const gridContainerTwoStyles = {
 };
 
 export const itemsCartWrapperStyles = {
-  maxHeight: '476px',
+  maxHeight: { xs: '300px', sm: '476px' },
   overflowY: 'auto',
   scrollbarWidth: 'thin',
   scrollbarColor: 'rgb(240, 239, 239)',
