@@ -35,7 +35,10 @@ const SuccessOrder = ({ user }) => {
 
     if (Boolean(result.msgSuccess)) {
       setSuccessMsg(result.msgSuccess);
-      idTimeout.current = setTimeout(() => setReceive(true), 1100);
+      idTimeout.current = setTimeout(() => {
+        setReceive(true);
+        clearTimeout(idTimeout.current);
+      }, 1100);
     }
   };
 
@@ -124,10 +127,6 @@ const SuccessOrder = ({ user }) => {
       updateProducts();
     }
   }, [orderState]);
-
-  useEffect(() => {
-    return () => clearTimeout(idTimeout.current);
-  }, []);
 
   return (
     <>
