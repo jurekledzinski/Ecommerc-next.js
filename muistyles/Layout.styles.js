@@ -12,7 +12,7 @@ export const Image = styled('img')(({ theme }) => ({
 
 export const wrapperTitleStyles = {
   maxWidth: '1200px',
-  padding: '20px 0 20px 24px',
+  padding: { xs: '10px 20px', sm: '20px 0 20px 24px' },
   margin: '0 auto',
   backgroundColor: (theme) => theme.palette.background.paper,
 };
@@ -20,6 +20,7 @@ export const wrapperTitleStyles = {
 export const titleProductsStyles = {
   color: (theme) => theme.palette.text.primary,
   textTransform: 'uppercase',
+  fontSize: '1.6rem',
   fontWeight: 500,
   fontFamily: 'Oswald, sans-serif',
   letterSpacing: 1,
