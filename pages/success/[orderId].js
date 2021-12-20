@@ -1,6 +1,6 @@
 import cookie from 'cookie';
 import Cookies from 'js-cookie';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { CLEAR_CART, USER_LOGIN_DATA } from '../../utils/constants';
 
 import { StoreContext } from '../../utils/store';
@@ -23,6 +23,7 @@ const SuccessOrder = ({ user }) => {
   const [successMsg, setSuccessMsg] = useState('');
   const [emailReceive, setEmailReceive] = useState(false);
   const [orderState, setOrderState] = useState({});
+  const idTimeout = useRef(null);
 
   const sendSuccessEmail = async (orderData) => {
     const result = await sendEmail(
@@ -34,7 +35,7 @@ const SuccessOrder = ({ user }) => {
 
     if (Boolean(result.msgSuccess)) {
       setSuccessMsg(result.msgSuccess);
-      setEmailReceive(true);
+      idTimeout.current = setTimeout(() => setReceive(true), 1100);
     }
   };
 
@@ -123,6 +124,10 @@ const SuccessOrder = ({ user }) => {
       updateProducts();
     }
   }, [orderState]);
+
+  useEffect(() => {
+    return () => clearTimeout(idTimeout.current);
+  }, []);
 
   return (
     <>
