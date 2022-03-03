@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
@@ -24,14 +24,68 @@ import {
   wrapperSliderOtherProductsStyles,
 } from '../muistyles/SliderOtherProducts.styles';
 
+import { UPDATE_PRODUCTS_BRAND_ON_STOCK } from '../utils/constants';
+import { controlCart } from '../helpers/carthelpers';
 import { StoreContext } from '../utils/store';
 
 const SliderOtherProducts = () => {
-  const { stateReviews } = useContext(StoreContext);
+  const {
+    dispatchCart,
+    disptachProductsBrand,
+    stateCart,
+    stateLoginUser,
+    stateReviews,
+  } = useContext(StoreContext);
   const [dataProducts, setDataProducts] = useState([]);
+  const [productsTop, setProductsTop] = useState([]);
   const router = useRouter();
   const index = router.asPath.slice(1).indexOf('/');
   const category = router.asPath.slice(1).slice(0, index);
+  const topProducts = useRef([]);
+
+  const handleAddToCart = (idProduct) => {
+    const singleProductAdded = dataProducts.find(
+      (item) => item._id === idProduct
+    );
+
+    let copyProduct = {
+      ...singleProductAdded,
+      amount: singleProductAdded.onStock,
+    };
+
+    controlCart(copyProduct, idProduct, stateCart, dispatchCart);
+  };
+
+  useEffect(() => {
+    if (!Boolean(stateLoginUser.tokenAccess)) {
+      localStorage.setItem('cart', JSON.stringify(stateCart));
+    }
+    stateCart.products.forEach((item) => {
+      disptachProductsBrand({
+        type: UPDATE_PRODUCTS_BRAND_ON_STOCK,
+        productId: item._id,
+        amountOnStock: item.onStock,
+      });
+    });
+  }, [stateCart]);
+
+  useEffect(() => {
+    topProducts.current = JSON.parse(JSON.stringify(dataProducts));
+  }, [dataProducts]);
+
+  useEffect(() => {
+    const update = topProducts.current.map((item1) => {
+      const product = stateCart.products.find(
+        (item2) => item2._id === item1._id
+      );
+      if (product) {
+        return { ...item1, onStock: product.onStock };
+      }
+      return item1;
+    });
+
+    setProductsTop(update);
+  }, [stateCart, topProducts.current]);
 
   useEffect(() => {
     const fetchExtraProducts = async () => {
@@ -48,7 +102,7 @@ const SliderOtherProducts = () => {
         Top rated phones
       </Typography>
       <Splide options={optionsSliderOtherProducts}>
-        {dataProducts.map((item, index) => (
+        {productsTop.map((item, index) => (
           <SplideSlide key={index}>
             <Card sx={{ height: '320px' }}>
               <Link
@@ -84,7 +138,13 @@ const SliderOtherProducts = () => {
                 <Typography variant="h6" sx={titleContentTopRatesTwoStyles}>
                   Price: {item.price.toFixed(2)}€
                 </Typography>
-                <Button variant="contained">Add to cart</Button>
+                <Button
+                  disabled={item.onStock === 0 ? true : false}
+                  variant="contained"
+                  onClick={() => handleAddToCart(item._id)}
+                >
+                  {item.onStock === 0 ? 'Out of stock' : 'Add to cart'}
+                </Button>
               </CardContent>
             </Card>
           </SplideSlide>
