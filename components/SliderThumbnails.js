@@ -63,7 +63,7 @@ const SliderThumbnails = () => {
                 <WrapperSlideMainThumbNails>
                   <img
                     src={item}
-                    srcSet={`${item}?tr=w-305,h-250,cm-pad_resize,bg-transparent`}
+                    srcSet={`${item}?tr=w-305,h-250,cm-pad_resize`}
                     sizes="150px"
                     alt={name}
                     onLoad={handleOnLoadImage}
