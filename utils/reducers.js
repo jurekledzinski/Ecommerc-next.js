@@ -10,6 +10,7 @@ import {
   CREATE_CART,
   CLOSE_DRAWER,
   CLOSE_EDIT_FORM,
+  CLEAR_PRODUCTS_BRAND,
   DELETE_REVIEW,
   FETCH_DATA_BRAND_PRODUCTS,
   FETCH_DETAILS_PRODUCT,
@@ -98,6 +99,8 @@ export const dataProductsByBrandReducer = (state, action) => {
         onStock:
           item._id === action.productId ? action.amountOnStock : item.onStock,
       }));
+    case CLEAR_PRODUCTS_BRAND:
+      return action.data;
     default:
       return state;
   }

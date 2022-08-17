@@ -4,6 +4,7 @@ import Products from '../../../components/Products';
 
 import { useRoutesHook } from '../../../customHooks/useRoutesHook';
 import {
+  CLEAR_PRODUCTS_BRAND,
   FETCH_DATA_BRAND_PRODUCTS,
   USER_LOGIN_DATA,
   UPDATE_PRODUCTS_BRAND_ON_STOCK,
@@ -40,6 +41,10 @@ const ProductsListPage = ({ products, user }) => {
   useEffect(() => {
     if (products.length > 0) {
       disptachProductsBrand({
+        type: CLEAR_PRODUCTS_BRAND,
+        data: [],
+      });
+      disptachProductsBrand({
         type: FETCH_DATA_BRAND_PRODUCTS,
         data: createCopyProducts(products),
       });
@@ -55,10 +60,6 @@ const ProductsListPage = ({ products, user }) => {
       });
     });
   }, [stateProductsBrand.length]);
-
-  useEffect(() => {
-    console.log(stateProductsBrand, 'stateProductsBrand');
-  }, [stateProductsBrand]);
 
   return <Products endpoints={endpoints} />;
 };
