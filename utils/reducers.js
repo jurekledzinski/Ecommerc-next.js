@@ -6,6 +6,7 @@ import {
   ADD_REVIEW,
   ADD_STEP_STEPPER,
   CLEAR_CART,
+  CLEAR_DETAILS_PRODUCT,
   CLEAR_USER_LOGIN_DATA,
   CREATE_CART,
   CLOSE_DRAWER,
@@ -118,6 +119,8 @@ export const detailsProductReducer = (state, action) => {
         onStock:
           state._id === action.productId ? action.updateOnStock : state.onStock,
       };
+    case CLEAR_DETAILS_PRODUCT:
+      return action.data;
     default:
       return state;
   }

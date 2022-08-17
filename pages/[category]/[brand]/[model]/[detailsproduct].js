@@ -3,6 +3,7 @@ import React, { useEffect, useContext } from 'react';
 
 import { StoreContext } from '../../../../utils/store';
 import {
+  CLEAR_DETAILS_PRODUCT,
   FETCH_DETAILS_PRODUCT,
   GET_REVIEW,
   USER_LOGIN_DATA,
@@ -21,6 +22,10 @@ const DetailsProduct = ({ detailsProduct, productReviews, user }) => {
   useEffect(() => {
     console.log(detailsProduct, 'detailsProduct');
     if (detailsProduct.name) {
+      dispatchDetailsProduct({
+        type: CLEAR_DETAILS_PRODUCT,
+        data: {},
+      });
       dispatchDetailsProduct({
         type: FETCH_DETAILS_PRODUCT,
         data: detailsProduct,
