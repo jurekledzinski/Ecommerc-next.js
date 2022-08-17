@@ -117,7 +117,7 @@ const SliderOtherProducts = () => {
                       height="150"
                       alt=""
                       src={item.imagesSlider[0]}
-                      srcSet={`${item.imagesSlider[0]}?tr=w-100,h-100,cm-pad_resize,bg-transparent`}
+                      srcSet={`${item.imagesSlider[0]}?tr=w-100,h-100,cm-pad_resize`}
                       sizes="100px"
                       sx={cardMediaTopRateStyles}
                     ></CardMedia>
