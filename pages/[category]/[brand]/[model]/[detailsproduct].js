@@ -20,7 +20,6 @@ const DetailsProduct = ({ detailsProduct, productReviews, user }) => {
   } = useContext(StoreContext);
 
   useEffect(() => {
-    console.log(detailsProduct, 'detailsProduct');
     if (detailsProduct.name) {
       dispatchDetailsProduct({
         type: CLEAR_DETAILS_PRODUCT,
