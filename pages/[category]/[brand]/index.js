@@ -56,6 +56,10 @@ const ProductsListPage = ({ products, user }) => {
     });
   }, [stateProductsBrand.length]);
 
+  useEffect(() => {
+    console.log(stateProductsBrand, 'stateProductsBrand');
+  }, [stateProductsBrand]);
+
   return <Products endpoints={endpoints} />;
 };
 
