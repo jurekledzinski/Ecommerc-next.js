@@ -90,7 +90,7 @@ const Products = ({ endpoints }) => {
                         image={item.imagesSlider[0]}
                         alt={item.name}
                         sx={cardMediaStyles}
-                        srcSet={`${item.imagesSlider[0]}?tr=w-250,h-250,cm-pad_resize,bg-transparent`}
+                        srcSet={`${item.imagesSlider[0]}?tr=w-250,h-250,cm-pad_resize`}
                         sizes="250px"
                         onLoad={() => setIsLoad(true)}
                       />
