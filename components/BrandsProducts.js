@@ -36,33 +36,31 @@ const BrandsProducts = () => {
             <Grid key={index} item xs={12} sm={6} md={3}>
               <Card>
                 <Link href={`/${item.category}/${item.brand}`} passHref>
-                  <a style={linkBrandStyles}>
-                    <CardActionArea sx={cardActionBrandsStyles}>
-                      <Box sx={boxWrapperImagesBrandsStyles}>
-                        <CardMedia
-                          component="img"
-                          image={item.image}
-                          alt={item.brand}
-                          sx={imageBrandsStyles}
-                          onLoad={() => setIsLoad(true)}
+                  <CardActionArea sx={cardActionBrandsStyles}>
+                    <Box sx={boxWrapperImagesBrandsStyles}>
+                      <CardMedia
+                        component="img"
+                        image={item.image}
+                        alt={item.brand}
+                        sx={imageBrandsStyles}
+                        onLoad={() => setIsLoad(true)}
+                      />
+                      {!Boolean(isLoad) && (
+                        <CircularProgress
+                          size={20}
+                          thickness={2}
+                          sx={loaderBrandsImageStyles}
                         />
-                        {!Boolean(isLoad) && (
-                          <CircularProgress
-                            size={20}
-                            thickness={2}
-                            sx={loaderBrandsImageStyles}
-                          />
-                        )}
+                      )}
+                    </Box>
+                    <CardContent sx={cardContentBrandsStyles}>
+                      <Box sx={boxBrandStyles}>
+                        <Typography variant="h3" sx={brandTitleStyles}>
+                          {item.brand}
+                        </Typography>
                       </Box>
-                      <CardContent sx={cardContentBrandsStyles}>
-                        <Box sx={boxBrandStyles}>
-                          <Typography variant="h3" sx={brandTitleStyles}>
-                            {item.brand}
-                          </Typography>
-                        </Box>
-                      </CardContent>
-                    </CardActionArea>
-                  </a>
+                    </CardContent>
+                  </CardActionArea>
                 </Link>
               </Card>
             </Grid>

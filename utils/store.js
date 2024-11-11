@@ -62,16 +62,6 @@ const StoreProvider = ({ children }) => {
 
   let initialStateCartNotLoggedUser;
 
-  if (typeof window !== 'undefined' && !stateLoginUser?.tokenAccess) {
-    initialStateCartNotLoggedUser = JSON.parse(
-      localStorage.getItem('cart')
-    ) || {
-      products: [],
-      totalCartAmount: 0,
-      totalCartPrice: 0,
-    };
-  }
-
   const [stateOpenDrawer, disptachOpenDrawer] = useReducer(
     openDrawerReducer,
     initialStateOpenDrawer
@@ -101,6 +91,16 @@ const StoreProvider = ({ children }) => {
     userReducer,
     initialStateLoginUser
   );
+
+  if (typeof window !== 'undefined' && !stateLoginUser?.tokenAccess) {
+    initialStateCartNotLoggedUser = JSON.parse(
+      localStorage.getItem('cart')
+    ) || {
+      products: [],
+      totalCartAmount: 0,
+      totalCartPrice: 0,
+    };
+  }
 
   const [stateCart, dispatchCart] = useReducer(
     cartReducer,

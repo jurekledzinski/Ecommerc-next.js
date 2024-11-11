@@ -15,21 +15,26 @@ const handler = connectDb(async (req, res) => {
   const handleStripeCheckout = async () => {
     const changedProducts = productsOrdered.map((item) => {
       return {
-        name: item.name,
-        currency: 'eur',
+        price_data: {
+          currency: 'eur',
+          unit_amount: Math.round(item.price * 100),
+          product_data: {
+            name: item.name,
+            description: item.description,
+            images: [item.imagesSlider[0]],
+          },
+        },
         quantity: item.amount - item.onStock,
-        amount: Math.round(item.price * 100),
-        images: [item.imagesSlider[0]],
       };
     });
 
     const session = await stripe.checkout.sessions.create({
-      success_url: `https://${domainURL}/success/order?id=${orderID}`,
-      cancel_url: `https://${domainURL}/cancel/order?id=${orderID}`,
-      payment_method_types: ['card'],
-      line_items: changedProducts,
+      line_items: [...changedProducts],
       mode: 'payment',
+      payment_method_types: ['card'],
       client_reference_id: orderID,
+      success_url: `http://${domainURL}/success/order?id=${orderID}`,
+      cancel_url: `http://${domainURL}/cancel/order?id=${orderID}`,
       shipping_options: [
         {
           shipping_rate_data: {

@@ -1,4 +1,4 @@
-import cookie from 'cookie';
+const cookie = require('cookie');
 import { connectDb } from '../../../utils/db';
 import User from '../../../models/user';
 import { isAuth } from '../../../helpers/api/auth-helper';
@@ -28,7 +28,7 @@ const clearCookie = (res) => {
     cookie.serialize('_sp', '', {
       httpOnly: true,
       path: '/',
-      expires: new Date('Thu, 01 Jan 1970 00:00:00 GMT'),
+      expires: new Date(0),
     })
   );
 };

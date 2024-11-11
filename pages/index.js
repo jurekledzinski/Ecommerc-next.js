@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Cookies from 'js-cookie';
-import cookie from 'cookie';
+const cookie = require('cookie');
 import Layout from '../components/Layout';
 import Box from '@mui/material/Box';
 import BrandsProducts from '../components/BrandsProducts';
@@ -20,7 +20,6 @@ const Home = ({ brands, user, pageLoad }) => {
   const [pageLoading, setPageLoading] = useState(
     false || Boolean(sessionStorage.getItem('_ls'))
   );
-  const idTimeout = useRef(null);
 
   useEffect(() => {
     if (Object.keys(user).length > 0) {
@@ -36,14 +35,9 @@ const Home = ({ brands, user, pageLoad }) => {
     window.onbeforeunload = function (e) {
       sessionStorage.removeItem('_ls', '1');
     };
-    window.onload = function () {
-      idTimeout.current = setTimeout(() => {
-        sessionStorage.setItem('_ls', '1');
-        setPageLoading(pageLoad);
-      }, 300);
-    };
 
-    return () => clearTimeout(idTimeout.current);
+    sessionStorage.setItem('_ls', '1');
+    setPageLoading(pageLoad);
   }, []);
 
   return (
@@ -78,22 +72,20 @@ const Home = ({ brands, user, pageLoad }) => {
 
 export default Home;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const domainUrl = context.req.headers.host;
-  const response1 = await fetch(
-    `https://${domainUrl}/api/v1/refresher-access`,
-    {
-      method: 'PATCH',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'applications/json',
-        credentials: 'include',
-        cookie: JSON.stringify(context.req.cookies),
-      },
-    }
-  );
 
-  const response2 = await fetch(`https://${domainUrl}/api/v1/brands`);
+  const response1 = await fetch(`http://${domainUrl}/api/v1/refresher-access`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'applications/json',
+      credentials: 'include',
+      cookie: JSON.stringify(context.req.cookies),
+    },
+  });
+
+  const response2 = await fetch(`http://${domainUrl}/api/v1/brands`);
 
   if (response1.ok || response2.ok) {
     const dataUser = await response1.json();
@@ -139,4 +131,4 @@ export async function getServerSideProps(context) {
       },
     };
   }
-}
+};

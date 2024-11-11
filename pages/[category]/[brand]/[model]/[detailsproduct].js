@@ -1,4 +1,4 @@
-import cookie from 'cookie';
+const cookie = require('cookie');
 import React, { useEffect, useContext } from 'react';
 
 import { StoreContext } from '../../../../utils/store';
@@ -66,21 +66,18 @@ export async function getServerSideProps(context) {
   const domainUrl = context.req.headers.host;
 
   const response1 = await fetch(
-    `https://${domainUrl}/api/v1/${category}/${brand}/${id}`
+    `http://${domainUrl}/api/v1/${category}/${brand}/${id}`
   );
 
-  const response2 = await fetch(
-    `https://${domainUrl}/api/v1/refresher-access`,
-    {
-      method: 'PATCH',
+  const response2 = await fetch(`http://${domainUrl}/api/v1/refresher-access`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'applications/json',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'applications/json',
-        credentials: 'include',
-        cookie: JSON.stringify(context.req.cookies),
-      },
-    }
-  );
+      cookie: JSON.stringify(context.req.cookies),
+    },
+  });
 
   if (response1.ok || response2.ok) {
     const dataDetails = await response1.json();
@@ -90,7 +87,7 @@ export async function getServerSideProps(context) {
     const { tokenAccess, user } = data;
 
     const response3 = await fetch(
-      `https://${domainUrl}/api/v1/reviews?productId=${detailsProduct._id}`,
+      `http://${domainUrl}/api/v1/reviews?productId=${detailsProduct._id}`,
       {
         method: 'GET',
         credentials: 'include',

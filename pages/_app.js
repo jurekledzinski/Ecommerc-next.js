@@ -39,9 +39,7 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
-    window.onload = function () {
-      sessionStorage.setItem('_ls', '1');
-    };
+    sessionStorage.setItem('_ls', '1');
   }, []);
 
   if (pageProps.error) {

@@ -110,19 +110,17 @@ const SliderOtherProducts = () => {
                   ?.toLowerCase()
                   ?.replace(/\s/g, '-')}?id=${item._id}`}
               >
-                <a>
-                  <CardActionArea sx={cardActionTopRatedStyles}>
-                    <CardMedia
-                      component="img"
-                      height="150"
-                      alt=""
-                      src={item.imagesSlider[0]}
-                      srcSet={`${item.imagesSlider[0]}?tr=w-100,h-100,cm-pad_resize`}
-                      sizes="100px"
-                      sx={cardMediaTopRateStyles}
-                    ></CardMedia>
-                  </CardActionArea>
-                </a>
+                <CardActionArea sx={cardActionTopRatedStyles}>
+                  <CardMedia
+                    component="img"
+                    height="150"
+                    alt=""
+                    src={item.imagesSlider[0]}
+                    srcSet={`${item.imagesSlider[0]}?tr=w-100,h-100,cm-pad_resize`}
+                    sizes="100px"
+                    sx={cardMediaTopRateStyles}
+                  ></CardMedia>
+                </CardActionArea>
               </Link>
               <CardContent>
                 <Typography variant="h6" sx={titleContentTopRatesOneStyles}>

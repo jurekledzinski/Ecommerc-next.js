@@ -64,11 +64,9 @@ const NavBar = () => {
     <AppBar sx={appBarStyles}>
       <Toolbar sx={toolbarNavStyles}>
         <NextLink href="/" passHref>
-          <Link sx={logoLinkStyles}>
-            <Typography variant="h4" sx={navBarLogostyles}>
-              Shoppy
-            </Typography>
-          </Link>
+          <Typography variant="h4" sx={navBarLogostyles}>
+            Shoppy
+          </Typography>
         </NextLink>
         <Box sx={boxWrapperStyles}>
           <IconButton onClick={handleToggleDarkMode}>

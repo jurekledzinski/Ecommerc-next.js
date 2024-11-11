@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import uuid from 'react-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -69,7 +69,7 @@ const OrderShippingForm = () => {
       cart: stateCart,
       email: profileData.email,
       idUser: user._id,
-      orderId: uuid(),
+      orderId: uuidv4(),
     };
 
     const result = await addOrderDetails(

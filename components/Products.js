@@ -79,31 +79,28 @@ const Products = ({ endpoints }) => {
                 href={`/${item.category}/${item.brand}/model/${item?.name
                   ?.toLowerCase()
                   ?.replace(/\s/g, '-')}?id=${item._id}`}
-                passHref
               >
-                <a style={aTagStyles}>
-                  <CardActionArea>
-                    <Box sx={productBoxesStyles}>
-                      <CardMedia
-                        component="img"
-                        height="250"
-                        image={item.imagesSlider[0]}
-                        alt={item.name}
-                        sx={cardMediaStyles}
-                        srcSet={`${item.imagesSlider[0]}?tr=w-250,h-250,cm-pad_resize`}
-                        sizes="250px"
-                        onLoad={() => setIsLoad(true)}
+                <CardActionArea>
+                  <Box sx={productBoxesStyles}>
+                    <CardMedia
+                      component="img"
+                      height="250"
+                      image={item.imagesSlider[0]}
+                      alt={item.name}
+                      sx={cardMediaStyles}
+                      srcSet={`${item.imagesSlider[0]}?tr=w-250,h-250,cm-pad_resize`}
+                      sizes="250px"
+                      onLoad={() => setIsLoad(true)}
+                    />
+                    {!Boolean(isLoad) && (
+                      <CircularProgress
+                        size={20}
+                        thickness={2}
+                        sx={loaderProductsImageStyles}
                       />
-                      {!Boolean(isLoad) && (
-                        <CircularProgress
-                          size={20}
-                          thickness={2}
-                          sx={loaderProductsImageStyles}
-                        />
-                      )}
-                    </Box>
-                  </CardActionArea>
-                </a>
+                    )}
+                  </Box>
+                </CardActionArea>
               </Link>
               <CardContent sx={cardContentStyles}>
                 <Typography variant="h6" sx={productTitleStyles}>

@@ -35,7 +35,7 @@ const MainSlider = () => {
     <WrapperSlider>
       <Splide
         options={optionsSlider}
-        hasSliderWrapper
+        hassliderwrapper={'true'}
         onMoved={(e) => setIndexSlide(e.index)}
       >
         {sliderData.map((item, index) => (

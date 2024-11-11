@@ -1,4 +1,4 @@
-import cookie from 'cookie';
+const cookie = require('cookie');
 import { connectDb } from '../../../utils/db';
 import Order from '../../../models/order';
 import User from '../../../models/user';

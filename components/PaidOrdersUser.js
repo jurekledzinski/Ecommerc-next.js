@@ -49,7 +49,7 @@ const PaidOrdersUser = () => {
       <Typography sx={titlePaidOrdersStyles} variant="h4">
         User Orders
       </Typography>
-      {stateOrdersUser.length > 0
+      {stateOrdersUser && stateOrdersUser.length > 0
         ? stateOrdersUser.map((item, index) => (
             <Box key={index} sx={boxPaidOrdersWrapperStyles}>
               <Accordion

@@ -73,11 +73,13 @@ const DetailsOrder = () => {
 
   const onSubmit = async (data) => {
     handelRedirect();
+
     const dataOrder = {
       isDelivered: false,
       isPaid: false,
       termsConditions: data.checkbox,
     };
+
     const productsOrder = {
       deliveryName: orderState.deliveryMethod,
       deliveryPrice: orderState.deliveryPrice,

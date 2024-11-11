@@ -1,4 +1,4 @@
-import cookie from 'cookie';
+const cookie = require('cookie');
 import Cookies from 'js-cookie';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { CLEAR_CART, USER_LOGIN_DATA } from '../../utils/constants';
@@ -151,7 +151,7 @@ SuccessOrder.getLayout = function PageLayout(page) {
 export async function getServerSideProps(context) {
   const domainUrl = context.req.headers.host;
 
-  const response = await fetch(`https://${domainUrl}/api/v1/refresher-access`, {
+  const response = await fetch(`http://${domainUrl}/api/v1/refresher-access`, {
     method: 'PATCH',
     credentials: 'include',
     headers: {

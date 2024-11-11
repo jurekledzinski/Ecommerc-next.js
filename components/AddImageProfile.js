@@ -30,14 +30,14 @@ const ProfileImage = () => {
   const { tokenAccess } = stateLoginUser;
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
-  const [nameFile, setNameFile] = useState('');
   const [isLoad, setIsLoad] = useState(false);
 
   const {
-    control,
+    register,
     formState: { errors },
     handleSubmit,
     reset,
+    watch,
   } = useForm({
     defaultValues: {
       image: '',
@@ -46,7 +46,7 @@ const ProfileImage = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append('image', data.image);
+    formData.append('image', data.image[0]);
 
     const result = await addImageProfile(
       '/api/v1/files/upload',
@@ -66,17 +66,9 @@ const ProfileImage = () => {
       };
       setSuccessMsg(result.msgSuccess);
       dispatchLoginUser({ type: USER_LOGIN_DATA, data: updateUser });
+      reset({ image: '' });
     }
   };
-
-  useEffect(() => {
-    if (Object.keys(stateLoginUser).length > 0) {
-      const defaultValues = {
-        image: '',
-      };
-      reset(defaultValues);
-    }
-  }, [stateLoginUser, reset]);
 
   const errorMessage = (errorMsg) => {
     return <FormMsgAvatarProfile>{errorMsg}</FormMsgAvatarProfile>;
@@ -113,35 +105,22 @@ const ProfileImage = () => {
           setErrorMsg={setErrorMsg}
           setSuccessMsg={setSuccessMsg}
         />
+        <LabelFileTag htmlFor="button-file">
+          <InputFile
+            accept="image/*"
+            id="button-file"
+            multiple
+            type="file"
+            {...register('image', {
+              required: { message: 'Image is required', value: true },
+            })}
+          />
+          <Button variant="contained" component="span">
+            Upload image
+          </Button>
+          <FileNameTag>{watch('image') && watch('image')[0]?.name}</FileNameTag>
+        </LabelFileTag>
         {errors.image && errorMessage(errors.image.message)}
-        <Controller
-          name="image"
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: 'Image is required',
-            },
-          }}
-          render={({ field }) => (
-            <LabelFileTag htmlFor="contained-button-file">
-              <InputFile
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
-                onChange={(e) => {
-                  field.onChange(e.target.files[0]);
-                  setNameFile(e.target.files[0].name);
-                }}
-              />
-              <Button variant="contained" component="span">
-                Upload image
-              </Button>
-              <FileNameTag>{nameFile}</FileNameTag>
-            </LabelFileTag>
-          )}
-        />
         <Button
           variant="contained"
           size="large"

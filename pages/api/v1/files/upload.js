@@ -1,23 +1,17 @@
 import ImageKit from 'imagekit';
 import fs from 'fs';
-import nextConnect from 'next-connect';
 import multiparty from 'multiparty';
 import { connectDb } from '../../../../utils/db';
 import User from '../../../../models/user';
 import errorHandler from '../../../../helpers/api/error-handler';
 import { isAuth } from '../../../../helpers/api/auth-helper';
+import { createRouter } from 'next-connect';
 
-const middleware = nextConnect();
-
-middleware.use(async (req, res, next) => {
-  const form = new multiparty.Form();
-
-  await form.parse(req, function (err, fields, files) {
-    req.body = fields;
-    req.files = files;
-    next();
-  });
-});
+export const config = {
+  api: {
+    bodyParser: false, // Disable Next.js body parser to allow multiparty
+  },
+};
 
 const imagekit = new ImageKit({
   publicKey: process.env.PUBLIC_KEY_IMAGEKIT,
@@ -25,68 +19,66 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.URL_ENDPOINT_IMAGEKIT,
 });
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+const router = createRouter();
 
-const handler = nextConnect();
+router.use((req, res, next) => {
+  const form = new multiparty.Form();
+  form.parse(req, (err, fields, files) => {
+    if (err) return errorHandler(err, res);
+    req.body = fields;
+    req.files = files;
+    next();
+  });
+});
 
-handler.use(middleware);
+connectDb();
 
-connectDb(
-  handler.post(async (req, res) => {
-    const idUser = isAuth(req);
-    try {
-      if (req.method === 'POST') {
-        const [objImage] = req.files.image;
-        const indexDot = objImage.originalFilename.indexOf('.');
-        const nameImage = objImage.originalFilename.slice(0, indexDot);
-        fs.readFile(objImage.path, async (error, data) => {
-          if (error) {
-            errorHandler(error, res);
-          }
+router.post(async (req, res) => {
+  const idUser = isAuth(req);
 
-          const result = await imagekit.upload({
-            file: data,
-            fileName: nameImage,
-            folder: '/Shoppy/avatars-users',
-          });
+  try {
+    const [objImage] = req.files.image;
+    const nameImage = objImage.originalFilename
+      .split('.')
+      .slice(0, -1)
+      .join('.');
 
-          const oldAvatarID = await User.findOne({ _id: idUser }).select([
-            '-_id',
-            'avatarId',
-          ]);
+    const data = await fs.promises.readFile(objImage.path);
 
-          if (oldAvatarID.avatarId) {
-            const foundAvatar = await imagekit.getFileDetails(
-              oldAvatarID.avatarId
-            );
+    const result = await imagekit.upload({
+      file: data,
+      fileName: nameImage,
+      folder: '/Shoppy/avatars-users',
+    });
 
-            if (foundAvatar.fileId === oldAvatarID.avatarId) {
-              await imagekit.deleteFile(oldAvatarID.avatarId);
-            }
-          }
+    const user = await User.findById(idUser).select('avatarId');
+    const oldAvatarID = user?.avatarId;
 
-          let userUpdate = await User.findByIdAndUpdate(
-            { _id: idUser },
-            {
-              avatar: `${result.url}/tr:w-200,h-200,fo-face`,
-              avatarId: result.fileId,
-            },
-            { new: true }
-          ).select(['avatar', 'avatarId', '-_id']);
+    if (oldAvatarID) {
+      try {
+        const foundAvatar = await imagekit.getFileDetails(oldAvatarID);
 
-          return res
-            .status(200)
-            .json({ msgSuccess: 'Profile image added', data: userUpdate });
-        });
-      }
-    } catch (error) {
-      errorHandler(error, res);
+        if (foundAvatar.fileId === oldAvatarID) {
+          await imagekit.deleteFile(oldAvatarID);
+        }
+      } catch (err) {}
     }
-  })
-);
 
-export default handler;
+    const userUpdate = await User.findByIdAndUpdate(
+      idUser,
+      {
+        avatar: `${result.url}/tr:w-200,h-200,fo-face`,
+        avatarId: result.fileId,
+      },
+      { new: true }
+    ).select('avatar avatarId');
+
+    return res
+      .status(200)
+      .json({ msgSuccess: 'Profile image added', data: userUpdate });
+  } catch (error) {
+    errorHandler(error, res);
+  }
+});
+
+export default router.handler();

@@ -1,4 +1,4 @@
-import cookie from 'cookie';
+const cookie = require('cookie');
 import React, { useContext, useEffect, useState } from 'react';
 import { USER_DATA_PROFILE, USER_LOGIN_DATA } from '../../utils/constants';
 
@@ -46,7 +46,7 @@ export default ProfileUser;
 export async function getServerSideProps(context) {
   const domainUrl = context.req.headers.host;
 
-  const response = await fetch(`https://${domainUrl}/api/v1/refresher-access`, {
+  const response = await fetch(`http://${domainUrl}/api/v1/refresher-access`, {
     method: 'PATCH',
     credentials: 'include',
     headers: {
